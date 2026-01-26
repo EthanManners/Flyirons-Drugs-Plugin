@@ -3,6 +3,7 @@ package com.drugs;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import com.drugs.addiction.AddictionManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -67,6 +68,10 @@ public class DrugsV2 extends JavaPlugin {
             new DrugsPlaceholderExpansion(this).register();
             getLogger().info("PlaceholderAPI expansion registered successfully!");
         }
+
+        // Initialize Addiction Manger
+        AddictionManager.init(this);
+
 
         getLogger().info("DrugsV2 enabled!");
     }

@@ -1,91 +1,77 @@
 heroin:
-  material: END_CRYSTAL
-  display-name: "&cHeroin"
+  material: DRIED_KELP
+  display-name: "&8Black Tar Heroin"
   lore:
     - "&7A high-risk, high-reward combat enhancer."
-    - "&7Not recommended for daily use."
+    - "&a&oStrength II"
+    - "&a&oResistance III"
+    - "&c&oSlowness II"
+    - "&7OD Risk: &4&lHigh"
   effects:
     STRENGTH:
-      duration: 600
+      duration:  1200
       amplifier: 1
-    SPEED:
+    SLOW:
       duration: 2400
       amplifier: 1
-
-opium:
-  material: POPPY
-  display-name: "&6Opium"
-  lore:
-    - "&7A potent relaxant from ancient blooms."
-    - "&7Feels good. Slows everything down."
-  effects:
     RESISTANCE:
-      duration: 400
-      amplifier: 0
-    SLOW:
-      duration: 400
-      amplifier: 0
-    REGENERATION:
-      duration: 200
-      amplifier: 0
+      duration: 2000
+      amplifier: 2
 
 fent:
   material: GHAST_TEAR
-  display-name: "&5Fent"
+  display-name: "&8Fent"
   lore:
-    - "&7Hyper-potent painkiller."
-    - "&7One hit is all it takes..."
+    - "&7Cheap, strong painkiller, but deadly"
+    - "&a&oStrength I"
+    - "&a&oAbsorption II"
+    - "&a&oResistance III"
+    - "&c&oSlowness IV"
+    - "&7OD Risk: &4&lVERY HIGH"
   effects:
     STRENGTH:
       duration: 200
-      amplifier: 1
-    SPEED:
-      duration: 200
-      amplifier: 1
-    ABSORPTION:
-      duration: 100
-      amplifier: 0
-
-morphine:
-  material: FERMENTED_SPIDER_EYE
-  display-name: "&eMorphine"
-  lore:
-    - "&7Smooths out the pain."
-    - "&7Heals, but slows you down."
-  effects:
-    REGENERATION:
-      duration: 400
-      amplifier: 1
-    RESISTANCE:
-      duration: 400
       amplifier: 0
     SLOW:
-      duration: 200
+      duration: 2400
+      amplifier: 3
+    ABSORPTION:
+      duration: 100
       amplifier: 1
+    RESISTANCE:
+      duration: 1000
+      amplifier: 2
 
-shroomshake:
-  material: RED_MUSHROOM
-  display-name: "&dShroomshake"
+
+shrooms:
+  material: BROWN_MUSHROOM
+  display-name: "&dShrooms"
   lore:
-    - "&7A vibrant mix of spore-born madness."
-    - "&7Everything is... squishy?"
+    - "&7Trippppyyyy"
+    - "&a&oJump Boost II"
+    - "&a&oLuck X"
+    - "&c&oNausea X"
+    - "&7OD Risk: &2&lNon-Lethal"
   effects:
     JUMP:
       duration: 400
       amplifier: 1
     LUCK:
       duration: 1200
-      amplifier: 0
+      amplifier: 9
     CONFUSION:
-      duration: 200
-      amplifier: 0
+      duration: 1200
+      amplifier: 9
 
-blue_crystal:
-  material: LAPIS_LAZULI
-  display-name: "&9Blue Crystal"
+meth:
+  material: QUARTZ
+  display-name: "&bCrystal Meth"
   lore:
-    - "&7High octane. High voltage."
-    - "&7Cooked in the back of an RV."
+    - "&7High octane, high voltage. Good for mining"
+    - "&a&oSpeed III"
+    - "&a&oHaste II"
+    - "&c&oWeakness II"
+    - "&7OD Risk: &e&lMedium"
   effects:
     SPEED:
       duration: 300
@@ -95,55 +81,153 @@ blue_crystal:
       amplifier: 1
     WEAKNESS:
       duration: 400
-      amplifier: 0
+      amplifier: 1
 
-cryozen:
-  material: BLUE_ICE
-  display-name: "&bCryozen"
+blunt:
+  material: STICK
+  display-name: "&2Blunt"
   lore:
-    - "&7Cools the nerves. And the muscles."
-    - "&7You're a tank. Temporarily."
+    - "&7Cannabis wrapped in a leaf"
+    - "&a&oResistance II"
+    - "&c&oHunger I"
+    - "&c&oSlowness II"
+    - "&7OD Risk: &2&lNon-Lethal"
+  effects:
+    RESISTANCE:
+      duration: 600
+      amplifier: 1
+    HUNGER:
+      duration: 800
+      amplifier: 0
+    SLOW:
+      duration: 600
+      amplifier: 1
+
+cocaine:
+  material: SUGAR
+  display-name: "&fCocaine"
+  lore:
+    - "&7Only the Elite like to go skiing"
+    - "&a&oSaturation III"
+    - "&a&oSpeed IV"
+    - "&a&oStrength I"
+    - "&7OD Risk: &4&lHigh"
+  effects:
+    SATURATION:
+      duration: 200
+      amplifier: 2
+    SPEED:
+      duration: 200
+      amplifier: 3
+    STRENGTH:
+      duration: 200
+      amplifier: 0
+      
+      
+      
+joint:
+  material: LIGHT
+  display-name: "&2Joint"
+  lore:
+    - "&7Cannabis wrapped in paper"
+    - "&a&oResistance II"
+    - "&c&oHunger II"
+    - "&c&oSlowness I"
+    - "&7OD Risk: &2&lNon-Lethal"
   effects:
     RESISTANCE:
       duration: 400
       amplifier: 1
-    FIRE_RESISTANCE:
+    HUNGER:
       duration: 600
-      amplifier: 0
+      amplifier: 1
     SLOW:
       duration: 400
       amplifier: 0
-
-shadowspike:
-  material: INK_SAC
-  display-name: "&8Shadowspike"
+      
+      
+      
+cart:
+  material: COMMAND_BLOCK_MINECART
+  display-name: "&2Cart"
   lore:
-    - "&7Disappear. Strike. Fade again."
-    - "&7A rogue’s companion."
+    - "&7Digital Cannabis"
+    - "&a&oResistance III"
+    - "&c&oHunger II"
+    - "&c&oSlowness II"
+    - "&7OD Risk: &2&lNon-Lethal"
   effects:
-    INVISIBILITY:
+    RESISTANCE:
       duration: 400
-      amplifier: 0
-    SPEED:
+      amplifier: 2
+    HUNGER:
       duration: 400
-      amplifier: 0
-    WEAKNESS:
-      duration: 400
-      amplifier: 0
-
-henbane:
-  material: RABBIT_FOOT
-  display-name: "&4Henbane"
+      amplifier: 1
+    SLOW:
+      duration: 200
+      amplifier: 1
+      
+      
+edible:
+  material: Cookie
+  display-name: "&2Edible"
   lore:
-    - "&7An ancient herb of the wild."
-    - "&7Fuels blind fury."
+    - "&7Cannabis without the lung damage" 
+    - "&a&oResistance I"
+    - "&c&oHunger I"
+    - "&c&oSlowness I"
+    - "&7OD Risk: &2&lNon-Lethal"
   effects:
-    STRENGTH:
-      duration: 600    # 30s
-      amplifier: 2     # Strength III
-    SPEED:
-      duration: 300    # 15s
-      amplifier: 2     # Speed III
-    BLINDNESS:
-      duration: 300    # 15s
-      amplifier: 0     # Blindness I
+    RESISTANCE:
+      duration: 800
+      amplifier: 0
+    HUNGER:
+      duration: 1200
+      amplifier: 1
+    SLOW:
+      duration: 800
+      amplifier: 0
+      
+      
+glue:
+  material: MILK_BUCKET
+  display-name: "&fGlue"
+  lore:
+    - "&7Ever wanted to sniff glue in Minecraft?"
+    - "&c&oPosion I"
+    - "&c&oMining Fatigue I"
+    - "&7OD Risk: &4&lHigh"
+  effects:
+    POISON:
+      duration: 800
+      amplifier: 0
+    SLOW_DIGGING:
+      duration: 1200
+      amplifier: 1
+
+molly:
+  material: POPPED_CHORUS_FRUIT
+  display-name: "&dMolly"
+  lore:
+    - "&7MDMA, Ecstacy"
+    - "&a&oRegeneration II"
+    - "&a&oAbsorption II"
+    - "&c&oGlowing I"
+    - "&7OD Risk: &3&lLow"
+  effects:
+    REGENERATION:
+      duration: 300
+      amplifier: 1
+    GLOWING:
+      duration: 1200
+      amplifier: 0
+    ABSORPTION:
+      duration: 1000
+      amplifier: 1
+
+
+      
+      
+ 
+
+

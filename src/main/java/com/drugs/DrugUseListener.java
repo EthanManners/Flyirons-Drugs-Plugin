@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.addiction.AddictionManager;
+
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -78,6 +80,15 @@ public class DrugUseListener implements Listener {
         }
 
         // ----------------------------------------
+        // Addiction system hook
+        // ----------------------------------------
+        AddictionManager.onDrugUse(player, drugId);
+
+
+
+
+
+        // ----------------------------------------
         // 🧪 Apply effects
         // ----------------------------------------
         profile.applyEffects(player);
@@ -112,5 +123,8 @@ public class DrugUseListener implements Listener {
                 AchievementManager.processTrigger(player, "all_drugs_used", context);
             }
         }
+
+
+          
     }
 }

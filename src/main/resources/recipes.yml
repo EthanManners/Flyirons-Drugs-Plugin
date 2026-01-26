@@ -4,21 +4,10 @@ heroin:
     - "GAG"
     - " B "
   ingredients:
-    S: SUGAR
+    S: POPPY
     G: GUNPOWDER
-    A: GOLDEN_APPLE
-    B: BONE
-
-opium:
-  shape:
-    - " P "
-    - "SGS"
-    - " B "
-  ingredients:
-    P: POPPY
-    S: SUGAR
-    G: GUNPOWDER
-    B: BONE
+    A: WITHER_ROSE
+    B: CHARCOAL
 
 fent:
   shape:
@@ -26,69 +15,114 @@ fent:
     - "GHG"
     - " R "
   ingredients:
-    G: GOLD_NUGGET
-    H: GHAST_TEAR
-    R: REDSTONE
+    G: POPPY
+    H: CHARCOAL
+    R: GUNPOWDER
 
-morphine:
-  shape:
-    - " N "
-    - "FEF"
-    - " N "
-  ingredients:
-    N: NETHER_WART
-    F: FERMENTED_SPIDER_EYE
-    E: IRON_NUGGET
-
-shroomshake:
+shrooms:
   shape:
     - " M "
     - "SBS"
     - " M "
   ingredients:
     M: RED_MUSHROOM
-    S: SUGAR
+    S: BROWN_MUSHROOM
     B: BLAZE_POWDER
 
-blue_crystal:
+meth:
   shape:
     - " L "
     - "SBS"
     - " L "
   ingredients:
-    L: LAPIS_LAZULI
-    S: SUGAR
-    B: BLAZE_POWDER
+    L: QUARTZ
+    S: AMETHYST_SHARD
+    B: SUSPICIOUS_STEW
 
-cryozen:
+blunt:
   shape:
-    - " I "
-    - "SWS"
-    - " R "
+    - " GF"
+    - "   "
+    - "   "
   ingredients:
-    I: BLUE_ICE
-    S: SUGAR
-    W: SNOWBALL
+    F: FERN
+    G: LEAF_LITTER
+
+cocaine:
+  shape:
+    - "BSB"
+    - "SDS"
+    - "WBW"
+  ingredients:
+    B: SNOWBALL
+    S: VINE
+    D: DRAGON_BREATH
+    W: WHITE_CONCRETE_POWDER
+    
+    
+joint:
+  shape:
+    - " GF"
+    - "   "
+    - "   "
+  ingredients:
+    F: FERN
+    G: PAPER
+    
+edible:
+  shape:
+    - " GF"
+    - "   "
+    - "   "
+  ingredients:
+    F: FERN
+    G: COOKIE
+    
+cart:
+  shape:
+    - " G "
+    - "RFB"
+    - " C "
+  ingredients:
+    F: FERN
+    G: GLASS
+    C: COPPER_INGOT
     R: REDSTONE
-
-shadowspike:
+    B: STONE_BUTTON
+    
+    
+glue:
   shape:
-    - " I "
-    - "SBS"
-    - " F "
+    - " WB"
+    - "   "
+    - "   "
   ingredients:
-    I: INK_SAC
-    S: SUGAR
-    B: BONE
-    F: FERMENTED_SPIDER_EYE
-
-henbane:
+    W: WATER_BUCKET
+    B: BONE_MEAL
+    
+    
+    
+    
+molly:
   shape:
-    - " F "
+    - "QQQ"
+    - "EGE"
+    - "MPM"
+  ingredients:
+    Q: QUARTZ
+    E: SPIDER_EYE
+    G: GOLDEN_APPLE
+    M: MAGENTA_DYE
+    P: PUFFERFISH
+
+
+suboxone:
+  shape:
+    - "   "
     - "GSG"
-    - " B "
+    - "   "
   ingredients:
-    F: RABBIT_FOOT
-    G: GUNPOWDER
+    G: GOLDEN_APPLE
     S: SUGAR
-    B: BONE
+
+

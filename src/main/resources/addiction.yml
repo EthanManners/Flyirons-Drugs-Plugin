@@ -1,0 +1,151 @@
+# addiction.yml
+settings:
+  enabled: true
+
+  # If false: milk will NOT permanently clear withdrawal/addiction effects.
+  # We'll re-apply withdrawal effects right after milk is consumed.
+  milk_clears_withdrawal: false
+
+  # Duration we use to represent "infinite" potion effects
+  infinite_duration_ticks: 99999
+
+  # How often we run the addiction heartbeat (withdrawal checks, re-apply effects, decay)
+  heartbeat_ticks: 20
+
+cures:
+  # You can add more cures later (benzos, naloxone, etc)
+  suboxone:
+    enabled: true
+    material: GOLDEN_APPLE
+    display-name: "&eSuboxone"
+    lore:
+      - "&7Treats withdrawal."
+      - "&7(Testing: cures all addictions)"
+    # If you want it to be opiate-only later:
+    # cures: ["heroin", "fent"]
+    cures: ["*"]   # * = all (for now)
+
+    # If true, also zeroes addiction points (full reset)
+    clears_points: true
+
+drugs:
+  # One-hit addictions (threshold=1 is basically instant-hook)
+  fent:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 1
+    withdrawal_after_seconds: 240   # 4 minutes (matches your design)
+    decay:
+      enabled: false
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 0
+
+  glue:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 1
+    withdrawal_after_seconds: 180
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.25
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 0
+
+  # High addiction, but not necessarily 1-hit
+  heroin:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 3
+    withdrawal_after_seconds: 300
+    decay:
+      enabled: false
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 0
+
+  cocaine:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 3
+    withdrawal_after_seconds: 240
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.5
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 0
+
+  meth:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 2
+    withdrawal_after_seconds: 240
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.25
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 0
+
+  # Lower addiction: weed + molly
+  blunt:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 4
+    withdrawal_after_seconds: 360
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 0
+
+  joint:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 4
+    withdrawal_after_seconds: 360
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 0
+
+  edible:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 5
+    withdrawal_after_seconds: 420
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 0
+
+  cart:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 4
+    withdrawal_after_seconds: 300
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.75
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 0
+
+  molly:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 4
+    withdrawal_after_seconds: 420
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.75
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 0

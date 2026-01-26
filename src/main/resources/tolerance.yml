@@ -19,6 +19,86 @@ heroin:
     3: 0.4
     4: 0.2
 
-henbane:
+fent:
+  max-tolerance: 2
+  decay-delay-minutes: 6
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.3
+    2: 0.1
+
+cocaine:
   max-tolerance: 5
-  decay-delay-minutes: 2
+  decay-delay-minutes: 5
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.8
+    2: 0.4
+    3: 0.2
+    4: 0.1
+
+
+meth:
+  max-tolerance: 10
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.8
+    2: 0.6
+    3: 0.4
+    4: 0.2  
+    
+    
+    
+blunt:
+  max-tolerance: 10
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.9
+    2: 0.75
+    3: 0.5
+    
+    
+    
+joint:
+  max-tolerance: 16
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.9
+    2: 0.75
+    3: 0.5
+    
+edible:
+  max-tolerance: 32
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.9
+    2: 0.75
+    3: 0.5
+
+
+cart:
+  max-tolerance: 5
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.9
+    2: 0.75
+    3: 0.5
+    4: 0.3
+    
+    
+molly:
+  max-tolerance: 15
+  decay-delay-minutes: 4
+  effectiveness-scaling:
+    0: 1.0
+    1: 0.9
+    2: 0.75
+    3: 0.5
+    4: 0.3
+
+
