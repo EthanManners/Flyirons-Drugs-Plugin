@@ -26,6 +26,10 @@ public class AddictionState {
         this.points += amount;
     }
 
+    public void setPoints(double points) {
+        this.points = Math.max(0, points);
+    }
+
     // Your original method name
     public void reducePoints(double amount) {
         this.points = Math.max(0, this.points - amount);
