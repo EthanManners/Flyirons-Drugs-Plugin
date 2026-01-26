@@ -5,6 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.addiction.AddictionConfig;
+import com.drugs.addiction.AddictionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,26 @@ public class DrugMenuGUI {
      * @param page   The page number (0-based)
      */
     public static void open(Player player, int page) {
-        List<String> allDrugIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
-        int maxPage = (int) Math.ceil(allDrugIds.size() / (double) ITEMS_PER_PAGE);
+        List<ItemStack> menuItems = new ArrayList<>();
+        for (String drugId : DrugRegistry.getRegisteredDrugNames()) {
+            DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
+            if (profile != null) {
+                menuItems.add(profile.createItem(1));
+            }
+        }
+
+        AddictionConfig config = AddictionManager.getConfig();
+        if (config != null) {
+            for (AddictionConfig.CureRule cure : config.getCures().values()) {
+                if (!cure.enabled) continue;
+                menuItems.add(AddictionManager.buildCureItem(cure, 1));
+            }
+        }
+
+        int maxPage = (int) Math.ceil(menuItems.size() / (double) ITEMS_PER_PAGE);
+        if (maxPage <= 0) {
+            maxPage = 1;
+        }
 
         // Clamp page number
         if (page < 0) page = 0;
@@ -33,16 +53,12 @@ public class DrugMenuGUI {
 
         Inventory gui = Bukkit.createInventory(null, GUI_SIZE, ChatColor.DARK_GREEN + "Drugs Menu (Page " + (page + 1) + ")");
 
-        // Add drug items for current page
+        // Add items for current page
         int start = page * ITEMS_PER_PAGE;
-        int end = Math.min(start + ITEMS_PER_PAGE, allDrugIds.size());
+        int end = Math.min(start + ITEMS_PER_PAGE, menuItems.size());
 
         for (int i = start; i < end; i++) {
-            String drugId = allDrugIds.get(i);
-            DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
-            if (profile != null) {
-                gui.setItem(i - start, profile.createItem(1));
-            }
+            gui.setItem(i - start, menuItems.get(i));
         }
 
         // Add navigation controls (last row)

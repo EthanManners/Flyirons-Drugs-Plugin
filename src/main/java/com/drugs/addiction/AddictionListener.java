@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -42,5 +43,11 @@ public class AddictionListener implements Listener {
     public void onMilkConsume(PlayerItemConsumeEvent event) {
         if (event.getItem().getType() != Material.MILK_BUCKET) return;
         AddictionManager.handleMilkConsumption(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onBedEnter(PlayerBedEnterEvent event) {
+        if (event.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK) return;
+        AddictionManager.applyCure(event.getPlayer(), "sleep");
     }
 }
