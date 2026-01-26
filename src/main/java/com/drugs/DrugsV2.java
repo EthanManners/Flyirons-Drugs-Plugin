@@ -3,6 +3,7 @@ package com.drugs;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import com.drugs.addiction.AddictionListener;
 import com.drugs.addiction.AddictionManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,6 +57,7 @@ public class DrugsV2 extends JavaPlugin {
         // Register events
         getServer().getPluginManager().registerEvents(new DrugMenuListener(), this);
         getServer().getPluginManager().registerEvents(new DrugUseListener(), this);
+        getServer().getPluginManager().registerEvents(new AddictionListener(), this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
 
         // Register commands
