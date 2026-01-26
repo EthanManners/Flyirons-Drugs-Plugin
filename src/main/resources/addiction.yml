@@ -27,6 +27,8 @@ cures:
 
     # If true, also zeroes addiction points (full reset)
     clears_points: true
+    reduce_points: 0
+    block_withdrawal_seconds: 240
 
 drugs:
   # One-hit addictions (threshold=1 is basically instant-hook)

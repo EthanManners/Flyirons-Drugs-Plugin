@@ -66,4 +66,31 @@ public class DrugRecipeHelper {
 
         Bukkit.addRecipe(recipe);
     }
+
+    /**
+     * Registers a shaped crafting recipe for a custom item (like cures).
+     */
+    public static void registerCustomRecipe(String id, ConfigurationSection section, ItemStack result, Plugin plugin) {
+        if (section == null || result == null) return;
+
+        var shape = section.getStringList("shape");
+        if (shape.size() != 3) return;
+
+        NamespacedKey key = new NamespacedKey(plugin, id.toLowerCase());
+        ShapedRecipe recipe = new ShapedRecipe(key, result);
+        recipe.shape(shape.toArray(new String[0]));
+
+        ConfigurationSection ingredients = section.getConfigurationSection("ingredients");
+        if (ingredients == null) return;
+
+        for (String symbol : ingredients.getKeys(false)) {
+            String matName = ingredients.getString(symbol);
+            Material mat = Material.matchMaterial(matName);
+            if (mat != null) {
+                recipe.setIngredient(symbol.charAt(0), mat);
+            }
+        }
+
+        Bukkit.addRecipe(recipe);
+    }
 }

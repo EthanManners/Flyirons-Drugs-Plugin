@@ -1,19 +1,24 @@
 package com.drugs.addiction;
 
-import java.util.*;
+import org.bukkit.Material;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public final class AddictionConfig {
 
-    // How often we tick withdrawal/decay checks
-    public int tickIntervalSeconds = 2;
-
-    // If true, milk clears withdrawal effects (you said you want this toggleable)
+    public boolean enabled = true;
     public boolean milkCuresWithdrawal = false;
+    public int infiniteDurationTicks = 99999;
+    public int heartbeatTicks = 20;
 
-    // Rules by drugId (e.g. "fent", "meth", "molly")
     private final Map<String, DrugRule> drugs = new HashMap<>();
-
-    // Cure items by cureId (e.g. "suboxone")
     private final Map<String, CureRule> cures = new HashMap<>();
 
     public Map<String, DrugRule> getDrugs() {
@@ -44,57 +49,41 @@ public final class AddictionConfig {
         cures.put(cureId.toLowerCase(Locale.ROOT), rule);
     }
 
-    // -------------------------
-    // Nested config objects
-    // -------------------------
-
     public static final class DrugRule {
         public boolean addictive = false;
-
-        // Points gained per use
         public double pointsPerUse = 1.0;
-
-        // Points required to be considered "addicted"
-        public double addictedThreshold = 3.0;
-
-        // Seconds after last dose before withdrawal begins
+        public double addictedAtPoints = 3.0;
         public int withdrawalAfterSeconds = 180;
-
-        // If true, points decay over time (optional per drug)
         public boolean decayEnabled = true;
-
-        // Points removed per minute (or per tick interval, depending how we implement it)
-        public double decayPerMinute = 0.0;
-
-        // Withdrawal effects applied when addicted and timer elapsed
+        public double decayPointsPerMinute = 0.0;
         public List<EffectSpec> withdrawalEffects = new ArrayList<>();
-
-        // Duration for withdrawal effects (you said 99999 ticks)
-        public int withdrawalEffectDurationTicks = 99999;
+        public List<EffectSpec> addictedEffects = new ArrayList<>();
     }
 
     public static final class CureRule {
-        // For now we can apply to all drugs, later we can restrict by tags/groups
         public boolean enabled = true;
-
-        // Remove addiction points (per drug)
-        public double removePoints = 0.0;
-
-        // Block withdrawal for N seconds
+        public Material material = Material.GOLDEN_APPLE;
+        public String displayName;
+        public List<String> lore = new ArrayList<>();
+        public Set<String> cures = new HashSet<>();
+        public boolean clearsPoints = false;
+        public double reducePoints = 0.0;
         public int blockWithdrawalSeconds = 0;
 
-        // Optional: only apply to these drug IDs (empty = all)
-        public Set<String> onlyDrugs = new HashSet<>();
+        public boolean allowsDrug(String drugId) {
+            if (cures.isEmpty()) return true;
+            if (cures.contains("*")) return true;
+            return cures.contains(drugId.toLowerCase(Locale.ROOT));
+        }
     }
 
     public static final class EffectSpec {
-        // Bukkit uses PotionEffectType.getByName("POISON"), "HUNGER", etc.
-        public String type;
+        public PotionEffectType type;
         public int amplifier;
 
         public EffectSpec() {}
 
-        public EffectSpec(String type, int amplifier) {
+        public EffectSpec(PotionEffectType type, int amplifier) {
             this.type = type;
             this.amplifier = amplifier;
         }
