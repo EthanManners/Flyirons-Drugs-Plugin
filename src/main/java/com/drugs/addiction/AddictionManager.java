@@ -246,6 +246,7 @@ public final class AddictionManager {
             heartbeatTask.cancel();
         }
         heartbeatTask = Bukkit.getScheduler().runTaskTimer(pluginInstance, new AddictionTickTask(), interval, interval);
+        Bukkit.getScheduler().runTaskTimer(pluginInstance, new AddictionTickTask(), interval, interval);
     }
 
     static void runHeartbeat() {
