@@ -37,7 +37,7 @@ public class DrugMenuGUI {
         AddictionConfig config = AddictionManager.getConfig();
         if (config != null) {
             for (AddictionConfig.CureRule cure : config.getCures().values()) {
-                if (!cure.enabled) continue;
+                if (!cure.enabled || !cure.itemEnabled) continue;
                 menuItems.add(AddictionManager.buildCureItem(cure, 1));
             }
         }

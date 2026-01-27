@@ -43,7 +43,7 @@ public final class AddictionManager {
         if (config == null) return cureIds;
         for (Map.Entry<String, AddictionConfig.CureRule> entry : config.getCures().entrySet()) {
             AddictionConfig.CureRule rule = entry.getValue();
-            if (rule != null && rule.enabled) {
+            if (rule != null && rule.enabled && rule.itemEnabled) {
                 cureIds.add(entry.getKey());
             }
         }
@@ -53,7 +53,7 @@ public final class AddictionManager {
     public static ItemStack getCureItem(String cureId, int amount) {
         if (config == null || cureId == null) return null;
         AddictionConfig.CureRule cure = config.getCureRule(cureId);
-        if (cure == null || !cure.enabled) return null;
+        if (cure == null || !cure.enabled || !cure.itemEnabled) return null;
         int safeAmount = Math.max(1, amount);
         return buildCureItem(cure, safeAmount);
     }
@@ -128,6 +128,8 @@ public final class AddictionManager {
             AddictionState state = entry.getValue();
 
             if (!cure.allowsDrug(drugId)) continue;
+            AddictionConfig.DrugRule drugRule = config.getDrugRule(drugId);
+            if (drugRule == null) continue;
 
             if (cure.clearsPoints) {
                 state.setPoints(0);
@@ -139,7 +141,11 @@ public final class AddictionManager {
                 state.blockWithdrawalForSeconds(cure.blockWithdrawalSeconds);
             }
 
+            state.updateLastDose();
             clearWithdrawalEffects(player, drugId);
+            if (state.getPoints() < drugRule.addictedAtPoints) {
+                clearAddictedEffects(player, drugId);
+            }
             used = true;
         }
 
@@ -151,7 +157,7 @@ public final class AddictionManager {
 
         for (Map.Entry<String, AddictionConfig.CureRule> entry : config.getCures().entrySet()) {
             AddictionConfig.CureRule cure = entry.getValue();
-            if (!cure.enabled) continue;
+            if (!cure.enabled || !cure.itemEnabled) continue;
             if (item.getType() != cure.material) continue;
 
             if (cure.displayName != null && item.hasItemMeta()) {
@@ -333,7 +339,7 @@ public final class AddictionManager {
         for (Map.Entry<String, AddictionConfig.CureRule> entry : config.getCures().entrySet()) {
             String cureId = entry.getKey();
             AddictionConfig.CureRule cure = entry.getValue();
-            if (!cure.enabled) continue;
+            if (!cure.enabled || !cure.itemEnabled) continue;
 
             ConfigurationSection recipeSection = drugsPlugin.getRecipesConfig().getConfigurationSection(cureId);
             if (recipeSection == null) continue;
