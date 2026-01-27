@@ -4,7 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import com.drugs.addiction.AddictionConfig;
 import com.drugs.addiction.AddictionManager;
 
 import java.util.ArrayList;
@@ -69,10 +68,8 @@ public class DrugsTabCompleter implements TabCompleter {
 
         if (args.length == 3 && args[0].equalsIgnoreCase("give")) {
             List<String> drugIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
-            AddictionConfig config = AddictionManager.getConfig();
-            if (config != null) {
-                drugIds.addAll(config.getCures().keySet());
-            }
+            drugIds.addAll(AddictionManager.getEnabledCureIds());
+            drugIds.add("all");
             return partialMatch(args[2], drugIds);
         }
 

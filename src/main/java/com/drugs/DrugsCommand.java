@@ -52,7 +52,7 @@ public class DrugsCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.GOLD + "-----[ DrugsV2 Help ]-----");
             sender.sendMessage(ChatColor.YELLOW + "/drugs" + ChatColor.GRAY + " - Open the drug selection GUI");
             if (sender.hasPermission("drugs.give")) {
-                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure> [amount]" + ChatColor.GRAY + " - Give an item to someone");
+                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure|all> [amount]" + ChatColor.GRAY + " - Give an item to someone");
             }
             if (sender.hasPermission("drugs.tolerance")) {
                 sender.sendMessage(ChatColor.YELLOW + "/tolerance" + ChatColor.GRAY + " - View your current drug tolerance");
@@ -91,7 +91,7 @@ public class DrugsCommand implements CommandExecutor {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId> [amount]");
+                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId|all> [amount]");
                 return true;
             }
 
@@ -111,6 +111,33 @@ public class DrugsCommand implements CommandExecutor {
                 } catch (NumberFormatException e) {
                     sender.sendMessage(ChatColor.RED + "Invalid amount, defaulting to 1.");
                 }
+            }
+
+            if (drugId.equalsIgnoreCase("all")) {
+                Set<String> allItems = new TreeSet<>();
+                allItems.addAll(DrugRegistry.getRegisteredDrugNames());
+                allItems.addAll(AddictionManager.getEnabledCureIds());
+
+                int givenCount = 0;
+                for (String itemId : allItems) {
+                    ItemStack item = DrugRegistry.getDrugItem(itemId, amount);
+                    if (item == null) {
+                        item = AddictionManager.getCureItem(itemId, amount);
+                    }
+                    if (item == null) continue;
+
+                    target.getInventory().addItem(item);
+                    givenCount++;
+                }
+
+                if (givenCount == 0) {
+                    sender.sendMessage(ChatColor.RED + "No drugs or cures are available to give.");
+                    return true;
+                }
+
+                sender.sendMessage(ChatColor.GREEN + "Gave " + givenCount + " items to " + target.getName());
+                target.sendMessage(ChatColor.GOLD + "You received " + givenCount + " items from " + sender.getName());
+                return true;
             }
 
             ItemStack item = DrugRegistry.getDrugItem(drugId, amount);
@@ -161,21 +188,27 @@ public class DrugsCommand implements CommandExecutor {
                 return true;
             }
 
-            DrugsV2.getInstance().reloadConfig();
-            DrugsV2.getInstance().saveRecipesConfig();
-            DrugsV2.getInstance().saveToleranceConfig();
-            DrugsV2.getInstance().saveAchievementSettingsConfig();
-            DrugsV2.getInstance().saveAchievementsConfig();
-            DrugsV2.getInstance().saveOverdoseConfig();
+            try {
+                DrugsV2.getInstance().reloadConfig();
+                DrugsV2.getInstance().saveRecipesConfig();
+                DrugsV2.getInstance().saveToleranceConfig();
+                DrugsV2.getInstance().saveAchievementSettingsConfig();
+                DrugsV2.getInstance().saveAchievementsConfig();
+                DrugsV2.getInstance().saveOverdoseConfig();
 
-            ToleranceConfigLoader.load(DrugsV2.getInstance().getDataFolder());
-            AchievementSettingsLoader.load(DrugsV2.getInstance().getDataFolder());
-            CustomAchievementLoader.load(DrugsV2.getInstance().getDataFolder());
-            OverdoseEffectManager.load(DrugsV2.getInstance().getDataFolder());
-            DrugRegistry.init(DrugsV2.getInstance());
-            AddictionManager.reload(DrugsV2.getInstance());
+                ToleranceConfigLoader.load(DrugsV2.getInstance().getDataFolder());
+                AchievementSettingsLoader.load(DrugsV2.getInstance().getDataFolder());
+                CustomAchievementLoader.load(DrugsV2.getInstance().getDataFolder());
+                OverdoseEffectManager.load(DrugsV2.getInstance().getDataFolder());
+                DrugRegistry.init(DrugsV2.getInstance());
+                AddictionManager.reload(DrugsV2.getInstance());
 
-            sender.sendMessage(ChatColor.GREEN + "DrugsV2 configs reloaded successfully.");
+                sender.sendMessage(ChatColor.GREEN + "DrugsV2 configs reloaded successfully.");
+            } catch (Exception e) {
+                DrugsV2.getInstance().getLogger().severe("Failed to reload configs: " + e.getMessage());
+                e.printStackTrace();
+                sender.sendMessage(ChatColor.RED + "Failed to reload configs. Check server logs for details.");
+            }
             return true;
         }
 

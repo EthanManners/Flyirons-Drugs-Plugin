@@ -27,6 +27,8 @@ public class OverdoseEffectManager {
     
     private static boolean stagedEnabled = false;
     private static boolean randomEnabled = false;
+
+    private static final Map<UUID, DeathMessageContext> deathMessages = new ConcurrentHashMap<>();
     
     // Store overdose effects
     private static final List<OverdoseEffect> defaultEffects = new ArrayList<>();
@@ -278,6 +280,17 @@ public class OverdoseEffectManager {
         UUID uuid = player.getUniqueId();
         globalOverdoseCounts.remove(uuid);
         drugOverdoseCounts.remove(uuid);
+        deathMessages.remove(uuid);
+    }
+
+    static DeathMessageContext consumeDeathMessage(UUID uuid) {
+        return deathMessages.remove(uuid);
+    }
+
+    private static void recordDeathMessage(Player player, String message, boolean broadcast) {
+        if (player == null) return;
+        if (message == null || message.isBlank()) return;
+        deathMessages.put(player.getUniqueId(), new DeathMessageContext(message, broadcast));
     }
     
     /**
@@ -305,11 +318,11 @@ public class OverdoseEffectManager {
         
         @Override
         public boolean apply(Player player, String drugId) {
-            if (broadcastMessages && !message.isEmpty()) {
-                String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
+            if (!message.isEmpty()) {
+                String formattedMsg = ChatColor.translateAlternateColorCodes('&',
                         message.replace("%player%", player.getName())
-                               .replace("%drug%", drugId));
-                Bukkit.broadcastMessage(formattedMsg);
+                               .replace("%drug%", getDrugLabel(drugId)));
+                recordDeathMessage(player, formattedMsg, broadcastMessages);
             }
             
             player.setHealth(0);
@@ -353,7 +366,7 @@ public class OverdoseEffectManager {
             if (!message.isEmpty()) {
                 String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
                         message.replace("%player%", player.getName())
-                               .replace("%drug%", drugId));
+                               .replace("%drug%", getDrugLabel(drugId)));
                 player.sendMessage(formattedMsg);
             }
             
@@ -378,7 +391,7 @@ public class OverdoseEffectManager {
         public boolean apply(Player player, String drugId) {
             String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
                     text.replace("%player%", player.getName())
-                         .replace("%drug%", drugId));
+                         .replace("%drug%", getDrugLabel(drugId)));
             
             if (broadcast) {
                 Bukkit.broadcastMessage(formattedMsg);
@@ -426,7 +439,7 @@ public class OverdoseEffectManager {
         @Override
         public boolean apply(Player player, String drugId) {
             String formattedCmd = command.replace("%player%", player.getName())
-                                        .replace("%drug%", drugId);
+                                        .replace("%drug%", getDrugLabel(drugId));
             
             if (asConsole) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formattedCmd);
@@ -435,6 +448,33 @@ public class OverdoseEffectManager {
             }
             
             return false;
+        }
+    }
+
+    private static String getDrugLabel(String drugId) {
+        if (drugId == null) return "";
+        DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
+        if (profile == null) {
+            return drugId;
+        }
+        return ChatColor.translateAlternateColorCodes('&', profile.getDisplayName());
+    }
+
+    static final class DeathMessageContext {
+        private final String message;
+        private final boolean broadcast;
+
+        private DeathMessageContext(String message, boolean broadcast) {
+            this.message = message;
+            this.broadcast = broadcast;
+        }
+
+        String message() {
+            return message;
+        }
+
+        boolean broadcast() {
+            return broadcast;
         }
     }
 } 

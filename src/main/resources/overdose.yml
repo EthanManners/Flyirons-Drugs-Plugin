@@ -18,9 +18,9 @@ default:
   # Effect types: death, effects, commands, damage, message, sound
   effects:
     - type: "death"
-      message: "&4%player% died from a drug overdose!"
+      message: "&4%player% died from a %drug% overdose!"
     - type: "message"
-      text: "&cYou overdosed and died!"
+      text: "&cYou overdosed on %drug% and died!"
       broadcast: true
 
 # Drug-specific overdose effects
@@ -28,17 +28,17 @@ drug_specific:
 #  fent:
 #    effects:
 #      - type: "death"
-#        message: "&4%player% died from a Fent overdose!"
+#        message: "&4%player% died from a %drug% overdose!"
 #      - type: "message"
-#        text: "&cYou overdosed on Fent and died!"
+#        text: "&cYou overdosed on %drug% and died!"
 #        broadcast: true
         
 #  heroin:
 #    effects:
 #      - type: "death"
-#        message: "&4%player% died from a Heroin overdose!"
+#        message: "&4%player% died from a %drug% overdose!"
 #      - type: "message"
-#        text: "&cYou overdosed on Heroin and died!"
+#        text: "&cYou overdosed on %drug% and died!"
 #        broadcast: true
 
 #  blue_crystal:
@@ -123,7 +123,7 @@ staged:
   third:
     effects:
       - type: "death"
-        message: "&4%player% couldn't handle another overdose and died!"
+        message: "&4%player% couldn't handle another %drug% overdose and died!"
 
 # Random effect pools (one is chosen randomly)
 random_effects:
@@ -137,4 +137,4 @@ random_effects:
     - type: "damage"
       amount: 15
     - type: "death"
-      message: "&4Bad luck! %player% died from an overdose!" 
+      message: "&4Bad luck! %player% died from a %drug% overdose!" 

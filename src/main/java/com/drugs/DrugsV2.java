@@ -58,6 +58,7 @@ public class DrugsV2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DrugMenuListener(), this);
         getServer().getPluginManager().registerEvents(new DrugUseListener(), this);
         getServer().getPluginManager().registerEvents(new AddictionListener(), this);
+        getServer().getPluginManager().registerEvents(new OverdoseDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
 
         // Register commands
