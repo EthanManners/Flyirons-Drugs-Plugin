@@ -13,7 +13,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public final class AddictionManager {
@@ -34,6 +36,18 @@ public final class AddictionManager {
 
     public static AddictionConfig getConfig() {
         return config;
+    }
+
+    public static Set<String> getEnabledCureIds() {
+        Set<String> cureIds = new HashSet<>();
+        if (config == null) return cureIds;
+        for (Map.Entry<String, AddictionConfig.CureRule> entry : config.getCures().entrySet()) {
+            AddictionConfig.CureRule rule = entry.getValue();
+            if (rule != null && rule.enabled) {
+                cureIds.add(entry.getKey());
+            }
+        }
+        return cureIds;
     }
 
     public static ItemStack getCureItem(String cureId, int amount) {
@@ -200,13 +214,13 @@ public final class AddictionManager {
     static void clearWithdrawalEffects(Player player, String drugId) {
         AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
         if (rule == null) return;
-        clearEffects(player, rule.withdrawalEffects);
+        clearEffects(player, rule.withdrawalEffects, true);
     }
 
     static void clearAddictedEffects(Player player, String drugId) {
         AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
         if (rule == null) return;
-        clearEffects(player, rule.addictedEffects);
+        clearEffects(player, rule.addictedEffects, true);
     }
 
     static void applyWithdrawalEffects(Player player, AddictionConfig.DrugRule rule) {
@@ -232,11 +246,25 @@ public final class AddictionManager {
         }
     }
 
-    private static void clearEffects(Player player, Iterable<AddictionConfig.EffectSpec> effects) {
+    private static void clearEffects(
+            Player player,
+            Iterable<AddictionConfig.EffectSpec> effects,
+            boolean onlyInfinite
+    ) {
         if (effects == null) return;
         for (AddictionConfig.EffectSpec effect : effects) {
             if (effect.type == null) continue;
-            player.removePotionEffect(effect.type);
+            if (!onlyInfinite) {
+                player.removePotionEffect(effect.type);
+                continue;
+            }
+
+            PotionEffect active = player.getPotionEffect(effect.type);
+            if (active == null) continue;
+            if (config == null) continue;
+            if (active.getDuration() >= config.infiniteDurationTicks - 1) {
+                player.removePotionEffect(effect.type);
+            }
         }
     }
 
