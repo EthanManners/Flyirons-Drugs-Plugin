@@ -27,6 +27,8 @@ public class OverdoseEffectManager {
     
     private static boolean stagedEnabled = false;
     private static boolean randomEnabled = false;
+
+    private static final Map<UUID, DeathMessageContext> deathMessages = new ConcurrentHashMap<>();
     
     // Store overdose effects
     private static final List<OverdoseEffect> defaultEffects = new ArrayList<>();
@@ -278,6 +280,17 @@ public class OverdoseEffectManager {
         UUID uuid = player.getUniqueId();
         globalOverdoseCounts.remove(uuid);
         drugOverdoseCounts.remove(uuid);
+        deathMessages.remove(uuid);
+    }
+
+    static DeathMessageContext consumeDeathMessage(UUID uuid) {
+        return deathMessages.remove(uuid);
+    }
+
+    private static void recordDeathMessage(Player player, String message, boolean broadcast) {
+        if (player == null) return;
+        if (message == null || message.isBlank()) return;
+        deathMessages.put(player.getUniqueId(), new DeathMessageContext(message, broadcast));
     }
     
     /**
@@ -305,11 +318,11 @@ public class OverdoseEffectManager {
         
         @Override
         public boolean apply(Player player, String drugId) {
-            if (broadcastMessages && !message.isEmpty()) {
-                String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
+            if (!message.isEmpty()) {
+                String formattedMsg = ChatColor.translateAlternateColorCodes('&',
                         message.replace("%player%", player.getName())
                                .replace("%drug%", getDrugLabel(drugId)));
-                Bukkit.broadcastMessage(formattedMsg);
+                recordDeathMessage(player, formattedMsg, broadcastMessages);
             }
             
             player.setHealth(0);
@@ -445,5 +458,23 @@ public class OverdoseEffectManager {
             return drugId;
         }
         return ChatColor.translateAlternateColorCodes('&', profile.getDisplayName());
+    }
+
+    static final class DeathMessageContext {
+        private final String message;
+        private final boolean broadcast;
+
+        private DeathMessageContext(String message, boolean broadcast) {
+            this.message = message;
+            this.broadcast = broadcast;
+        }
+
+        String message() {
+            return message;
+        }
+
+        boolean broadcast() {
+            return broadcast;
+        }
     }
 } 

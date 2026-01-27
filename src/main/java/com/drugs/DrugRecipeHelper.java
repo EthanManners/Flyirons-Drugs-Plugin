@@ -49,6 +49,7 @@ public class DrugRecipeHelper {
         ItemStack result = profile.createItem(1);
         NamespacedKey key = new NamespacedKey(plugin, id.toLowerCase());
 
+        Bukkit.removeRecipe(key);
         ShapedRecipe recipe = new ShapedRecipe(key, result);
         recipe.shape(shape.toArray(new String[0]));
 
@@ -77,6 +78,7 @@ public class DrugRecipeHelper {
         if (shape.size() != 3) return;
 
         NamespacedKey key = new NamespacedKey(plugin, id.toLowerCase());
+        Bukkit.removeRecipe(key);
         ShapedRecipe recipe = new ShapedRecipe(key, result);
         recipe.shape(shape.toArray(new String[0]));
 
