@@ -126,3 +126,12 @@ suboxone:
     S: SUGAR
 
 
+cbd:
+  shape:
+    - "FFF"
+    - "FFF"
+    - "FFF"
+  ingredients:
+    F: FERN
+
+
