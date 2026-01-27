@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.addiction.AddictionManager;
 
 import java.util.List;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class DrugsCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.GOLD + "-----[ DrugsV2 Help ]-----");
             sender.sendMessage(ChatColor.YELLOW + "/drugs" + ChatColor.GRAY + " - Open the drug selection GUI");
             if (sender.hasPermission("drugs.give")) {
-                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug> [amount]" + ChatColor.GRAY + " - Give a drug to someone");
+                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure> [amount]" + ChatColor.GRAY + " - Give an item to someone");
             }
             if (sender.hasPermission("drugs.tolerance")) {
                 sender.sendMessage(ChatColor.YELLOW + "/tolerance" + ChatColor.GRAY + " - View your current drug tolerance");
@@ -90,7 +91,7 @@ public class DrugsCommand implements CommandExecutor {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId> [amount]");
+                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId> [amount]");
                 return true;
             }
 
@@ -114,7 +115,10 @@ public class DrugsCommand implements CommandExecutor {
 
             ItemStack item = DrugRegistry.getDrugItem(drugId, amount);
             if (item == null) {
-                sender.sendMessage(ChatColor.RED + "Drug '" + drugId + "' not found.");
+                item = AddictionManager.getCureItem(drugId, amount);
+            }
+            if (item == null) {
+                sender.sendMessage(ChatColor.RED + "Drug or cure '" + drugId + "' not found.");
                 return true;
             }
 
@@ -144,6 +148,7 @@ public class DrugsCommand implements CommandExecutor {
 
             ToleranceTracker.resetAllTolerance(target);
             OverdoseEffectManager.resetOverdoseCounts(target);
+            AddictionManager.purgePlayer(target);
             sender.sendMessage(ChatColor.GREEN + "Reset all tolerance and overdose counts for " + target.getName());
             target.sendMessage(ChatColor.YELLOW + "Your drug tolerance levels and overdose counts have been purged by an admin.");
             return true;
@@ -168,6 +173,7 @@ public class DrugsCommand implements CommandExecutor {
             CustomAchievementLoader.load(DrugsV2.getInstance().getDataFolder());
             OverdoseEffectManager.load(DrugsV2.getInstance().getDataFolder());
             DrugRegistry.init(DrugsV2.getInstance());
+            AddictionManager.reload(DrugsV2.getInstance());
 
             sender.sendMessage(ChatColor.GREEN + "DrugsV2 configs reloaded successfully.");
             return true;

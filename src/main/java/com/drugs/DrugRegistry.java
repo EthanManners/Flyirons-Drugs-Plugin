@@ -124,7 +124,7 @@ public class DrugRegistry {
         // Check cache first
         DrugEffectProfile cachedProfile = itemMatchCache.get(cacheKey);
         if (cachedProfile != null || itemMatchCache.containsKey(cacheKey)) {
-            return cachedProfile;
+            return cachedProfile == DrugEffectProfile.NONE ? null : cachedProfile;
         }
         
         // If cache is too large, schedule cleanup

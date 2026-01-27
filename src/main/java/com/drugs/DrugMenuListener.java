@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.addiction.AddictionManager;
 
 /**
  * Handles clicks and closes for the Drugs GUI system.
@@ -52,6 +53,14 @@ public class DrugMenuListener implements Listener {
                 DrugEffectProfile profile = DrugRegistry.getProfileFromItem(clicked);
                 if (profile != null) {
                     DrugRecipeViewer.openRecipe(player, profile.getId());
+                    return;
+                }
+                String cureId = AddictionManager.getCureIdFromItem(clicked);
+                if (cureId != null) {
+                    if (DrugsV2.getInstance().getRecipesConfig().getConfigurationSection(cureId) == null) {
+                        return;
+                    }
+                    DrugRecipeViewer.openRecipe(player, cureId);
                 }
             }
         }
