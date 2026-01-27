@@ -308,7 +308,7 @@ public class OverdoseEffectManager {
             if (broadcastMessages && !message.isEmpty()) {
                 String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
                         message.replace("%player%", player.getName())
-                               .replace("%drug%", drugId));
+                               .replace("%drug%", getDrugLabel(drugId)));
                 Bukkit.broadcastMessage(formattedMsg);
             }
             
@@ -353,7 +353,7 @@ public class OverdoseEffectManager {
             if (!message.isEmpty()) {
                 String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
                         message.replace("%player%", player.getName())
-                               .replace("%drug%", drugId));
+                               .replace("%drug%", getDrugLabel(drugId)));
                 player.sendMessage(formattedMsg);
             }
             
@@ -378,7 +378,7 @@ public class OverdoseEffectManager {
         public boolean apply(Player player, String drugId) {
             String formattedMsg = ChatColor.translateAlternateColorCodes('&', 
                     text.replace("%player%", player.getName())
-                         .replace("%drug%", drugId));
+                         .replace("%drug%", getDrugLabel(drugId)));
             
             if (broadcast) {
                 Bukkit.broadcastMessage(formattedMsg);
@@ -426,7 +426,7 @@ public class OverdoseEffectManager {
         @Override
         public boolean apply(Player player, String drugId) {
             String formattedCmd = command.replace("%player%", player.getName())
-                                        .replace("%drug%", drugId);
+                                        .replace("%drug%", getDrugLabel(drugId));
             
             if (asConsole) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formattedCmd);
@@ -436,5 +436,14 @@ public class OverdoseEffectManager {
             
             return false;
         }
+    }
+
+    private static String getDrugLabel(String drugId) {
+        if (drugId == null) return "";
+        DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
+        if (profile == null) {
+            return drugId;
+        }
+        return ChatColor.translateAlternateColorCodes('&', profile.getDisplayName());
     }
 } 
