@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,6 @@ public final class AddictionManager {
     private static final Map<UUID, Map<String, AddictionState>> addictions = new HashMap<>();
     private static AddictionConfig config;
     private static JavaPlugin plugin;
-    private static BukkitTask heartbeatTask;
 
     private AddictionManager() {}
 
@@ -34,13 +32,6 @@ public final class AddictionManager {
 
     public static AddictionConfig getConfig() {
         return config;
-    }
-
-    public static void reload(JavaPlugin pluginInstance) {
-        plugin = pluginInstance;
-        config = AddictionConfigLoader.load(pluginInstance);
-        registerCureRecipes(pluginInstance);
-        startHeartbeat(pluginInstance);
     }
 
     public static void onDrugUse(Player player, String drugId) {
@@ -107,28 +98,10 @@ public final class AddictionManager {
             }
 
             clearWithdrawalEffects(player, drugId);
-            clearAddictedEffects(player, drugId);
             used = true;
         }
 
         return used;
-    }
-
-    public static ItemStack getCureItem(String cureId, int amount) {
-        if (config == null || cureId == null) return null;
-        AddictionConfig.CureRule cure = config.getCureRule(cureId);
-        if (cure == null || !cure.enabled) return null;
-        return buildCureItem(cure, amount);
-    }
-
-    public static void purgePlayer(Player player) {
-        if (player == null) return;
-        Map<String, AddictionState> map = addictions.remove(player.getUniqueId());
-        if (map == null || config == null) return;
-        for (String drugId : map.keySet()) {
-            clearWithdrawalEffects(player, drugId);
-            clearAddictedEffects(player, drugId);
-        }
     }
 
     public static String getCureIdFromItem(ItemStack item) {
@@ -242,10 +215,7 @@ public final class AddictionManager {
     private static void startHeartbeat(JavaPlugin pluginInstance) {
         if (config == null || !config.enabled) return;
         long interval = Math.max(1, config.heartbeatTicks);
-        if (heartbeatTask != null) {
-            heartbeatTask.cancel();
-        }
-        heartbeatTask = Bukkit.getScheduler().runTaskTimer(pluginInstance, new AddictionTickTask(), interval, interval);
+        Bukkit.getScheduler().runTaskTimer(pluginInstance, new AddictionTickTask(), interval, interval);
     }
 
     static void runHeartbeat() {
@@ -304,7 +274,6 @@ public final class AddictionManager {
             ConfigurationSection recipeSection = drugsPlugin.getRecipesConfig().getConfigurationSection(cureId);
             if (recipeSection == null) continue;
 
-            Bukkit.removeRecipe(new org.bukkit.NamespacedKey(pluginInstance, cureId.toLowerCase()));
             ItemStack result = buildCureItem(cure, 1);
             DrugRecipeHelper.registerCustomRecipe(cureId, recipeSection, result, pluginInstance);
         }

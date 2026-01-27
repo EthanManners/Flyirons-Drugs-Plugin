@@ -30,17 +30,6 @@ cures:
     reduce_points: 0
     block_withdrawal_seconds: 240
 
-  sleep:
-    enabled: true
-    material: WHITE_BED
-    display-name: "&bRest"
-    lore:
-      - "&7Sleeping helps ease withdrawal."
-    cures: ["*"]
-    clears_points: false
-    reduce_points: 1
-    block_withdrawal_seconds: 120
-
 drugs:
   # One-hit addictions (threshold=1 is basically instant-hook)
   fent:
