@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -62,9 +63,9 @@ public final class AddictionManager {
         if (player == null) return;
         addictions.remove(player.getUniqueId());
         if (config == null) return;
-        for (String drugId : config.getDrugs().keySet()) {
-            clearWithdrawalEffects(player, drugId);
-            clearAddictedEffects(player, drugId);
+        for (AddictionConfig.DrugRule rule : config.getDrugs().values()) {
+            clearWithdrawalEffects(player, rule);
+            clearAddictedEffects(player, rule);
         }
     }
 
@@ -77,21 +78,17 @@ public final class AddictionManager {
     }
 
     public static void onDrugUse(Player player, String drugId) {
-        if (config == null || !config.enabled || drugId == null) return;
+        if (!isEnabled() || player == null) return;
 
-        AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
+        AddictionConfig.DrugRule rule = getDrugRule(drugId);
         if (rule == null || !rule.addictive) return;
 
-        Map<String, AddictionState> playerAddictions =
-                addictions.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>());
-
-        AddictionState state =
-                playerAddictions.computeIfAbsent(drugId.toLowerCase(), k -> new AddictionState());
+        AddictionState state = getOrCreateState(player.getUniqueId(), drugId);
+        if (state == null) return;
 
         state.addPoints(rule.pointsPerUse);
         state.updateLastDose();
-
-        clearWithdrawalEffects(player, drugId);
+        clearWithdrawalEffects(player, rule);
     }
 
     public static Map<String, AddictionState> getAddictions(UUID uuid) {
@@ -99,21 +96,23 @@ public final class AddictionManager {
     }
 
     public static AddictionState getState(UUID uuid, String drugId) {
+        String normalizedId = normalizeId(drugId);
+        if (normalizedId == null) return null;
         Map<String, AddictionState> map = addictions.get(uuid);
         if (map == null) return null;
-        return map.get(drugId.toLowerCase());
+        return map.get(normalizedId);
     }
 
     public static boolean isAddicted(UUID uuid, String drugId) {
         AddictionState state = getState(uuid, drugId);
-        AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
+        AddictionConfig.DrugRule rule = getDrugRule(drugId);
 
         if (state == null || rule == null) return false;
         return state.getPoints() >= rule.addictedAtPoints;
     }
 
     public static boolean applyCure(Player player, String cureId) {
-        if (config == null || cureId == null) return false;
+        if (!isEnabled() || player == null) return false;
 
         AddictionConfig.CureRule cure = config.getCureRule(cureId);
         if (cure == null || !cure.enabled) return false;
@@ -126,6 +125,8 @@ public final class AddictionManager {
         for (Map.Entry<String, AddictionState> entry : playerAddictions.entrySet()) {
             String drugId = entry.getKey();
             AddictionState state = entry.getValue();
+            AddictionConfig.DrugRule rule = getDrugRule(drugId);
+            if (rule == null || !rule.addictive) continue;
 
             if (!cure.allowsDrug(drugId)) continue;
 
@@ -139,7 +140,8 @@ public final class AddictionManager {
                 state.blockWithdrawalForSeconds(cure.blockWithdrawalSeconds);
             }
 
-            clearWithdrawalEffects(player, drugId);
+            clearWithdrawalEffects(player, rule);
+            clearAddictedEffects(player, rule);
             used = true;
         }
 
@@ -189,21 +191,22 @@ public final class AddictionManager {
     }
 
     public static void handleMilkConsumption(Player player) {
-        if (config == null || config.milkCuresWithdrawal) return;
+        if (config == null || config.milkCuresWithdrawal || player == null) return;
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Map<String, AddictionState> playerAddictions = addictions.get(player.getUniqueId());
             if (playerAddictions == null) return;
 
+            long nowMillis = System.currentTimeMillis();
             for (Map.Entry<String, AddictionState> entry : playerAddictions.entrySet()) {
-                String drugId = entry.getKey();
-                AddictionState state = entry.getValue();
-                AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
+                AddictionConfig.DrugRule rule = getDrugRule(entry.getKey());
                 if (rule == null || !rule.addictive) continue;
-                if (!isAddicted(player.getUniqueId(), drugId)) continue;
-                if (state.isWithdrawalBlocked()) continue;
 
-                long secondsSinceDose = (System.currentTimeMillis() - state.getLastDoseMillis()) / 1000L;
+                AddictionState state = entry.getValue();
+                if (state == null || state.isWithdrawalBlocked()) continue;
+                if (state.getPoints() < rule.addictedAtPoints) continue;
+
+                long secondsSinceDose = (nowMillis - state.getLastDoseMillis()) / 1000L;
                 if (secondsSinceDose >= rule.withdrawalAfterSeconds) {
                     applyWithdrawalEffects(player, rule);
                 }
@@ -212,15 +215,15 @@ public final class AddictionManager {
     }
 
     static void clearWithdrawalEffects(Player player, String drugId) {
-        AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
+        AddictionConfig.DrugRule rule = getDrugRule(drugId);
         if (rule == null) return;
-        clearEffects(player, rule.withdrawalEffects, true);
+        clearWithdrawalEffects(player, rule);
     }
 
     static void clearAddictedEffects(Player player, String drugId) {
-        AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
+        AddictionConfig.DrugRule rule = getDrugRule(drugId);
         if (rule == null) return;
-        clearEffects(player, rule.addictedEffects, true);
+        clearAddictedEffects(player, rule);
     }
 
     static void applyWithdrawalEffects(Player player, AddictionConfig.DrugRule rule) {
@@ -269,11 +272,11 @@ public final class AddictionManager {
     }
 
     private static void startHeartbeat(JavaPlugin pluginInstance) {
-        if (config == null || !config.enabled) return;
-        long interval = Math.max(1, config.heartbeatTicks);
         if (heartbeatTask != null) {
             heartbeatTask.cancel();
         }
+        if (config == null || !config.enabled) return;
+        long interval = Math.max(1, config.heartbeatTicks);
         heartbeatTask = Bukkit.getScheduler().runTaskTimer(
                 pluginInstance,
                 new AddictionTickTask(),
@@ -283,9 +286,10 @@ public final class AddictionManager {
     }
 
     static void runHeartbeat() {
-        if (config == null || !config.enabled) return;
+        if (!isEnabled()) return;
 
         double intervalSeconds = config.heartbeatTicks / 20.0;
+        long nowMillis = System.currentTimeMillis();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             Map<String, AddictionState> map = addictions.get(player.getUniqueId());
@@ -294,33 +298,32 @@ public final class AddictionManager {
             for (Map.Entry<String, AddictionState> entry : map.entrySet()) {
                 String drugId = entry.getKey();
                 AddictionState state = entry.getValue();
-                AddictionConfig.DrugRule rule = config.getDrugRule(drugId);
-                if (rule == null || !rule.addictive) continue;
+                AddictionConfig.DrugRule rule = getDrugRule(drugId);
+                if (rule == null || !rule.addictive || state == null) continue;
 
                 if (rule.decayEnabled && rule.decayPointsPerMinute > 0 && state.getPoints() > 0) {
                     double decay = rule.decayPointsPerMinute * (intervalSeconds / 60.0);
                     state.removePoints(decay);
                 }
 
-                boolean addicted = state.getPoints() >= rule.addictedAtPoints;
-                if (!addicted) {
-                    clearWithdrawalEffects(player, drugId);
-                    clearAddictedEffects(player, drugId);
+                if (state.getPoints() < rule.addictedAtPoints) {
+                    clearWithdrawalEffects(player, rule);
+                    clearAddictedEffects(player, rule);
                     continue;
                 }
 
                 applyAddictedEffects(player, rule);
 
                 if (state.isWithdrawalBlocked()) {
-                    clearWithdrawalEffects(player, drugId);
+                    clearWithdrawalEffects(player, rule);
                     continue;
                 }
 
-                long secondsSinceDose = (System.currentTimeMillis() - state.getLastDoseMillis()) / 1000L;
+                long secondsSinceDose = (nowMillis - state.getLastDoseMillis()) / 1000L;
                 if (secondsSinceDose >= rule.withdrawalAfterSeconds) {
                     applyWithdrawalEffects(player, rule);
                 } else {
-                    clearWithdrawalEffects(player, drugId);
+                    clearWithdrawalEffects(player, rule);
                 }
             }
         }
@@ -341,5 +344,38 @@ public final class AddictionManager {
             ItemStack result = buildCureItem(cure, 1);
             DrugRecipeHelper.registerCustomRecipe(cureId, recipeSection, result, pluginInstance);
         }
+    }
+
+    private static AddictionConfig.DrugRule getDrugRule(String drugId) {
+        if (config == null) return null;
+        return config.getDrugRule(drugId);
+    }
+
+    private static String normalizeId(String id) {
+        if (id == null) return null;
+        return id.toLowerCase(Locale.ROOT);
+    }
+
+    private static AddictionState getOrCreateState(UUID uuid, String drugId) {
+        if (uuid == null) return null;
+        String normalizedId = normalizeId(drugId);
+        if (normalizedId == null) return null;
+        Map<String, AddictionState> playerAddictions =
+                addictions.computeIfAbsent(uuid, k -> new HashMap<>());
+        return playerAddictions.computeIfAbsent(normalizedId, k -> new AddictionState());
+    }
+
+    private static boolean isEnabled() {
+        return config != null && config.enabled;
+    }
+
+    private static void clearWithdrawalEffects(Player player, AddictionConfig.DrugRule rule) {
+        if (rule == null) return;
+        clearEffects(player, rule.withdrawalEffects, true);
+    }
+
+    private static void clearAddictedEffects(Player player, AddictionConfig.DrugRule rule) {
+        if (rule == null) return;
+        clearEffects(player, rule.addictedEffects, true);
     }
 }

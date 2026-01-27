@@ -34,11 +34,8 @@ public class DrugUseListener implements Listener {
         DrugEffectProfile profile = DrugRegistry.getProfileFromItem(item);
         if (profile == null) return;
 
-        // Get the drug ID
-        String drugId = DrugRegistry.getRegisteredDrugNames().stream()
-                .filter(id -> DrugRegistry.getProfileById(id).matches(item))
-                .findFirst()
-                .orElse(null);
+        // Get the drug ID directly from the matched profile
+        String drugId = profile.getId();
 
         if (drugId == null) return;
 
