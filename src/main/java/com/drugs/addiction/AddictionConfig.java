@@ -62,6 +62,7 @@ public final class AddictionConfig {
 
     public static final class CureRule {
         public boolean enabled = true;
+        public boolean itemEnabled = true;
         public Material material = Material.GOLDEN_APPLE;
         public String displayName;
         public List<String> lore = new ArrayList<>();

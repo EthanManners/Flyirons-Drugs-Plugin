@@ -62,6 +62,7 @@ public final class AddictionConfigLoader {
                 rule.displayName = c.getString("display-name", null);
                 rule.lore = c.getStringList("lore");
                 rule.enabled = c.getBoolean("enabled", true);
+                rule.itemEnabled = c.getBoolean("item_enabled", true);
                 rule.clearsPoints = c.getBoolean("clears_points", false);
                 rule.reducePoints = c.getDouble("reduce_points", 0.0);
                 rule.blockWithdrawalSeconds = Math.max(0, c.getInt("block_withdrawal_seconds", 0));

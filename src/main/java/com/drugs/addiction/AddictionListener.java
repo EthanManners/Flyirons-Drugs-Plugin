@@ -5,12 +5,23 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class AddictionListener implements Listener {
+
+    @EventHandler
+    public void onBedEnter(PlayerBedEnterEvent event) {
+        if (event.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK) return;
+        AddictionConfig config = AddictionManager.getConfig();
+        if (config == null) return;
+        AddictionConfig.CureRule cure = config.getCureRule("sleep");
+        if (cure == null || !cure.enabled) return;
+        AddictionManager.applyCure(event.getPlayer(), "sleep");
+    }
 
     @EventHandler
     public void onCureUse(PlayerInteractEvent event) {
