@@ -24,8 +24,27 @@ public class DrugMenuGUI {
      * @param page   The page number (0-based)
      */
     public static void open(Player player, int page) {
-        List<String> allDrugIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
-        int maxPage = (int) Math.ceil(allDrugIds.size() / (double) ITEMS_PER_PAGE);
+        List<ItemStack> menuItems = new ArrayList<>();
+        List<String> drugIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
+        List<String> cureIds = new ArrayList<>(CureRegistry.getRegisteredCureNames());
+        drugIds.sort(String::compareToIgnoreCase);
+        cureIds.sort(String::compareToIgnoreCase);
+
+        for (String drugId : drugIds) {
+            DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
+            if (profile != null) {
+                menuItems.add(profile.createItem(1));
+            }
+        }
+
+        for (String cureId : cureIds) {
+            CureProfile profile = CureRegistry.getProfileById(cureId);
+            if (profile != null && profile.isEnabled() && profile.isItemEnabled()) {
+                menuItems.add(profile.createItem(1));
+            }
+        }
+
+        int maxPage = Math.max(1, (int) Math.ceil(menuItems.size() / (double) ITEMS_PER_PAGE));
 
         // Clamp page number
         if (page < 0) page = 0;
@@ -35,14 +54,10 @@ public class DrugMenuGUI {
 
         // Add drug items for current page
         int start = page * ITEMS_PER_PAGE;
-        int end = Math.min(start + ITEMS_PER_PAGE, allDrugIds.size());
+        int end = Math.min(start + ITEMS_PER_PAGE, menuItems.size());
 
         for (int i = start; i < end; i++) {
-            String drugId = allDrugIds.get(i);
-            DrugEffectProfile profile = DrugRegistry.getProfileById(drugId);
-            if (profile != null) {
-                gui.setItem(i - start, profile.createItem(1));
-            }
+            gui.setItem(i - start, menuItems.get(i));
         }
 
         // Add navigation controls (last row)

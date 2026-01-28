@@ -51,7 +51,7 @@ public class DrugsCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.GOLD + "-----[ DrugsV2 Help ]-----");
             sender.sendMessage(ChatColor.YELLOW + "/drugs" + ChatColor.GRAY + " - Open the drug selection GUI");
             if (sender.hasPermission("drugs.give")) {
-                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug> [amount]" + ChatColor.GRAY + " - Give a drug to someone");
+                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure|all> [amount]" + ChatColor.GRAY + " - Give drugs/cures to someone");
             }
             if (sender.hasPermission("drugs.tolerance")) {
                 sender.sendMessage(ChatColor.YELLOW + "/tolerance" + ChatColor.GRAY + " - View your current drug tolerance");
@@ -90,7 +90,7 @@ public class DrugsCommand implements CommandExecutor {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId> [amount]");
+                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId|all> [amount]");
                 return true;
             }
 
@@ -112,9 +112,33 @@ public class DrugsCommand implements CommandExecutor {
                 }
             }
 
+            if (drugId.equalsIgnoreCase("all")) {
+                int total = 0;
+                for (String id : DrugRegistry.getRegisteredDrugNames()) {
+                    ItemStack drugItem = DrugRegistry.getDrugItem(id, amount);
+                    if (drugItem != null) {
+                        target.getInventory().addItem(drugItem);
+                        total++;
+                    }
+                }
+                for (String id : CureRegistry.getRegisteredCureNames()) {
+                    ItemStack cureItem = CureRegistry.getCureItem(id, amount);
+                    if (cureItem != null) {
+                        target.getInventory().addItem(cureItem);
+                        total++;
+                    }
+                }
+                sender.sendMessage(ChatColor.GREEN + "Gave " + total + " item types to " + target.getName());
+                target.sendMessage(ChatColor.GOLD + "You received " + total + " item types from " + sender.getName());
+                return true;
+            }
+
             ItemStack item = DrugRegistry.getDrugItem(drugId, amount);
             if (item == null) {
-                sender.sendMessage(ChatColor.RED + "Drug '" + drugId + "' not found.");
+                item = CureRegistry.getCureItem(drugId, amount);
+            }
+            if (item == null) {
+                sender.sendMessage(ChatColor.RED + "Drug or cure '" + drugId + "' not found.");
                 return true;
             }
 
@@ -162,12 +186,16 @@ public class DrugsCommand implements CommandExecutor {
             DrugsV2.getInstance().saveAchievementSettingsConfig();
             DrugsV2.getInstance().saveAchievementsConfig();
             DrugsV2.getInstance().saveOverdoseConfig();
+            DrugsV2.getInstance().saveAddictionConfig();
 
             ToleranceConfigLoader.load(DrugsV2.getInstance().getDataFolder());
             AchievementSettingsLoader.load(DrugsV2.getInstance().getDataFolder());
             CustomAchievementLoader.load(DrugsV2.getInstance().getDataFolder());
             OverdoseEffectManager.load(DrugsV2.getInstance().getDataFolder());
+            AddictionConfigLoader.load(DrugsV2.getInstance());
             DrugRegistry.init(DrugsV2.getInstance());
+            CureRegistry.init(DrugsV2.getInstance());
+            AddictionManager.reload(DrugsV2.getInstance());
 
             sender.sendMessage(ChatColor.GREEN + "DrugsV2 configs reloaded successfully.");
             return true;

@@ -32,13 +32,7 @@ public class DrugUseListener implements Listener {
         DrugEffectProfile profile = DrugRegistry.getProfileFromItem(item);
         if (profile == null) return;
 
-        // Get the drug ID
-        String drugId = DrugRegistry.getRegisteredDrugNames().stream()
-                .filter(id -> DrugRegistry.getProfileById(id).matches(item))
-                .findFirst()
-                .orElse(null);
-
-        if (drugId == null) return;
+        String drugId = profile.getId();
 
         // Only cancel the event if we've confirmed this is a valid drug use
         event.setCancelled(true);
