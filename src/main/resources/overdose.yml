@@ -9,7 +9,7 @@ settings:
   # Whether to track overdose attempts per drug or globally
   track-per-drug: true
   # How long overdose attempts are remembered (in minutes)
-  attempt-expiry: 30
+  attempt-expiry: 15
   # Whether to broadcast overdose messages
   broadcast-messages: true
 
@@ -21,31 +21,79 @@ default:
       message: "&4%player% died from a drug overdose!"
     - type: "message"
       text: "&cYou overdosed and died!"
-      broadcast: false
+      broadcast: true
 
 # Drug-specific overdose effects
 drug_specific:
-  fent:
-    effects:
-      - type: "death"
-        message: "&4%player% died from a Fent overdose!"
-      - type: "message"
-        text: "&cYou overdosed on Fent and died!"
-        broadcast: false
+#  fent:
+#    effects:
+#      - type: "death"
+#        message: "&4%player% died from a Fent overdose!"
+#      - type: "message"
+#        text: "&cYou overdosed on Fent and died!"
+#        broadcast: true
+        
+#  heroin:
+#    effects:
+#      - type: "death"
+#        message: "&4%player% died from a Heroin overdose!"
+#      - type: "message"
+#        text: "&cYou overdosed on Heroin and died!"
+#        broadcast: true
 
-  blue_crystal:
+#  blue_crystal:
+#    effects:
+#      - type: "effects"
+#        potion_effects:
+#          - effect: "WEAKNESS"
+#            duration: 2400
+#            amplifier: 2
+#          - effect: "SLOW"
+#            duration: 1200
+#            amplifier: 1
+#      - type: "damage"
+#        amount: 16
+#        message: "&cYour heart can't handle the stimulants!"
+
+  blunt:
     effects:
       - type: "effects"
         potion_effects:
-          - effect: "WEAKNESS"
+          - effect: "CONFUSION"
             duration: 2400
-            amplifier: 2
-          - effect: "SLOW"
-            duration: 1200
-            amplifier: 1
-      - type: "damage"
-        amount: 16
-        message: "&cYour heart can't handle the stimulants!"
+            amplifier: 10
+
+  shrooms:
+    effects:
+      - type: "effects"
+        potion_effects:
+          - effect: "CONFUSION"
+            duration: 2400
+            amplifier: 10
+  joint:
+    effects:
+      - type: "effects"
+        potion_effects:
+          - effect: "CONFUSION"
+            duration: 2400
+            amplifier: 10
+
+  cart:
+    effects:
+      - type: "effects"
+        potion_effects:
+          - effect: "NAUSEA"
+            duration: 2400
+            amplifier: 10
+     
+  edible:
+    effects:
+      - type: "effects"
+        potion_effects:
+          - effect: "CONFUSION"
+            duration: 2400
+            amplifier: 10
+
 
 # Staged overdose progression (based on number of overdoses)
 staged:
