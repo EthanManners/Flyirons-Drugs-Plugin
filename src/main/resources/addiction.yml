@@ -1,0 +1,177 @@
+# addiction.yml
+settings:
+  enabled: true
+
+  # If false: milk will NOT permanently clear withdrawal/addiction effects.
+  # We'll re-apply withdrawal effects right after milk is consumed.
+  milk_clears_withdrawal: false
+
+  # Duration we use to represent "infinite" potion effects
+  infinite_duration_ticks: 99999
+
+  # How often we run the addiction heartbeat (withdrawal checks, re-apply effects, decay)
+  heartbeat_ticks: 20
+
+cures:
+  # You can add more cures later (benzos, naloxone, etc)
+  suboxone:
+    enabled: true
+    material: BLUE_EGG
+    display-name: "&eSuboxone"
+    lore:
+      - "&7Treats withdrawal."
+      - "&7(Testing: cures all addictions)"
+    # If you want it to be opiate-only later:
+    # cures: ["heroin", "fent"]
+    cures: ["heroin", "fent"]   # * = all (for now)
+
+    # If true, also zeroes addiction points (full reset)
+    clears_points: true
+    reduce_points: 0
+    block_withdrawal_seconds: 1
+
+  sleep:
+    enabled: true
+    item_enabled: false
+    material: WHITE_BED
+    display-name: "&bRest"
+    lore:
+      - "&7Sleeping helps ease withdrawal."
+    cures: ["cocaine", "molly"]
+    clears_points: true
+    reduce_points: 0
+    block_withdrawal_seconds: 1
+
+  cbd:
+    enabled: true
+    material: LARGE_FERN
+    display-name: "&2CBD"
+    lore:
+      - "&7Contains less than 0.3% ∆9-THC."
+    cures: ["blunt", "joint", "edible", "cart"]
+    clears_points: false
+    reduce_points: 2
+    block_withdrawal_seconds: 30
+
+
+drugs:
+  # One-hit addictions (threshold=1 is basically instant-hook)
+  fent:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 1
+    withdrawal_after_seconds: 5   # 4 minutes
+    decay:
+      enabled: false
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 1
+
+  glue:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 1
+    withdrawal_after_seconds: 180
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.25
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 1
+
+  # High addiction, but not necessarily 1-hit
+  heroin:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 3
+    withdrawal_after_seconds: 300
+    decay:
+      enabled: false
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 1
+
+  cocaine:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 3
+    withdrawal_after_seconds: 4
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.5
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 1
+
+  meth:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 4
+    withdrawal_after_seconds: 240
+    decay:
+      enabled: true
+      points_decay_per_minute: 2
+    withdrawal_effects:
+      - type: POISON
+        amplifier: 1
+
+  # Lower addiction: weed + molly
+  blunt:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 5
+    withdrawal_after_seconds: 30
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 1
+
+  joint:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 7
+    withdrawal_after_seconds: 360
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 1
+
+  edible:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 5
+    withdrawal_after_seconds: 420
+    decay:
+      enabled: true
+      points_decay_per_minute: 1.0
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 1
+
+  cart:
+    addictive: true
+    points_per_use: 2
+    addicted_at_points: 4
+    withdrawal_after_seconds: 300
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.75
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 1
+
+  molly:
+    addictive: true
+    points_per_use: 1
+    addicted_at_points: 4
+    withdrawal_after_seconds: 420
+    decay:
+      enabled: true
+      points_decay_per_minute: 0.75
+    withdrawal_effects:
+      - type: HUNGER
+        amplifier: 1
