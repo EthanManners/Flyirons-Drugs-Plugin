@@ -7,6 +7,7 @@ heroin:
     - "&a&oResistance III"
     - "&c&oSlowness II"
     - "&7OD Risk: &4&lHigh"
+    - "&7Abuse Potential: &4&lHigh"
   effects:
     STRENGTH:
       duration:  1200
@@ -28,6 +29,7 @@ fent:
     - "&a&oResistance III"
     - "&c&oSlowness IV"
     - "&7OD Risk: &4&lVERY HIGH"
+    - "&7Abuse Potential: &4&lVERY HIGH"
   effects:
     STRENGTH:
       duration: 200
@@ -52,6 +54,7 @@ shrooms:
     - "&a&oLuck X"
     - "&c&oNausea X"
     - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &2&lNon-Addictive"
   effects:
     JUMP:
       duration: 400
@@ -72,6 +75,7 @@ meth:
     - "&a&oHaste II"
     - "&c&oWeakness II"
     - "&7OD Risk: &e&lMedium"
+    - "&7Abuse Potential: &e&lMedium"
   effects:
     SPEED:
       duration: 300
@@ -92,6 +96,7 @@ blunt:
     - "&c&oHunger I"
     - "&c&oSlowness II"
     - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &2&lLow"
   effects:
     RESISTANCE:
       duration: 600
@@ -112,6 +117,7 @@ cocaine:
     - "&a&oSpeed IV"
     - "&a&oStrength I"
     - "&7OD Risk: &4&lHigh"
+    - "&7Abuse Potential: &4&lHigh"
   effects:
     SATURATION:
       duration: 200
@@ -134,6 +140,7 @@ joint:
     - "&c&oHunger II"
     - "&c&oSlowness I"
     - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &2&lLow"
   effects:
     RESISTANCE:
       duration: 400
@@ -156,6 +163,7 @@ cart:
     - "&c&oHunger II"
     - "&c&oSlowness II"
     - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &2&lLow"
   effects:
     RESISTANCE:
       duration: 400
@@ -177,6 +185,7 @@ edible:
     - "&c&oHunger I"
     - "&c&oSlowness I"
     - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &2&lLow"
   effects:
     RESISTANCE:
       duration: 800
@@ -197,6 +206,7 @@ glue:
     - "&c&oPosion I"
     - "&c&oMining Fatigue I"
     - "&7OD Risk: &4&lHigh"
+    - "&7Abuse Potential: &4&lHigh"
   effects:
     POISON:
       duration: 800
@@ -214,6 +224,7 @@ molly:
     - "&a&oAbsorption II"
     - "&c&oGlowing I"
     - "&7OD Risk: &3&lLow"
+    - "&7Abuse Potential: &2&lLow"
   effects:
     REGENERATION:
       duration: 300
