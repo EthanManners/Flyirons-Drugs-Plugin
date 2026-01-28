@@ -19,8 +19,7 @@ cures:
     material: BLUE_EGG
     display-name: "&eSuboxone"
     lore:
-      - "&7Treats withdrawal."
-      - "&7(Testing: cures all addictions)"
+      - "&7Treats opiod withdrawal."
     # If you want it to be opiate-only later:
     # cures: ["heroin", "fent"]
     cures: ["heroin", "fent", "glue"]   # * = all (for now)
