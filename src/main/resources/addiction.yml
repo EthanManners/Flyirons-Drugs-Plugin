@@ -23,7 +23,7 @@ cures:
       - "&7(Testing: cures all addictions)"
     # If you want it to be opiate-only later:
     # cures: ["heroin", "fent"]
-    cures: ["heroin", "fent"]   # * = all (for now)
+    cures: ["heroin", "fent", "glue"]   # * = all (for now)
 
     # If true, also zeroes addiction points (full reset)
     clears_points: true
@@ -60,7 +60,7 @@ drugs:
     addictive: true
     points_per_use: 1
     addicted_at_points: 1
-    withdrawal_after_seconds: 5   # 4 minutes
+    withdrawal_after_seconds: 240   # 4 minutes
     decay:
       enabled: false
     withdrawal_effects:
@@ -95,7 +95,7 @@ drugs:
     addictive: true
     points_per_use: 2
     addicted_at_points: 3
-    withdrawal_after_seconds: 4
+    withdrawal_after_seconds: 120
     decay:
       enabled: true
       points_decay_per_minute: 0.5
@@ -120,7 +120,7 @@ drugs:
     addictive: true
     points_per_use: 1
     addicted_at_points: 5
-    withdrawal_after_seconds: 30
+    withdrawal_after_seconds: 420
     decay:
       enabled: true
       points_decay_per_minute: 1.0
