@@ -47,6 +47,15 @@ public class DrugRecipeHelper {
         if (profile == null) return;
 
         ItemStack result = profile.createItem(1);
+        registerItemRecipe(id, section, result, plugin);
+    }
+
+    public static void registerItemRecipe(String id, ConfigurationSection section, ItemStack result, Plugin plugin) {
+        if (section == null || result == null) return;
+
+        var shape = section.getStringList("shape");
+        if (shape.size() != 3) return;
+
         NamespacedKey key = new NamespacedKey(plugin, id.toLowerCase());
 
         ShapedRecipe recipe = new ShapedRecipe(key, result);

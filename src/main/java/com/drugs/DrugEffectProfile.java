@@ -66,6 +66,7 @@ public class DrugEffectProfile {
         // Maxed tolerance logic
         if (toleranceLevel >= max) {
             ToleranceTracker.onDrugUse(player, id); // consume, track use
+            AddictionManager.onDrugUse(player, id);
 
             int overdoseCount = ToleranceTracker.incrementOverdoseCount(player, id);
             boolean shouldDie = OverdoseEffectManager.processOverdose(player, id, overdoseCount);
@@ -98,6 +99,7 @@ public class DrugEffectProfile {
         }
 
         ToleranceTracker.onDrugUse(player, id);
+        AddictionManager.onDrugUse(player, id);
     }
 
     /**
