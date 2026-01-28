@@ -32,6 +32,7 @@ public class DrugsV2 extends JavaPlugin {
         saveAchievementSettingsConfig();
         saveAchievementsConfig();
         saveOverdoseConfig();
+        saveAddictionConfig();
 
         // Initialize performance optimizer first
         PerformanceOptimizer.initialize();
@@ -46,8 +47,14 @@ public class DrugsV2 extends JavaPlugin {
         // Load overdose effect settings
         OverdoseEffectManager.load(getDataFolder());
 
+        // Load addiction settings and cure definitions
+        AddictionConfigLoader.load(this);
+
         // Initialize core drug system
         DrugRegistry.init(this);
+        CureRegistry.init(this);
+
+        AddictionManager.init(this);
 
         // Start tolerance decay
         ToleranceTracker.startDecayTask();
@@ -55,6 +62,7 @@ public class DrugsV2 extends JavaPlugin {
         // Register events
         getServer().getPluginManager().registerEvents(new DrugMenuListener(), this);
         getServer().getPluginManager().registerEvents(new DrugUseListener(), this);
+        getServer().getPluginManager().registerEvents(new AddictionListener(), this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
 
         // Register commands
@@ -73,6 +81,7 @@ public class DrugsV2 extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
     }
 
@@ -114,6 +123,13 @@ public class DrugsV2 extends JavaPlugin {
         File file = new File(getDataFolder(), "overdose.yml");
         if (!file.exists()) {
             saveResource("overdose.yml", false);
+        }
+    }
+
+    public void saveAddictionConfig() {
+        File file = new File(getDataFolder(), "addiction.yml");
+        if (!file.exists()) {
+            saveResource("addiction.yml", false);
         }
     }
 
