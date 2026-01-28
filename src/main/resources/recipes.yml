@@ -118,12 +118,13 @@ molly:
 
 suboxone:
   shape:
-    - "   "
+    - " P "
     - "GSG"
-    - "   "
+    - " P "
   ingredients:
     G: GOLDEN_APPLE
     S: SUGAR
+    P: POPPY
 
 
 cbd:
