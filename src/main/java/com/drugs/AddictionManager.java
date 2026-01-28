@@ -161,6 +161,7 @@ public class AddictionManager {
         state.setLastUseMillis(now);
         state.setLastDecayMillis(now);
         state.setWithdrawalActive(false);
+        clearWithdrawalEffects(player, profile);
     }
 
     public static boolean applyCure(Player player, CureProfile cure) {
