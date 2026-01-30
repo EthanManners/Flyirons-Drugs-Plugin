@@ -1,4 +1,5 @@
 # PUBLIC SMP SERVER COMING SOON
+Discord: https://discord.gg/SaxTyAFHV9
 
 # Flyirons Drugs Plugin
 
