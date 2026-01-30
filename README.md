@@ -1,174 +1,166 @@
-# Norse's Drugs - Minecraft Drug Plugin
+# Flyirons Drugs Plugin
 
-Norse's Drugs is a powerful, modular Minecraft plugin that adds craftable, configurable combat drugs with effects, tolerance, overdosing, and GUI support.
+Flyirons Drugs is a fork of the original **Norses Drugs** plugin for survival SMP servers.
 
-## 🔥 Features
-- Craftable drugs with custom effects
-- Tolerance system that reduces potency with repeated use
-- Overdose system when abusing drugs at max tolerance
-- Configurable recipes and effects (no hardcoded logic)
-- GUI for browsing and previewing all drugs
-- Admin tools: reload configs, purge players tolerances, list drugs
-- Add your own drugs in seconds!
-- **NEW!** Fully customizable achievement system with multilingual support
-- **NEW!** Create your own custom achievements with different triggers and rewards
-- **NEW!** Configurable overdose effects with drug-specific consequences
-- **NEW!** PlaceholderAPI support for displaying drug tolerances and effectiveness
+It adds craftable consumables that apply potion effects, along with a persistent addiction, tolerance, and overdose system. The plugin adds an extra gameplay layer that affects PvP, resource production, logistics, and long-term player decisions.
 
-## 🧪 Default Drugs Included
-- **Heroin** – Strength & Speed
-- **Henbane** – Berserker burst (Strength III + Blindness)
-- **Opium** – Regeneration & Resistance
-- **Fent** – Quick PvP burst with high risk
-- **Morphine** – Regeneration tank
-- **Shroomshake** – Luck + Jump + Trippy visuals
-- **Blue Crystal** – Speed + Haste (Made in an RV ;))
-- **Cryozen** – Tanky, icy resistance
-- **Shadowspike** – Invisibility & escape tool
+---
 
-## 🏆 Achievements
+## How This Plugin Is Meant to Be Used
 
-Players can unlock progress-based achievements by using drugs in specific ways. Use `/drugs achievements` to track them!
+This plugin is designed to work **out of the box**.
 
-### Default Achievements
-- **First Dose** – Use your first drug
-- **Chem Connoisseur** – Try every drug at least once
-- **Risky Business** – Use a drug while at max tolerance
-- **I Can Stop Anytime** – Reach max tolerance on 3 different drugs
-- **Clean Slate** – Let a maxed drug's tolerance decay all the way back to 0
-- **Flatline** – Die from a drug overdose
-- **Close Call** – Survive an overdose attempt
+All drugs, effects, crafting recipes, addiction behavior, withdrawal rules, and overdose logic are already configured and balanced relative to each other. The config files define the actual gameplay and are not examples or placeholders.
 
-### Custom Achievements
-You can create your own achievements by adding them to the `achievements.yml` file. Each achievement needs:
-- A unique ID
-- Title and description (with color code support)
-- A trigger type that determines when it's granted
-- Icon materials for locked and unlocked states
+You *can* change the configs, but the default values are intentional and meant to be used as-is.
 
-Available triggers include:
-- `first_drug_use`: First time using any drug
-- `all_drugs_used`: Using every registered drug at least once
-- `use_at_max`: Using a drug while at max tolerance
-- `maxed_three`: Hitting max tolerance on 3+ drugs
-- `decay_full`: When a maxed drug's tolerance decays to 0
-- `use_specific_drug`: Using a specific drug (requires drug_id)
-- `craft_drug`: Crafting any drug
-- `craft_specific`: Crafting a specific drug (requires drug_id)
-- `overdose_survive`: Surviving an overdose attempt
-- `overdose_death`: Dying from an overdose
-- `use_count`: Using drugs a certain number of times
+Best suited for:
+- Survival SMP servers  
+- PvP-enabled servers  
+- Long-running worlds  
 
-Example custom achievement:
-```yaml
-crystal-chef:
-  title: "&9Crystal Chef"
-  description: "&7Craft Blue Crystal for the first time"
-  trigger: "craft_specific"
-  drug_id: "blue_crystal"
-  icon: "LAPIS_LAZULI"
-  completed_icon: "LAPIS_BLOCK"
-```
+---
 
-### Achievement Customization
+## Gameplay Overview
 
-You can fully customize the achievement system in the `achievement_settings.yml` file:
+### Drug Effects
+- Each drug applies a fixed set of potion effects.
+- Effects are generally short in duration.
+- Buffs are paired with downsides such as slowness, hunger, weakness, nausea, or visibility.
 
-- Enable/disable the entire achievement system
-- Enable/disable individual achievements
-- Customize achievement titles and descriptions in any language
-- Configure notification settings (chat messages, sounds, fireworks)
+### Addiction & Tolerance
+- Repeated use increases tolerance and addiction.
+- Addiction persists across sessions.
+- Higher addiction increases overdose risk.
+- Different drugs have different addiction severity levels.
 
-## 💀 Configurable Overdose Effects
+### Withdrawal
+- Withdrawal begins when an addicted player stops using a drug.
+- Withdrawal persists until:
+  - a cure is used, or
+  - the drug is taken again (temporarily blocking withdrawal).
+- Most drugs apply **Poison** during withdrawal.
+- Cannabis-based drugs apply **Hunger** instead of Poison.
 
-The plugin now features a highly customizable overdose system that goes beyond simple death when players overdose. Configure in `overdose.yml`:
+### Overdose
+- Overdose chance scales based on addiction level and usage frequency.
+- Overdoses can kill the player.
+- Death messages indicate which drug caused the overdose.
 
-### Overdose Features
-- **Drug-Specific Effects**: Define unique overdose consequences for each drug
-- **Effect Types**: Choose from death, potion effects, damage, messages, sounds, and commands
-- **Staged Progression**: Set different effects based on number of overdoses
-- **Random Effect Pools**: Configure random effect selection for unpredictability
-- **Threshold Control**: Set how many attempts trigger overdose effects
-- **Global or Per-Drug Tracking**: Track overdose attempts globally or per drug
-- **Customizable Messages**: Set custom messages with color codes and variables
+### Crafting & Supply
+- Drugs are crafted using survival resources.
+- Many recipes require dangerous, rare, or time-consuming materials.
+- Sustained drug use requires ongoing production and logistics.
 
-Example configuration:
-```yaml
-drug_specific:
-  blue_crystal:
-    effects:
-      - type: "effects"
-        potion_effects:
-          - effect: "WEAKNESS"
-            duration: 2400
-            amplifier: 2
-      - type: "damage"
-        amount: 16
-        message: "&cYour heart can't handle the stimulants!"
-```
+---
 
-For detailed instructions on configuring overdose effects, see [`OVERDOSE_EFFECTS.md`](./OVERDOSE_EFFECTS.md).
+## Drugs
 
-## 🚀 Performance Optimizations
+### Heroin
+- **Effects:** Strength, high Resistance, Slowness  
+- **Addiction:** High  
+- **Overdose Risk:** High  
+- **Withdrawal:** Poison  
+- **Role:** Short-term combat durability with heavy movement penalty
+- **Notes:** Strong defensive boost but difficult to fight or escape while using
 
-This plugin is optimized for large servers with hundreds of players:
+### Fent
+- **Effects:** Strength, Absorption, very high Resistance, extreme Slowness  
+- **Addiction:** Extreme  
+- **Overdose Risk:** Very High  
+- **Withdrawal:** Poison  
+- **Role:** Extremely strong damage reduction for a brief window
+- **Notes:** Meant to be dangerous and unsustainable without cures or maintenance
 
-- **Smart Caching**: Reduces database/disk operations by caching player data
-- **Batched Processing**: Processes tolerance decay in small batches to prevent lag spikes
-- **Concurrent Collections**: Uses thread-safe data structures for multi-threaded operations
-- **Memory Management**: Automatically cleans up unused cache entries to prevent memory leaks
-- **Pre-computed Values**: Stores frequently accessed values to avoid expensive operations
-- **Asynchronous Tasks**: Runs non-essential tasks off the main thread
+### Cocaine
+- **Effects:** Speed, Strength, Saturation  
+- **Addiction:** High  
+- **Overdose Risk:** High  
+- **Withdrawal:** Poison  
+- **Role:** Short burst combat and movement
+- **Notes:** Very short duration, encourages repeated use
 
-## 📦 Commands
+### Meth
+- **Effects:** Speed, Haste, Weakness  
+- **Addiction:** Medium  
+- **Overdose Risk:** Medium  
+- **Withdrawal:** Poison  
+- **Role:** Fast mining and movement at the cost of combat effectiveness
 
-| Command | Description |
-|--------|-------------|
-| `/drugs` | Opens the drug GUI |
-| `/drugs help` | Shows help menu |
-| `/drugs give <player> <drug> [amount]` | Gives a drug to a player (admin) |
-| `/drugs purge <player>` | Resets tolerance and overdose counts for a player (admin) |
-| `/drugs reload` | Reloads all configs |
-| `/drugs list` | Lists all loaded drugs |
-| `/drugs overdose reload` | Reloads overdose configuration (admin) |
-| `/drugs overdose reset <player>` | Resets a player's overdose counts (admin) |
-| `/tolerance` | View your own tolerance levels |
-| `/drugs achievements` | View your personal achievement progress |
+### Molly
+- **Effects:** Regeneration, Absorption, Glowing  
+- **Addiction:** Low  
+- **Overdose Risk:** Low  
+- **Withdrawal:** Poison  
+- **Role:** Team pushes and sustained fights, reduced stealth
 
-## 🔐 Permissions
+### Shrooms
+- **Effects:** Jump Boost, Luck, Nausea  
+- **Addiction:** Low  
+- **Overdose Risk:** Non-lethal  
+- **Withdrawal:** None or minimal  
+- **Role:** Utility and exploration
 
-| Node | Access |
-|------|--------|
-| `drugs.menu` | Access the /drugs GUI (default: true) |
-| `drugs.give` | Use /drugs give (default: op) |
-| `drugs.tolerance` | Use /tolerance |
-| `drugs.admin.reload` | Use /drugs reload |
-| `drugs.admin.purge` | Use /drugs purge |
-| `drugs.admin.list` | Use /drugs list |
-| `drugs.achievements` | Use /drugs achievements |
-| `drugs.admin.achievements` | Manage achievement settings |
-| `drugs.admin.overdose` | Manage overdose settings |
+### Cannabis (Blunt / Joint / Edible / Cart)
+- **Effects:** Resistance, Hunger, Slowness  
+- **Addiction:** Low  
+- **Overdose Risk:** Non-lethal  
+- **Withdrawal:** Hunger  
+- **Role:** Low-risk defensive buffs with movement and food penalties  
+- **Notes:** Cart is non-stackable; other forms are stackable
 
-## ⚙️ Configuration
-Edit the files in `/plugins/DrugsV2/`:
-- `config.yml` – drug effects, lore, materials
-- `recipes.yml` – crafting shapes + ingredients
-- `tolerance.yml` – scaling + decay per drug
-- `achievement_settings.yml` – achievement customization and language settings
-- `achievements.yml` – define custom achievements and triggers
-- `overdose.yml` – configure overdose effects and behavior
+### Glue
+- **Effects:** Poison, Mining Fatigue  
+- **Addiction:** High  
+- **Overdose Risk:** High  
+- **Withdrawal:** Poison  
+- **Role:** Cheap and intentionally bad
 
-## 📘 Documentation
-- [`DRUG_TEMPLATE.md`](./DRUG_TEMPLATE.md) - Learn how to add your own drugs
-- [`OVERDOSE_EFFECTS.md`](./OVERDOSE_EFFECTS.md) - Configure overdose effects
-- [`PLACEHOLDER_USAGE.md`](./PLACEHOLDER_USAGE.md) - PlaceholderAPI integration guide
+---
 
-## 📘 Add Your Own Drugs
-See [`DRUG_TEMPLATE.md`](./DRUG_TEMPLATE.md)
+## Cures
 
-## ✅ Supports:
-- Minecraft 1.21+
-- Paper, Spigot
-- PlaceholderAPI
+### Enchanted Golden Apple
+- **Effect:** Clears all addiction and tolerance
+- **Use Case:** Full reset / emergency cure
 
-Enjoy 😉
+### Suboxone
+- **Effect:** Cures opioid addiction  
+- **Applies To:** Heroin, Fent  
+- **Notes:** Intended for managing or exiting high-risk opioid dependence
+
+### CBD
+- **Effect:** Cures cannabis addiction  
+- **Applies To:** Blunt, Joint, Edible, Cart  
+- **Notes:** Removes hunger-based withdrawal
+
+### Sleeping
+- **Effect:** Clears stimulant addiction  
+- **Applies To:** Cocaine, Meth  
+- **Notes:** Requires actual sleep, not just time passing
+
+---
+
+## Resource Pack (Recommended)
+
+The repo includes:
+
+**`RECOMMENDEDResourcePack.zip`**
+
+This resource pack only adds **custom textures** for drug items.  
+It is optional, but recommended for visual clarity.
+
+---
+
+## Installation
+
+1. Drop the plugin JAR into your `plugins` folder.
+2. (Recommended) Install the included resource pack.
+3. Start or restart the server.
+
+---
+
+## Credits
+
+- Original Plugin: **Norses Drugs**
+- Fork and Balance Changes: **Flyiron**
