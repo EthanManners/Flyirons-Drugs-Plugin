@@ -98,9 +98,9 @@ Best suited for:
 
 ### Shrooms
 - **Effects:** Jump Boost, Luck, Nausea  
-- **Addiction:** Low  
+- **Addiction:** Non-Addictive
 - **Overdose Risk:** Non-lethal  
-- **Withdrawal:** None or minimal  
+- **Withdrawal:** None
 - **Role:** Utility and exploration
 
 ### Cannabis (Blunt / Joint / Edible / Cart)
