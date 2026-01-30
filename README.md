@@ -1,3 +1,5 @@
+#PUBLIC SMP SERVER COMING SOON
+
 # Flyirons Drugs Plugin
 
 Flyirons Drugs is a fork of the original **Norses Drugs** plugin for survival SMP servers.
