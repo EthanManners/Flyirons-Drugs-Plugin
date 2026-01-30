@@ -123,7 +123,7 @@ Best suited for:
 ## Cures
 
 ### Enchanted Golden Apple
-- **Effect:** Clears all addiction and tolerance
+- **Effect:** Clears all addiction
 - **Use Case:** Full reset / emergency cure
 
 ### Suboxone
