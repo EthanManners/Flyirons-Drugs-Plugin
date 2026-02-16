@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public final class StrainsMenuGUI {
 
-    private static final String TITLE_PREFIX = ChatColor.DARK_GREEN + "Cannabis Strains";
+    private static final String TITLE_PREFIX = ChatColor.DARK_GREEN + "Strains";
     private static final List<String> RARITY_ORDER = List.of("common", "uncommon", "rare", "legendary");
     private static final int GUI_SIZE = 54;
     private static final int ITEMS_PER_PAGE = 45;

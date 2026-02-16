@@ -107,7 +107,7 @@ public class CannabisPlantListener implements Listener {
         if (meta != null) {
             DrugItemMetadata.setItemType(meta, "cannabis_plant");
             DrugItemMetadata.setStrainId(meta, resolved);
-            meta.setDisplayName("§2Cannabis Fern §7(§f" + (profile != null ? profile.getDisplayName() : resolved) + "§7)");
+            meta.setDisplayName("§2Weed §7(§f" + (profile != null ? profile.getDisplayName() : resolved) + "§7)");
             meta.setLore(java.util.Arrays.asList(
                     "§7Strain: §a" + (profile != null ? profile.getDisplayName() : resolved),
                     "§7Rarity: §e" + (profile != null ? profile.getRarity() : "common"),
