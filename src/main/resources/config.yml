@@ -78,13 +78,13 @@ meth:
     - "&7Abuse Potential: &e&lMedium"
   effects:
     SPEED:
-      duration: 300
+      duration: 2000
       amplifier: 2
     HASTE:
-      duration: 300
+      duration: 3000
       amplifier: 1
     WEAKNESS:
-      duration: 400
+      duration: 3000
       amplifier: 1
 
 blunt:
