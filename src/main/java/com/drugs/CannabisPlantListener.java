@@ -5,9 +5,13 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFertilizeEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -36,22 +40,95 @@ public class CannabisPlantListener implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (block.getType() != Material.FERN) return;
+        if (block.getType() != Material.FERN && block.getType() != Material.LARGE_FERN) return;
 
-        String parentStrain = CannabisPlantRegistry.getPlant(block.getLocation());
+        Block rootBlock = getRootFernBlock(block);
+        String parentStrain = CannabisPlantRegistry.getPlant(rootBlock.getLocation());
         if (parentStrain == null) return;
 
+        // Normal break (non-shears): return one inherited/mutated fern.
         String childStrain = StrainConfigLoader.rollChildStrain(parentStrain);
         ItemStack drop = createStrainFern(childStrain);
 
         event.setDropItems(false);
         event.setExpToDrop(0);
-        block.setType(Material.AIR);
+        clearFernPlant(rootBlock);
 
-        Item droppedItem = block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.2, 0.5), drop);
+        Item droppedItem = rootBlock.getWorld().dropItemNaturally(rootBlock.getLocation().add(0.5, 0.2, 0.5), drop);
         droppedItem.setPickupDelay(10);
 
-        CannabisPlantRegistry.removePlant(block.getLocation());
+        CannabisPlantRegistry.removePlant(rootBlock.getLocation());
+    }
+
+    @EventHandler
+    public void onFernBonemeal(BlockFertilizeEvent event) {
+        Block block = event.getBlock();
+        if (block.getType() != Material.FERN) return;
+
+        String parentStrain = CannabisPlantRegistry.getPlant(block.getLocation());
+        if (parentStrain == null) return;
+
+        // Keep strain anchored at bottom block after bonemeal growth into large fern.
+        CannabisPlantRegistry.setPlant(block.getLocation(), parentStrain);
+    }
+
+    @EventHandler
+    public void onLargeFernShear(PlayerInteractEvent event) {
+        if (event.getHand() != EquipmentSlot.HAND || !event.getAction().isRightClick()) return;
+        if (event.getClickedBlock() == null) return;
+
+        ItemStack hand = event.getPlayer().getInventory().getItemInMainHand();
+        if (hand == null || hand.getType() != Material.SHEARS) return;
+
+        Block clicked = event.getClickedBlock();
+        if (clicked.getType() != Material.LARGE_FERN) return;
+
+        Block rootBlock = getRootFernBlock(clicked);
+        String parentStrain = CannabisPlantRegistry.getPlant(rootBlock.getLocation());
+        if (parentStrain == null) {
+            parentStrain = DrugItemMetadata.DEFAULT_STRAIN_ID;
+        }
+
+        event.setCancelled(true);
+
+        clearFernPlant(rootBlock);
+        CannabisPlantRegistry.removePlant(rootBlock.getLocation());
+
+        // Shearing large fern should drop two small ferns, each with independent mutation roll.
+        for (int i = 0; i < 2; i++) {
+            String childStrain = StrainConfigLoader.rollChildStrain(parentStrain);
+            ItemStack drop = createStrainFern(childStrain);
+            Item dropped = rootBlock.getWorld().dropItemNaturally(rootBlock.getLocation().add(0.5, 0.2, 0.5), drop);
+            dropped.setPickupDelay(10);
+        }
+
+        if (hand.hasItemMeta() && hand.getItemMeta() instanceof Damageable damageable) {
+            int nextDamage = damageable.getDamage() + 1;
+            damageable.setDamage(Math.min(nextDamage, hand.getType().getMaxDurability()));
+            hand.setItemMeta(damageable);
+        }
+    }
+
+    private Block getRootFernBlock(Block block) {
+        if (block.getType() == Material.LARGE_FERN && block.getRelative(0, -1, 0).getType() == Material.LARGE_FERN) {
+            return block.getRelative(0, -1, 0);
+        }
+        return block;
+    }
+
+    private void clearFernPlant(Block rootBlock) {
+        if (rootBlock.getType() == Material.FERN) {
+            rootBlock.setType(Material.AIR);
+            return;
+        }
+
+        if (rootBlock.getType() == Material.LARGE_FERN) {
+            Block top = rootBlock.getRelative(0, 1, 0);
+            if (top.getType() == Material.LARGE_FERN) {
+                top.setType(Material.AIR);
+            }
+            rootBlock.setType(Material.AIR);
+        }
     }
 
     public static ItemStack createStrainFern(String strainId) {
