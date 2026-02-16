@@ -34,6 +34,14 @@ public class DrugUseListener implements Listener {
 
         String drugId = profile.getId();
 
+        if (item.hasItemMeta() && !DrugItemMetadata.hasDrugId(item.getItemMeta())) {
+            ItemStack migrated = DrugRegistry.getDrugItem(drugId, item.getAmount(), DrugItemMetadata.getStrainId(item));
+            if (migrated != null) {
+                player.getInventory().setItemInMainHand(migrated);
+                item = migrated;
+            }
+        }
+
         // Only cancel the event if we've confirmed this is a valid drug use
         event.setCancelled(true);
 
@@ -74,7 +82,7 @@ public class DrugUseListener implements Listener {
         // ----------------------------------------
         // 🧪 Apply effects
         // ----------------------------------------
-        profile.applyEffects(player);
+        profile.applyEffects(player, item);
 
         if (player.getGameMode() != GameMode.CREATIVE) {
             int newAmount = item.getAmount() - 1;

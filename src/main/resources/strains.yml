@@ -1,0 +1,108 @@
+reggie:
+  display-name: "Reggie"
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 0.9
+    amplifier-multiplier: 1.0
+  mutation-chance: 0.005
+  mutation-weights:
+    reggie: 70
+    skunk: 20
+    og_kush: 10
+
+skunk:
+  display-name: "Skunk"
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.0
+  mutation-chance: 0.006
+  mutation-weights:
+    skunk: 70
+    og_kush: 20
+    sour_diesel: 10
+
+og_kush:
+  display-name: "OG Kush"
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.08
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    og_kush: 65
+    sour_diesel: 20
+    purple_haze: 10
+    white_widow: 5
+
+sour_diesel:
+  display-name: "Sour Diesel"
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.008
+  mutation-weights:
+    sour_diesel: 60
+    white_widow: 25
+    purple_haze: 10
+    godfather_og: 5
+
+purple_haze:
+  display-name: "Purple Haze"
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.16
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.009
+  mutation-weights:
+    purple_haze: 60
+    white_widow: 20
+    godfather_og: 15
+    black_mamba: 5
+
+white_widow:
+  display-name: "White Widow"
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.2
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.01
+  mutation-weights:
+    white_widow: 55
+    godfather_og: 20
+    black_mamba: 15
+    moon_rock: 10
+
+godfather_og:
+  display-name: "Godfather OG"
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 1.25
+    amplifier-multiplier: 1.25
+  mutation-chance: 0.01
+  mutation-weights:
+    godfather_og: 70
+    black_mamba: 20
+    moon_rock: 10
+
+black_mamba:
+  display-name: "Black Mamba"
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 1.3
+    amplifier-multiplier: 1.3
+  mutation-chance: 0.01
+  mutation-weights:
+    black_mamba: 75
+    moon_rock: 25
+
+moon_rock:
+  display-name: "Moon Rock"
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 1.4
+    amplifier-multiplier: 1.35
+  mutation-chance: 0.01
+  mutation-weights:
+    moon_rock: 100

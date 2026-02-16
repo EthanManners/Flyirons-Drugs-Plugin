@@ -33,6 +33,7 @@ public class DrugsV2 extends JavaPlugin {
         saveAchievementsConfig();
         saveOverdoseConfig();
         saveAddictionConfig();
+        saveStrainsConfig();
 
         // Initialize performance optimizer first
         PerformanceOptimizer.initialize();
@@ -49,6 +50,8 @@ public class DrugsV2 extends JavaPlugin {
 
         // Load addiction settings and cure definitions
         AddictionConfigLoader.load(this);
+        StrainConfigLoader.load(getDataFolder());
+        CannabisPlantRegistry.init(getDataFolder());
 
         // Initialize core drug system
         DrugRegistry.init(this);
@@ -63,12 +66,16 @@ public class DrugsV2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DrugMenuListener(), this);
         getServer().getPluginManager().registerEvents(new DrugUseListener(), this);
         getServer().getPluginManager().registerEvents(new AddictionListener(), this);
+        getServer().getPluginManager().registerEvents(new CannabisPlantListener(), this);
+        getServer().getPluginManager().registerEvents(new StrainCraftingListener(), this);
+        getServer().getPluginManager().registerEvents(new StrainsMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
 
         // Register commands
         getCommand("drugs").setExecutor(new DrugsCommand());
         getCommand("drugs").setTabCompleter(new DrugsTabCompleter());
         getCommand("tolerance").setExecutor(new ToleranceCommand());
+        getCommand("strains").setExecutor(new StrainsCommand());
 
         // Register PlaceholderAPI expansion if available
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -81,6 +88,7 @@ public class DrugsV2 extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        CannabisPlantRegistry.save();
         AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
     }
@@ -130,6 +138,13 @@ public class DrugsV2 extends JavaPlugin {
         File file = new File(getDataFolder(), "addiction.yml");
         if (!file.exists()) {
             saveResource("addiction.yml", false);
+        }
+    }
+
+    public void saveStrainsConfig() {
+        File file = new File(getDataFolder(), "strains.yml");
+        if (!file.exists()) {
+            saveResource("strains.yml", false);
         }
     }
 

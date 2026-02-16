@@ -8,9 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -58,10 +56,16 @@ public class DrugEffectProfile {
     /**
      * Applies the drug effects to the player, scaling with tolerance.
      */
-    public void applyEffects(Player player) {
+    public void applyEffects(Player player, ItemStack sourceItem) {
         int toleranceLevel = ToleranceTracker.getToleranceLevel(player, id);
         int max = ToleranceConfigLoader.getMaxTolerance(id);
         double multiplier = ToleranceTracker.getEffectivenessMultiplier(player, id);
+
+        StrainProfile strainProfile = null;
+        if (StrainConfigLoader.isCannabisDrug(id)) {
+            String strainId = DrugItemMetadata.getStrainId(sourceItem);
+            strainProfile = StrainConfigLoader.getStrain(strainId);
+        }
 
         // Maxed tolerance logic
         if (toleranceLevel >= max) {
@@ -85,6 +89,11 @@ public class DrugEffectProfile {
         for (PotionEffect baseEffect : effects) {
             int newDuration = (int) (baseEffect.getDuration() * multiplier);
             int amplifier = baseEffect.getAmplifier();
+
+            if (strainProfile != null) {
+                newDuration = (int) Math.max(1, Math.round(newDuration * strainProfile.getDurationMultiplier()));
+                amplifier = Math.max(0, (int) Math.round(amplifier * strainProfile.getAmplifierMultiplier()));
+            }
 
             if (newDuration > 0) {
                 player.addPotionEffect(new PotionEffect(
@@ -115,6 +124,26 @@ public class DrugEffectProfile {
         // Otherwise create a new item with the specified amount
         return createItemInternal(amount);
     }
+
+    public ItemStack createItem(int amount, String strainId) {
+        ItemStack item = createItem(amount);
+        if (!StrainConfigLoader.isCannabisDrug(id) || item == null || !item.hasItemMeta()) {
+            return item;
+        }
+
+        StrainProfile strain = StrainConfigLoader.getStrain(strainId);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+
+        String resolved = strain != null ? strain.getId() : DrugItemMetadata.DEFAULT_STRAIN_ID;
+        DrugItemMetadata.setStrainId(meta, resolved);
+        List<String> lore = new ArrayList<>(meta.hasLore() ? Objects.requireNonNull(meta.getLore()) : Collections.emptyList());
+        lore.removeIf(line -> ChatColor.stripColor(line).toLowerCase().startsWith("strain:"));
+        lore.add(ChatColor.DARK_GREEN + "Strain: " + ChatColor.GREEN + (strain != null ? strain.getDisplayName() : resolved));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
     
     /**
      * Internal method to create an item stack
@@ -124,7 +153,20 @@ public class DrugEffectProfile {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
-            meta.setLore(new ArrayList<>(formattedLore)); // Use pre-formatted lore
+            DrugItemMetadata.setDrugId(meta, id);
+            DrugItemMetadata.setItemType(meta, id);
+
+            List<String> loreWithStrain = new ArrayList<>(formattedLore);
+            if (StrainConfigLoader.isCannabisDrug(id)) {
+                String defaultStrain = DrugItemMetadata.DEFAULT_STRAIN_ID;
+                DrugItemMetadata.setStrainId(meta, defaultStrain);
+                StrainProfile profile = StrainConfigLoader.getStrain(defaultStrain);
+                if (profile != null) {
+                    loreWithStrain.add(ChatColor.DARK_GREEN + "Strain: " + ChatColor.GREEN + profile.getDisplayName());
+                }
+            }
+
+            meta.setLore(loreWithStrain);
             item.setItemMeta(meta);
         }
         return item;
@@ -137,7 +179,13 @@ public class DrugEffectProfile {
     public boolean matches(ItemStack item) {
         if (item == null || item.getType() != material || !item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
-        if (meta == null || !meta.hasDisplayName()) return false;
+        if (meta == null) return false;
+
+        String taggedDrugId = DrugItemMetadata.getDrugId(meta);
+        if (taggedDrugId != null) {
+            return taggedDrugId.equalsIgnoreCase(id);
+        }
+        if (!meta.hasDisplayName()) return false;
 
         String itemName = ChatColor.stripColor(meta.getDisplayName());
         return itemName.equalsIgnoreCase(strippedDisplayName);
