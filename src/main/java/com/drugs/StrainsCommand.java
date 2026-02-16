@@ -43,7 +43,6 @@ public class StrainsCommand implements CommandExecutor {
 
             meta.setDisplayName(ChatColor.GREEN + strain.getDisplayName());
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GRAY + "ID: " + ChatColor.WHITE + strain.getId());
             lore.add(ChatColor.GRAY + "Rarity: " + ChatColor.YELLOW + capitalize(strain.getRarity()));
             lore.add(ChatColor.GRAY + "Duration Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getDurationMultiplier()));
             lore.add(ChatColor.GRAY + "Amplifier Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getAmplifierMultiplier()));
