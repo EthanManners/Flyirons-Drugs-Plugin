@@ -1,108 +1,1009 @@
 reggie:
-  display-name: "Reggie"
+  display-name: Reggie
   rarity: common
   effect-modifiers:
     duration-multiplier: 0.9
     amplifier-multiplier: 1.0
   mutation-chance: 0.005
   mutation-weights:
-    reggie: 70
-    skunk: 20
-    og_kush: 10
-
-skunk:
-  display-name: "Skunk"
+    reggie: 60
+    blue_dream: 4
+    durban_poison: 4
+    gelato_41: 4
+    gg4: 4
+    gmo_cookies: 3
+    ice_cream_cake: 3
+    jack_herer: 3
+    pineapple_express: 3
+    runtz: 3
+    skywalker_og: 3
+    sour_diesel: 3
+    wedding_cake: 3
+blue_dream:
+  display-name: Blue Dream
   rarity: common
   effect-modifiers:
     duration-multiplier: 1.0
-    amplifier-multiplier: 1.0
+    amplifier-multiplier: 1.05
   mutation-chance: 0.006
   mutation-weights:
-    skunk: 70
-    og_kush: 20
-    sour_diesel: 10
-
-og_kush:
-  display-name: "OG Kush"
-  rarity: uncommon
+    blue_dream: 100
+durban_poison:
+  display-name: Durban Poison
+  rarity: common
   effect-modifiers:
-    duration-multiplier: 1.08
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    durban_poison: 62
+    chemdawg: 19
+    granddaddy_purple: 19
+gelato_41:
+  display-name: 'Gelato #41'
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    gelato_41: 62
+    bubba_kush: 38
+gg4:
+  display-name: GG4
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    gg4: 100
+gmo_cookies:
+  display-name: GMO Cookies
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    gmo_cookies: 62
+    strawberry_cough: 19
+    sunset_sherbert: 19
+ice_cream_cake:
+  display-name: Ice Cream Cake
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    ice_cream_cake: 62
+    dosidos: 19
+    northern_lights: 19
+jack_herer:
+  display-name: Jack Herer
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    jack_herer: 62
+    gsc: 38
+pineapple_express:
+  display-name: Pineapple Express
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    pineapple_express: 62
+    trainwreck: 38
+runtz:
+  display-name: Runtz
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    runtz: 100
+skywalker_og:
+  display-name: Skywalker OG
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    skywalker_og: 62
+    super_lemon_haze: 38
+sour_diesel:
+  display-name: Sour Diesel
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    sour_diesel: 62
+    white_widow: 38
+wedding_cake:
+  display-name: Wedding Cake
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.0
+    amplifier-multiplier: 1.05
+  mutation-chance: 0.006
+  mutation-weights:
+    wedding_cake: 62
+    green_crack: 19
+    mac_1: 19
+bubba_kush:
+  display-name: Bubba Kush
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
     amplifier-multiplier: 1.1
   mutation-chance: 0.007
   mutation-weights:
-    og_kush: 65
-    sour_diesel: 20
-    purple_haze: 10
-    white_widow: 5
-
-sour_diesel:
-  display-name: "Sour Diesel"
+    bubba_kush: 64
+    area_41: 8
+    biskante: 7
+    gushers: 7
+    mimosa: 7
+    permanent_marker: 7
+chemdawg:
+  display-name: Chemdawg
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    chemdawg: 64
+    krypto_chronic: 9
+    lumpys_apple_fritter: 9
+    pancakes: 9
+    peanut_butter_breath: 9
+dosidos:
+  display-name: Dosidos
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    dosidos: 64
+    bubba_fett: 36
+granddaddy_purple:
+  display-name: Granddaddy Purple
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    granddaddy_purple: 64
+    apples_and_bananas: 8
+    bananaconda: 7
+    head_cracker: 7
+    super_boof: 7
+    white_truffle: 7
+green_crack:
+  display-name: Green Crack
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    green_crack: 64
+    cereal_milk: 12
+    gelonade: 12
+    kush_mints: 12
+gsc:
+  display-name: GSC (Girl Scout Cookies)
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    gsc: 64
+    blueberry_cupcake: 18
+    oreoz: 18
+mac_1:
+  display-name: MAC 1
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    mac_1: 64
+    animal_face: 18
+    jealousy: 18
+northern_lights:
+  display-name: Northern Lights
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    northern_lights: 64
+    gary_payton: 18
+    pink_runtz: 18
+strawberry_cough:
+  display-name: Strawberry Cough
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    strawberry_cough: 64
+    biscotti: 8
+    hella_jelly: 7
+    jelly_donutz: 7
+    pink_rosay: 7
+    rainbow_belts_3_0: 7
+sunset_sherbert:
+  display-name: Sunset Sherbert
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    sunset_sherbert: 64
+    lemon_cherry_gelato: 12
+    modified_grapes: 12
+    zkittlez: 12
+super_lemon_haze:
+  display-name: Super Lemon Haze
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    super_lemon_haze: 64
+    jokerz: 12
+    puff_pastry: 12
+    slurricane_ix: 12
+trainwreck:
+  display-name: Trainwreck
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    trainwreck: 64
+    lorange: 18
+    zoap: 18
+white_widow:
+  display-name: White Widow
+  rarity: common
+  effect-modifiers:
+    duration-multiplier: 1.06
+    amplifier-multiplier: 1.1
+  mutation-chance: 0.007
+  mutation-weights:
+    white_widow: 64
+    california_octane: 18
+    rs11: 18
+animal_face:
+  display-name: Animal Face
   rarity: uncommon
   effect-modifiers:
-    duration-multiplier: 1.12
-    amplifier-multiplier: 1.05
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
   mutation-chance: 0.008
   mutation-weights:
-    sour_diesel: 60
-    white_widow: 25
-    purple_haze: 10
-    godfather_og: 5
-
-purple_haze:
-  display-name: "Purple Haze"
+    animal_face: 66
+    compound_z: 34
+apples_and_bananas:
+  display-name: Apples and Bananas
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    apples_and_bananas: 66
+    blue_zushi: 34
+area_41:
+  display-name: Area 41
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    area_41: 66
+    lantz: 34
+bananaconda:
+  display-name: Bananaconda
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    bananaconda: 66
+    whitethorn_rose: 34
+biscotti:
+  display-name: Biscotti
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    biscotti: 66
+    first_class_funk: 34
+biskante:
+  display-name: Biskante
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    biskante: 66
+    blueberry_caviar: 34
+blueberry_cupcake:
+  display-name: Blueberry Cupcake
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    blueberry_cupcake: 100
+bubba_fett:
+  display-name: Bubba Fett
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    bubba_fett: 100
+california_octane:
+  display-name: California Octane
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    california_octane: 100
+cereal_milk:
+  display-name: Cereal Milk
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    cereal_milk: 66
+    jade_dragon: 34
+gary_payton:
+  display-name: Gary Payton
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    gary_payton: 66
+    pav: 34
+gelonade:
+  display-name: Gelonade
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    gelonade: 66
+    gozer_og: 17
+    wagyu: 17
+gushers:
+  display-name: Gushers
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    gushers: 66
+    azure_haze: 17
+    glitter_bomb: 17
+head_cracker:
+  display-name: Head Cracker
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    head_cracker: 66
+    velcroz: 34
+hella_jelly:
+  display-name: Hella Jelly
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    hella_jelly: 100
+jealousy:
+  display-name: Jealousy
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    jealousy: 100
+jelly_donutz:
+  display-name: Jelly Donutz
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    jelly_donutz: 100
+jokerz:
+  display-name: Jokerz
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    jokerz: 100
+krypto_chronic:
+  display-name: Krypto Chronic
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    krypto_chronic: 66
+    neptunes_beard: 34
+kush_mints:
+  display-name: Kush Mints
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    kush_mints: 66
+    bubblegum_popperz: 34
+lemon_cherry_gelato:
+  display-name: Lemon Cherry Gelato
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    lemon_cherry_gelato: 100
+lorange:
+  display-name: L'Orange
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    lorange: 100
+lumpys_apple_fritter:
+  display-name: Lumpy's Apple Fritter
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    lumpys_apple_fritter: 100
+mimosa:
+  display-name: Mimosa
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    mimosa: 66
+    hyper_za: 34
+modified_grapes:
+  display-name: Modified Grapes
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    modified_grapes: 100
+oreoz:
+  display-name: Oreoz
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    oreoz: 100
+pancakes:
+  display-name: Pancakes
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    pancakes: 66
+    solar_flare: 34
+peanut_butter_breath:
+  display-name: Peanut Butter Breath
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    peanut_butter_breath: 66
+    bangers_and_mac_1: 34
+permanent_marker:
+  display-name: Permanent Marker
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    permanent_marker: 66
+    think_tank: 34
+pink_rosay:
+  display-name: Pink Rosay
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    pink_rosay: 100
+pink_runtz:
+  display-name: Pink Runtz
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    pink_runtz: 66
+    steal_yo_face: 34
+puff_pastry:
+  display-name: Puff Pastry
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    puff_pastry: 100
+rainbow_belts_3_0:
+  display-name: Rainbow Belts 3.0
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    rainbow_belts_3_0: 66
+    zereal_killer: 34
+rs11:
+  display-name: RS11
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    rs11: 100
+slurricane_ix:
+  display-name: Slurricane IX
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    slurricane_ix: 66
+    mule_fuel: 34
+super_boof:
+  display-name: Super Boof
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    super_boof: 100
+white_truffle:
+  display-name: White Truffle
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    white_truffle: 66
+    ghost_orchid_og: 34
+zkittlez:
+  display-name: Zkittlez
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    zkittlez: 66
+    melted_strawberries: 34
+zoap:
+  display-name: Zoap
+  rarity: uncommon
+  effect-modifiers:
+    duration-multiplier: 1.1
+    amplifier-multiplier: 1.15
+  mutation-chance: 0.008
+  mutation-weights:
+    zoap: 66
+    gas_face: 34
+azure_haze:
+  display-name: Azure Haze
   rarity: rare
   effect-modifiers:
-    duration-multiplier: 1.16
-    amplifier-multiplier: 1.15
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
   mutation-chance: 0.009
   mutation-weights:
-    purple_haze: 60
-    white_widow: 20
-    godfather_og: 15
-    black_mamba: 5
-
-white_widow:
-  display-name: "White Widow"
+    azure_haze: 100
+bangers_and_mac_1:
+  display-name: 'Bangers and Mac #1'
   rarity: rare
   effect-modifiers:
-    duration-multiplier: 1.2
+    duration-multiplier: 1.12
     amplifier-multiplier: 1.2
-  mutation-chance: 0.01
+  mutation-chance: 0.009
   mutation-weights:
-    white_widow: 55
-    godfather_og: 20
-    black_mamba: 15
-    moon_rock: 10
-
-godfather_og:
-  display-name: "Godfather OG"
+    bangers_and_mac_1: 68
+    og_kush: 32
+blue_zushi:
+  display-name: Blue Zushi
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    blue_zushi: 68
+    hindu_kush: 32
+blueberry_caviar:
+  display-name: Blueberry Caviar
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    blueberry_caviar: 100
+bubblegum_popperz:
+  display-name: Bubblegum Popperz
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    bubblegum_popperz: 68
+    lambs_bread: 11
+    malawi_gold: 11
+    purple_haze: 10
+compound_z:
+  display-name: Compound Z
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    compound_z: 100
+first_class_funk:
+  display-name: First Class Funk
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    first_class_funk: 100
+gas_face:
+  display-name: Gas Face
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    gas_face: 68
+    panama_red: 32
+ghost_orchid_og:
+  display-name: Ghost Orchid OG
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    ghost_orchid_og: 100
+glitter_bomb:
+  display-name: Glitter Bomb
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    glitter_bomb: 100
+gozer_og:
+  display-name: Gozer OG
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    gozer_og: 100
+hyper_za:
+  display-name: Hyper Za
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    hyper_za: 68
+    acapulco_gold: 32
+jade_dragon:
+  display-name: Jade Dragon
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    jade_dragon: 100
+lantz:
+  display-name: Lantz
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    lantz: 100
+melted_strawberries:
+  display-name: Melted Strawberries
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    melted_strawberries: 100
+mule_fuel:
+  display-name: Mule Fuel
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    mule_fuel: 100
+neptunes_beard:
+  display-name: Neptune's Beard
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    neptunes_beard: 100
+pav:
+  display-name: "Pav\xE9"
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    pav: 68
+    skunk_1: 32
+solar_flare:
+  display-name: Solar Flare
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    solar_flare: 100
+steal_yo_face:
+  display-name: Steal Yo Face
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    steal_yo_face: 100
+think_tank:
+  display-name: Think Tank
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    think_tank: 100
+velcroz:
+  display-name: VelcroZ
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    velcroz: 68
+    afghani: 16
+    thai_stick: 16
+wagyu:
+  display-name: Wagyu
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    wagyu: 100
+whitethorn_rose:
+  display-name: Whitethorn Rose
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    whitethorn_rose: 100
+zereal_killer:
+  display-name: Zereal Killer
+  rarity: rare
+  effect-modifiers:
+    duration-multiplier: 1.12
+    amplifier-multiplier: 1.2
+  mutation-chance: 0.009
+  mutation-weights:
+    zereal_killer: 68
+    colombian_gold: 32
+acapulco_gold:
+  display-name: Acapulco Gold
   rarity: legendary
   effect-modifiers:
-    duration-multiplier: 1.25
-    amplifier-multiplier: 1.25
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
   mutation-chance: 0.01
   mutation-weights:
-    godfather_og: 70
-    black_mamba: 20
-    moon_rock: 10
-
-black_mamba:
-  display-name: "Black Mamba"
+    acapulco_gold: 100
+afghani:
+  display-name: Afghani
   rarity: legendary
   effect-modifiers:
-    duration-multiplier: 1.3
-    amplifier-multiplier: 1.3
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
   mutation-chance: 0.01
   mutation-weights:
-    black_mamba: 75
-    moon_rock: 25
-
-moon_rock:
-  display-name: "Moon Rock"
+    afghani: 100
+colombian_gold:
+  display-name: Colombian Gold
   rarity: legendary
   effect-modifiers:
-    duration-multiplier: 1.4
-    amplifier-multiplier: 1.35
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
   mutation-chance: 0.01
   mutation-weights:
-    moon_rock: 100
+    colombian_gold: 100
+hindu_kush:
+  display-name: Hindu Kush
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    hindu_kush: 100
+lambs_bread:
+  display-name: Lamb's Bread
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    lambs_bread: 100
+malawi_gold:
+  display-name: Malawi Gold
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    malawi_gold: 100
+og_kush:
+  display-name: OG Kush
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    og_kush: 100
+panama_red:
+  display-name: Panama Red
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    panama_red: 100
+purple_haze:
+  display-name: Purple Haze
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    purple_haze: 100
+skunk_1:
+  display-name: 'Skunk #1'
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    skunk_1: 100
+thai_stick:
+  display-name: Thai Stick
+  rarity: legendary
+  effect-modifiers:
+    duration-multiplier: 2.08
+    amplifier-multiplier: 2.25
+  mutation-chance: 0.01
+  mutation-weights:
+    thai_stick: 100
