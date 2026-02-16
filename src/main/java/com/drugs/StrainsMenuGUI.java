@@ -74,7 +74,7 @@ public final class StrainsMenuGUI {
 
         for (int i = 0; i < allPages.size(); i++) {
             StrainsPage page = allPages.get(i);
-            String expected = "Cannabis Strains - " + capitalize(page.rarity)
+            String expected = "Strains - " + capitalize(page.rarity)
                     + " (Page " + page.rarityPage + "/" + page.rarityTotalPages + ")";
             if (expected.equals(stripped)) {
                 return i;
