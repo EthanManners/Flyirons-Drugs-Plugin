@@ -108,6 +108,12 @@ public class DrugRegistry {
         return profile.createItem(amount);
     }
 
+    public static ItemStack getDrugItem(String id, int amount, String strainId) {
+        DrugEffectProfile profile = getProfileById(id);
+        if (profile == null) return null;
+        return profile.createItem(amount, strainId);
+    }
+
     /**
      * Tries to match a held item to a known drug.
      * Uses caching for performance.
@@ -159,6 +165,12 @@ public class DrugRegistry {
         
         if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             result = 31 * result + item.getItemMeta().getDisplayName().hashCode();
+        }
+        if (item.hasItemMeta()) {
+            String drugId = DrugItemMetadata.getDrugId(item.getItemMeta());
+            String strainId = DrugItemMetadata.getStrainId(item.getItemMeta());
+            if (drugId != null) result = 31 * result + drugId.hashCode();
+            if (strainId != null) result = 31 * result + strainId.hashCode();
         }
         
         return result;

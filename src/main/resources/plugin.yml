@@ -15,6 +15,11 @@ commands:
     usage: /tolerance
     permission: drugs.tolerance
 
+  strains:
+    description: View all available cannabis strains
+    usage: /strains
+    permission: drugs.strains
+
 permissions:
   drugs.menu:
     description: Allows access to the drug menu
@@ -26,6 +31,10 @@ permissions:
 
   drugs.tolerance:
     description: Allows using /tolerance
+    default: true
+
+  drugs.strains:
+    description: Allows viewing the /strains menu
     default: true
 
   drugs.admin.reload:
@@ -51,4 +60,3 @@ permissions:
   drugs.admin.overdose:
     description: Allows managing overdose settings and effects
     default: op
-

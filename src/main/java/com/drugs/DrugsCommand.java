@@ -56,6 +56,9 @@ public class DrugsCommand implements CommandExecutor {
             if (sender.hasPermission("drugs.tolerance")) {
                 sender.sendMessage(ChatColor.YELLOW + "/tolerance" + ChatColor.GRAY + " - View your current drug tolerance");
             }
+            if (sender.hasPermission("drugs.strains")) {
+                sender.sendMessage(ChatColor.YELLOW + "/strains" + ChatColor.GRAY + " - Open the cannabis strain index");
+            }
             if (sender.hasPermission("drugs.admin.purge")) {
                 sender.sendMessage(ChatColor.YELLOW + "/drugs purge <player>" + ChatColor.GRAY + " - Reset a player's tolerance");
             }
@@ -187,12 +190,15 @@ public class DrugsCommand implements CommandExecutor {
             DrugsV2.getInstance().saveAchievementsConfig();
             DrugsV2.getInstance().saveOverdoseConfig();
             DrugsV2.getInstance().saveAddictionConfig();
+            DrugsV2.getInstance().saveStrainsConfig();
 
             ToleranceConfigLoader.load(DrugsV2.getInstance().getDataFolder());
             AchievementSettingsLoader.load(DrugsV2.getInstance().getDataFolder());
             CustomAchievementLoader.load(DrugsV2.getInstance().getDataFolder());
             OverdoseEffectManager.load(DrugsV2.getInstance().getDataFolder());
             AddictionConfigLoader.load(DrugsV2.getInstance());
+            StrainConfigLoader.load(DrugsV2.getInstance().getDataFolder());
+            CannabisPlantRegistry.cleanupInvalidPlants();
             DrugRegistry.init(DrugsV2.getInstance());
             CureRegistry.init(DrugsV2.getInstance());
             AddictionManager.reload(DrugsV2.getInstance());
