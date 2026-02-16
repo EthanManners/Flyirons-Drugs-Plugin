@@ -36,7 +36,7 @@ cures:
     display-name: "&bRest"
     lore:
       - "&7Sleeping helps ease withdrawal."
-    cures: ["cocaine", "molly"]
+    cures: ["cocaine", "molly", "meth"]
     clears_points: true
     reduce_points: 0
     block_withdrawal_seconds: 1
