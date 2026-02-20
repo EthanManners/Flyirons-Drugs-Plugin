@@ -12,6 +12,10 @@ public final class BongItemFactory {
     }
 
     public static ItemStack createBongItem(int amount) {
+        return createBongItem(amount, MechanicsConfig.getBongDurabilityUses());
+    }
+
+    public static ItemStack createBongItem(int amount, int durability) {
         ItemStack item = new ItemStack(BongConfigLoader.getBongItemMaterial(), Math.max(1, amount));
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
@@ -25,6 +29,10 @@ public final class BongItemFactory {
             meta.setCustomModelData(BongConfigLoader.getBongCustomModelData());
         }
         DrugItemMetadata.setItemType(meta, "bong");
+        int maxDurability = MechanicsConfig.getBongDurabilityUses();
+        int appliedDurability = Math.max(0, Math.min(durability, maxDurability));
+        DrugItemMetadata.setBongDurability(meta, appliedDurability);
+        DrugItemMetadata.applyBongDurabilityLore(meta, appliedDurability, maxDurability);
         item.setItemMeta(meta);
         return item;
     }

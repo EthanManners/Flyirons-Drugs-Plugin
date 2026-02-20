@@ -36,6 +36,7 @@ public class DrugsV2 extends JavaPlugin {
         saveAddictionConfig();
         saveStrainsConfig();
         saveBongConfig();
+        saveMechanicsConfig();
 
         // Initialize performance optimizer first
         PerformanceOptimizer.initialize();
@@ -54,6 +55,7 @@ public class DrugsV2 extends JavaPlugin {
         AddictionConfigLoader.load(this);
         StrainConfigLoader.load(getDataFolder());
         BongConfigLoader.load(getDataFolder());
+        MechanicsConfig.load(getDataFolder());
         CannabisPlantRegistry.init(getDataFolder());
         BongRegistry.init(getDataFolder());
 
@@ -162,6 +164,13 @@ public class DrugsV2 extends JavaPlugin {
         File file = new File(getDataFolder(), "bong.yml");
         if (!file.exists()) {
             saveResource("bong.yml", false);
+        }
+    }
+
+    public void saveMechanicsConfig() {
+        File file = new File(getDataFolder(), "mechanics.yml");
+        if (!file.exists()) {
+            saveResource("mechanics.yml", false);
         }
     }
 

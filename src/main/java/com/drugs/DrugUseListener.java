@@ -1,5 +1,8 @@
 package com.drugs;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,15 +88,65 @@ public class DrugUseListener implements Listener {
         profile.applyEffects(player, item);
 
         if (player.getGameMode() != GameMode.CREATIVE) {
+            if (drugId.equalsIgnoreCase("cart")) {
+                handleCartDurability(player, item);
+            } else {
+                int newAmount = item.getAmount() - 1;
+                if (newAmount <= 0) {
+                    player.getInventory().setItemInMainHand(null);
+                } else {
+                    item.setAmount(newAmount);
+                }
+            }
+        }
+    }
+    
+
+    private void handleCartDurability(Player player, ItemStack item) {
+        if (item == null || !item.hasItemMeta()) {
+            return;
+        }
+
+        var meta = item.getItemMeta();
+        int maxDurability = MechanicsConfig.getCartDurabilityUses();
+        Integer currentDurability = DrugItemMetadata.getCartDurability(meta);
+
+        if (currentDurability == null || currentDurability <= 0 || currentDurability > maxDurability) {
+            currentDurability = maxDurability;
+        }
+
+        int nextDurability = currentDurability - 1;
+        if (nextDurability <= 0) {
+            sendCartDurabilityActionBar(player, 0, maxDurability);
             int newAmount = item.getAmount() - 1;
             if (newAmount <= 0) {
                 player.getInventory().setItemInMainHand(null);
             } else {
                 item.setAmount(newAmount);
+                var refreshedMeta = item.getItemMeta();
+                if (refreshedMeta != null) {
+                    DrugItemMetadata.setCartDurability(refreshedMeta, maxDurability);
+                    DrugItemMetadata.applyCartDurabilityLore(refreshedMeta, maxDurability, maxDurability);
+                    item.setItemMeta(refreshedMeta);
+                }
             }
+            return;
         }
+
+        DrugItemMetadata.setCartDurability(meta, nextDurability);
+        DrugItemMetadata.applyCartDurabilityLore(meta, nextDurability, maxDurability);
+        item.setItemMeta(meta);
+        sendCartDurabilityActionBar(player, nextDurability, maxDurability);
     }
-    
+
+    private void sendCartDurabilityActionBar(Player player, int currentDurability, int maxDurability) {
+        String message = ChatColor.DARK_GREEN + "Cart Durability: "
+                + ChatColor.GREEN + Math.max(0, currentDurability)
+                + ChatColor.DARK_GRAY + "/"
+                + ChatColor.GREEN + Math.max(1, maxDurability);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+    }
+
     /**
      * Tracks drug usage for the connoisseur achievement
      */

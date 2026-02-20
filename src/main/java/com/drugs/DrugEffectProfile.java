@@ -186,6 +186,12 @@ public class DrugEffectProfile {
             }
 
             meta.setLore(loreWithStrain);
+            if (id.equalsIgnoreCase("cart")) {
+                int maxDurability = MechanicsConfig.getCartDurabilityUses();
+                DrugItemMetadata.setCartDurability(meta, maxDurability);
+                DrugItemMetadata.applyCartDurabilityLore(meta, maxDurability, maxDurability);
+            }
+
             item.setItemMeta(meta);
         }
         return item;

@@ -1,6 +1,9 @@
 package com.drugs;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,6 +11,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -43,6 +47,11 @@ public class BongListener implements Listener {
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
+    public BongListener() {
+        DrugsV2 plugin = DrugsV2.getInstance();
+        plugin.getServer().getScheduler().runTaskTimer(plugin, this::cleanupUnsupportedBongs, 20L, 20L);
+    }
+
     @EventHandler
     public void onPlace(PlayerInteractEvent event) {
         if (!BongConfigLoader.isEnabled()) return;
@@ -53,8 +62,12 @@ public class BongListener implements Listener {
 
         Block clicked = event.getClickedBlock();
         if (clicked == null || !clicked.getType().isSolid()) return;
+        if (event.getBlockFace() != BlockFace.UP) {
+            event.getPlayer().sendMessage("§cBongs can only be placed on top of blocks.");
+            return;
+        }
 
-        Block target = clicked.getRelative(event.getBlockFace());
+        Block target = clicked.getRelative(BlockFace.UP);
         if (!target.getType().isAir()) {
             event.getPlayer().sendMessage("§cYou need a clear space to place a bong.");
             return;
@@ -66,8 +79,9 @@ public class BongListener implements Listener {
             return;
         }
 
+        int placedDurability = resolveBongDurability(handItem);
         float placementYaw = snapToOctantYaw(event.getPlayer().getLocation().getYaw());
-        spawnOrReplace(anchor, placementYaw);
+        spawnOrReplace(anchor, placementYaw, placedDurability);
         event.setCancelled(true);
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -121,11 +135,27 @@ public class BongListener implements Listener {
             weed.setAmount(weed.getAmount() - 1);
         }
 
+        int maxDurability = MechanicsConfig.getBongDurabilityUses();
+        int remainingDurability = Math.max(0, data.getDurability() - 1);
+        data.setDurability(remainingDurability);
+        sendBongDurabilityActionBar(player, remainingDurability, maxDurability);
+
         cooldowns.put(player.getUniqueId().toString(), System.currentTimeMillis());
         player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0f, 1.25f);
         StrainProfile strain = StrainConfigLoader.getStrain(strainId);
         String strainName = strain != null ? strain.getDisplayName() : strainId;
         spawnCampfireSmoke(data);
+
+        if (remainingDurability <= 0) {
+            Location brokenAt = data.getAnchor();
+            if (brokenAt != null) {
+                BongRegistry.remove(brokenAt);
+                brokenAt.getWorld().playSound(brokenAt, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.9f);
+            }
+            player.sendMessage("§cThe bong cracked after that hit.");
+            return;
+        }
+
         player.sendMessage("§2You take a bong hit. §7(Strain: §a" + strainName + "§7)");
     }
 
@@ -143,12 +173,29 @@ public class BongListener implements Listener {
 
         BongRegistry.remove(anchor);
         if (player.getGameMode() != GameMode.CREATIVE) {
-            anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1));
+            anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1, data.getDurability()));
         }
 
         player.playSound(anchor, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.9f);
     }
 
+
+    private void cleanupUnsupportedBongs() {
+        for (BongRegistry.BongData data : BongRegistry.getSnapshot().values()) {
+            Location anchor = data.getAnchor();
+            if (anchor == null || anchor.getWorld() == null) {
+                continue;
+            }
+
+            Block support = anchor.getBlock().getRelative(BlockFace.DOWN);
+            if (support.getType().isSolid()) {
+                continue;
+            }
+
+            BongRegistry.remove(anchor);
+            anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1, data.getDurability()));
+        }
+    }
 
     public void removeOrphanEntitiesAtAnchor(Location anchor) {
         if (anchor == null || anchor.getWorld() == null) return;
@@ -167,7 +214,7 @@ public class BongListener implements Listener {
         }
     }
 
-    public void spawnOrReplace(Location anchor, float yaw) {
+    public void spawnOrReplace(Location anchor, float yaw, int durability) {
         BongRegistry.remove(anchor);
         removeOrphanEntitiesAtAnchor(anchor);
 
@@ -203,7 +250,7 @@ public class BongListener implements Listener {
             spawned.getPersistentDataContainer().set(getAnchorDataKey(), PersistentDataType.STRING, getAnchorTag(anchor));
         });
 
-        BongRegistry.put(anchor, new BongRegistry.BongData(anchor, yaw, displayIds, hitbox.getUniqueId()));
+        BongRegistry.put(anchor, new BongRegistry.BongData(anchor, yaw, displayIds, hitbox.getUniqueId(), durability));
     }
 
     private UUID spawnDisplay(Location anchor, float yaw, ItemStack displayItem, Vector3f offset, Vector3f scale, Quaternionf rightRotation) {
@@ -306,6 +353,27 @@ public class BongListener implements Listener {
 
         Location smokeOrigin = anchor.clone().add(0.5, 0.9, 0.5);
         anchor.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, smokeOrigin, 12, 0.08, 0.35, 0.08, 0.01);
+    }
+
+    private int resolveBongDurability(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) {
+            return MechanicsConfig.getBongDurabilityUses();
+        }
+
+        Integer tagged = DrugItemMetadata.getBongDurability(item.getItemMeta());
+        int maxDurability = MechanicsConfig.getBongDurabilityUses();
+        if (tagged == null || tagged <= 0) {
+            return maxDurability;
+        }
+        return Math.min(tagged, maxDurability);
+    }
+
+    private void sendBongDurabilityActionBar(Player player, int current, int max) {
+        String message = ChatColor.DARK_GREEN + "Bong Durability: "
+                + ChatColor.GREEN + Math.max(0, current)
+                + ChatColor.DARK_GRAY + "/"
+                + ChatColor.GREEN + Math.max(1, max);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 
     private boolean isOnCooldown(Player player) {

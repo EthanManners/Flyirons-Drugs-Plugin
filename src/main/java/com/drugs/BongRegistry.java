@@ -25,8 +25,9 @@ public final class BongRegistry {
         private final float yaw;
         private final List<UUID> displayIds;
         private UUID interactionId;
+        private int durability;
 
-        public BongData(Location anchor, float yaw, List<UUID> displayIds, UUID interactionId) {
+        public BongData(Location anchor, float yaw, List<UUID> displayIds, UUID interactionId, int durability) {
             this.worldId = anchor.getWorld().getUID().toString();
             this.x = anchor.getBlockX();
             this.y = anchor.getBlockY();
@@ -34,12 +35,21 @@ public final class BongRegistry {
             this.yaw = yaw;
             this.displayIds = displayIds == null ? new ArrayList<>() : new ArrayList<>(displayIds);
             this.interactionId = interactionId;
+            this.durability = Math.max(0, durability);
         }
 
         public Location getAnchor() {
             World world = Bukkit.getWorld(UUID.fromString(worldId));
             if (world == null) return null;
             return new Location(world, x, y, z);
+        }
+
+        public int getDurability() {
+            return durability;
+        }
+
+        public void setDurability(int durability) {
+            this.durability = Math.max(0, durability);
         }
 
         public boolean hasEntity(UUID entityId) {
@@ -84,6 +94,11 @@ public final class BongRegistry {
         return null;
     }
 
+
+    public static Map<String, BongData> getSnapshot() {
+        return new HashMap<>(bongs);
+    }
+
     public static void remove(Location location) {
         BongData data = get(location);
         if (data != null) {
@@ -108,6 +123,7 @@ public final class BongRegistry {
             yaml.set(base + ".yaw", data.yaw);
             yaml.set(base + ".displays", data.displayIds.stream().map(UUID::toString).toList());
             yaml.set(base + ".interaction", data.interactionId == null ? null : data.interactionId.toString());
+            yaml.set(base + ".durability", data.durability);
         }
         try {
             yaml.save(file);
@@ -147,9 +163,10 @@ public final class BongRegistry {
             }
 
             UUID interaction = parseUuid(yaml.getString(node + ".interaction"));
+            int durability = Math.max(0, yaml.getInt(node + ".durability", MechanicsConfig.getBongDurabilityUses()));
 
             Location location = new Location(world, x, y, z);
-            bongs.put(key(location), new BongData(location, yaw, displays, interaction));
+            bongs.put(key(location), new BongData(location, yaw, displays, interaction, durability));
         }
     }
 
@@ -181,7 +198,7 @@ public final class BongRegistry {
             }
 
             listener.removeOrphanEntitiesAtAnchor(anchor);
-            listener.spawnOrReplace(anchor, data.yaw);
+            listener.spawnOrReplace(anchor, data.yaw, data.getDurability());
         }
     }
 
