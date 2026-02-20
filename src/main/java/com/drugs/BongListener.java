@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Interaction;
@@ -34,6 +35,7 @@ import java.util.UUID;
 public class BongListener implements Listener {
 
     private static final String WATER_IN_GLASS_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0YzgyMTRhYjhkZDAwNGJlYmE2YTQxODg2MDQ0NzBhODM4ZmViMWFlOTJlZTYyZDFkMTVlMGRmMGNlYmZmNyJ9fX0=";
+    private static final float NORTH_FACING_YAW = 180.0f;
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
@@ -49,8 +51,8 @@ public class BongListener implements Listener {
         if (clicked == null || !clicked.getType().isSolid()) return;
 
         Block target = clicked.getRelative(event.getBlockFace());
-        if (!target.getType().isAir() || !target.getRelative(0, 1, 0).getType().isAir()) {
-            event.getPlayer().sendMessage("§cYou need a clear 1x1x2 space to place a bong.");
+        if (!target.getType().isAir()) {
+            event.getPlayer().sendMessage("§cYou need a clear space to place a bong.");
             return;
         }
 
@@ -60,7 +62,7 @@ public class BongListener implements Listener {
             return;
         }
 
-        spawnOrReplace(anchor, event.getPlayer().getLocation().getYaw());
+        spawnOrReplace(anchor, NORTH_FACING_YAW);
         event.setCancelled(true);
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -118,6 +120,7 @@ public class BongListener implements Listener {
         player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0f, 1.25f);
         StrainProfile strain = StrainConfigLoader.getStrain(strainId);
         String strainName = strain != null ? strain.getDisplayName() : strainId;
+        spawnCampfireSmoke(data);
         player.sendMessage("§2You take a bong hit. §7(Strain: §a" + strainName + "§7)");
     }
 
@@ -166,10 +169,10 @@ public class BongListener implements Listener {
                         .rotateY((float) Math.toRadians(1))
                         .rotateZ((float) Math.toRadians(1))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.64, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.225, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
-            spawned.setInteractionWidth(0.8f);
-            spawned.setInteractionHeight(1.15f);
+            spawned.setInteractionWidth(0.55f);
+            spawned.setInteractionHeight(0.45f);
             spawned.setPersistent(true);
         });
 
@@ -181,7 +184,7 @@ public class BongListener implements Listener {
         ItemDisplay display = anchor.getWorld().spawn(displayLocation, ItemDisplay.class, spawned -> {
             spawned.setPersistent(true);
             spawned.setItemStack(displayItem);
-            spawned.setRotation(yaw, 0.0f);
+            spawned.setRotation(NORTH_FACING_YAW, 0.0f);
             spawned.setTransformation(new Transformation(
                     new Vector3f(0f, 0f, 0f),
                     new Quaternionf(),
@@ -232,6 +235,16 @@ public class BongListener implements Listener {
             return "http://textures.minecraft.net/texture/f04c8214ab8dd004beba6a4188604470a838feb1ae92ee62d1d15e0df0cebff7";
         }
         return json.substring(start, end);
+    }
+
+    private void spawnCampfireSmoke(BongRegistry.BongData data) {
+        if (data == null) return;
+
+        Location anchor = data.getAnchor();
+        if (anchor == null || anchor.getWorld() == null) return;
+
+        Location smokeOrigin = anchor.clone().add(0.5, 0.9, 0.5);
+        anchor.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, smokeOrigin, 12, 0.08, 0.35, 0.08, 0.01);
     }
 
     private boolean isOnCooldown(Player player) {

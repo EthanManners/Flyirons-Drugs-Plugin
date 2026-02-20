@@ -136,3 +136,11 @@ cbd:
     F: FERN
 
 
+
+bong:
+  shape:
+    - " G "
+    - "G G"
+    - " G "
+  ingredients:
+    G: GLASS
