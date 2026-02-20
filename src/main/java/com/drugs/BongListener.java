@@ -109,7 +109,7 @@ public class BongListener implements Listener {
 
         ItemStack weed = resolveWeedItem(player);
         if (weed == null) {
-            player.sendMessage("§cHold strain-tagged weed to use the bong.");
+            player.sendMessage("§cHold weed to use the bong.");
             return;
         }
 
