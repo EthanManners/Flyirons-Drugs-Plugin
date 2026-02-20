@@ -169,7 +169,7 @@ public class BongListener implements Listener {
                         .rotateY((float) Math.toRadians(1))
                         .rotateZ((float) Math.toRadians(1))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.225, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.0, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
             spawned.setInteractionWidth(0.55f);
             spawned.setInteractionHeight(0.45f);
