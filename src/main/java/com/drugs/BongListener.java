@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Interaction;
@@ -119,6 +120,7 @@ public class BongListener implements Listener {
         player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0f, 1.25f);
         StrainProfile strain = StrainConfigLoader.getStrain(strainId);
         String strainName = strain != null ? strain.getDisplayName() : strainId;
+        spawnCampfireSmoke(data);
         player.sendMessage("§2You take a bong hit. §7(Strain: §a" + strainName + "§7)");
     }
 
@@ -233,6 +235,16 @@ public class BongListener implements Listener {
             return "http://textures.minecraft.net/texture/f04c8214ab8dd004beba6a4188604470a838feb1ae92ee62d1d15e0df0cebff7";
         }
         return json.substring(start, end);
+    }
+
+    private void spawnCampfireSmoke(BongRegistry.BongData data) {
+        if (data == null) return;
+
+        Location anchor = data.getAnchor();
+        if (anchor == null || anchor.getWorld() == null) return;
+
+        Location smokeOrigin = anchor.clone().add(0.5, 0.9, 0.5);
+        anchor.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, smokeOrigin, 12, 0.08, 0.35, 0.08, 0.01);
     }
 
     private boolean isOnCooldown(Player player) {

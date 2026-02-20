@@ -60,6 +60,7 @@ public class DrugsV2 extends JavaPlugin {
         // Initialize core drug system
         DrugRegistry.init(this);
         CureRegistry.init(this);
+        registerBongRecipe();
 
         AddictionManager.init(this);
 
@@ -162,6 +163,15 @@ public class DrugsV2 extends JavaPlugin {
         if (!file.exists()) {
             saveResource("bong.yml", false);
         }
+    }
+
+    private void registerBongRecipe() {
+        if (recipesConfig == null) return;
+
+        var recipeSection = recipesConfig.getConfigurationSection("bong");
+        if (recipeSection == null) return;
+
+        DrugRecipeHelper.registerItemRecipe("bong", recipeSection, BongItemFactory.createBongItem(1), this);
     }
 
     public FileConfiguration getRecipesConfig() {
