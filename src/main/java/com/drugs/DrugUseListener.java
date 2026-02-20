@@ -1,5 +1,8 @@
 package com.drugs;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -114,6 +117,7 @@ public class DrugUseListener implements Listener {
 
         int nextDurability = currentDurability - 1;
         if (nextDurability <= 0) {
+            sendCartDurabilityActionBar(player, 0, maxDurability);
             int newAmount = item.getAmount() - 1;
             if (newAmount <= 0) {
                 player.getInventory().setItemInMainHand(null);
@@ -132,6 +136,15 @@ public class DrugUseListener implements Listener {
         DrugItemMetadata.setCartDurability(meta, nextDurability);
         DrugItemMetadata.applyCartDurabilityLore(meta, nextDurability, maxDurability);
         item.setItemMeta(meta);
+        sendCartDurabilityActionBar(player, nextDurability, maxDurability);
+    }
+
+    private void sendCartDurabilityActionBar(Player player, int currentDurability, int maxDurability) {
+        String message = ChatColor.DARK_GREEN + "Cart Durability: "
+                + ChatColor.GREEN + Math.max(0, currentDurability)
+                + ChatColor.DARK_GRAY + "/"
+                + ChatColor.GREEN + Math.max(1, maxDurability);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 
     /**
