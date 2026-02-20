@@ -2,7 +2,9 @@ package com.drugs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -61,6 +63,8 @@ public class DrugEffectProfile {
         int max = ToleranceConfigLoader.getMaxTolerance(id);
         double multiplier = ToleranceTracker.getEffectivenessMultiplier(player, id);
 
+        spawnConsumptionParticles(player);
+
         StrainProfile strainProfile = null;
         if (StrainConfigLoader.isCannabisDrug(id)) {
             String strainId = DrugItemMetadata.getStrainId(sourceItem);
@@ -109,6 +113,21 @@ public class DrugEffectProfile {
 
         ToleranceTracker.onDrugUse(player, id);
         AddictionManager.onDrugUse(player, id);
+    }
+
+
+    private void spawnConsumptionParticles(Player player) {
+        if (player == null) return;
+
+        Location location = player.getLocation().add(0, 1.1, 0);
+        if (id.equalsIgnoreCase("blunt") || id.equalsIgnoreCase("joint")) {
+            player.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, location, 10, 0.25, 0.35, 0.25, 0.01);
+            return;
+        }
+
+        if (id.equalsIgnoreCase("cart")) {
+            player.getWorld().spawnParticle(Particle.POOF, location, 12, 0.25, 0.3, 0.25, 0.02);
+        }
     }
 
     /**

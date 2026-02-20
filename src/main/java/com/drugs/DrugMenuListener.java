@@ -57,6 +57,11 @@ public class DrugMenuListener implements Listener {
                 CureProfile cureProfile = CureRegistry.getProfileFromItem(clicked);
                 if (cureProfile != null) {
                     DrugRecipeViewer.openRecipe(player, cureProfile.getId());
+                    return;
+                }
+
+                if (BongItemFactory.isBongItem(clicked)) {
+                    DrugRecipeViewer.openRecipe(player, "bong");
                 }
             }
         }
