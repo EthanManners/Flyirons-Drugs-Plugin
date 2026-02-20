@@ -34,6 +34,7 @@ import java.util.UUID;
 public class BongListener implements Listener {
 
     private static final String WATER_IN_GLASS_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0YzgyMTRhYjhkZDAwNGJlYmE2YTQxODg2MDQ0NzBhODM4ZmViMWFlOTJlZTYyZDFkMTVlMGRmMGNlYmZmNyJ9fX0=";
+    private static final float NORTH_FACING_YAW = 180.0f;
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
@@ -60,7 +61,7 @@ public class BongListener implements Listener {
             return;
         }
 
-        spawnOrReplace(anchor, event.getPlayer().getLocation().getYaw());
+        spawnOrReplace(anchor, NORTH_FACING_YAW);
         event.setCancelled(true);
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -166,10 +167,10 @@ public class BongListener implements Listener {
                         .rotateY((float) Math.toRadians(1))
                         .rotateZ((float) Math.toRadians(1))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.64, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.30, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
-            spawned.setInteractionWidth(0.8f);
-            spawned.setInteractionHeight(1.15f);
+            spawned.setInteractionWidth(0.55f);
+            spawned.setInteractionHeight(0.45f);
             spawned.setPersistent(true);
         });
 
@@ -181,7 +182,7 @@ public class BongListener implements Listener {
         ItemDisplay display = anchor.getWorld().spawn(displayLocation, ItemDisplay.class, spawned -> {
             spawned.setPersistent(true);
             spawned.setItemStack(displayItem);
-            spawned.setRotation(yaw, 0.0f);
+            spawned.setRotation(NORTH_FACING_YAW, 0.0f);
             spawned.setTransformation(new Transformation(
                     new Vector3f(0f, 0f, 0f),
                     new Quaternionf(),
