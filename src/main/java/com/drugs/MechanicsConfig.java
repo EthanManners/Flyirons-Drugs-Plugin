@@ -8,6 +8,7 @@ public final class MechanicsConfig {
 
     private static int cannabisGrowthSeconds = 600;
     private static int cartDurabilityUses = 16;
+    private static int bongDurabilityUses = 24;
 
     private MechanicsConfig() {
     }
@@ -21,6 +22,7 @@ public final class MechanicsConfig {
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
         cannabisGrowthSeconds = Math.max(1, yaml.getInt("cannabis.growth-seconds", 600));
         cartDurabilityUses = Math.max(1, yaml.getInt("cart.durability-uses", 16));
+        bongDurabilityUses = Math.max(1, yaml.getInt("bong.durability-uses", 24));
     }
 
     public static int getCannabisGrowthSeconds() {
@@ -29,5 +31,9 @@ public final class MechanicsConfig {
 
     public static int getCartDurabilityUses() {
         return cartDurabilityUses;
+    }
+
+    public static int getBongDurabilityUses() {
+        return bongDurabilityUses;
     }
 }

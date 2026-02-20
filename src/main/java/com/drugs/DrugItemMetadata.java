@@ -64,6 +64,25 @@ public final class DrugItemMetadata {
         return pdc.has(key("drug_id"), PersistentDataType.STRING);
     }
 
+
+    public static void setBongDurability(ItemMeta meta, int durability) {
+        meta.getPersistentDataContainer().set(key("bong_durability"), PersistentDataType.INTEGER, Math.max(0, durability));
+    }
+
+    public static Integer getBongDurability(ItemMeta meta) {
+        if (meta == null) return null;
+        return meta.getPersistentDataContainer().get(key("bong_durability"), PersistentDataType.INTEGER);
+    }
+
+    public static void applyBongDurabilityLore(ItemMeta meta, int durability, int maxDurability) {
+        if (meta == null) return;
+
+        List<String> lore = new ArrayList<>(meta.hasLore() ? Objects.requireNonNull(meta.getLore()) : Collections.emptyList());
+        lore.removeIf(line -> ChatColor.stripColor(line).toLowerCase().startsWith("durability:"));
+        lore.add(ChatColor.GRAY + "Durability: " + ChatColor.GREEN + durability + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + maxDurability);
+        meta.setLore(lore);
+    }
+
     public static void setCartDurability(ItemMeta meta, int durability) {
         meta.getPersistentDataContainer().set(key("cart_durability"), PersistentDataType.INTEGER, Math.max(0, durability));
     }

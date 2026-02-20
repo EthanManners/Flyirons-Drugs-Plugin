@@ -5,3 +5,7 @@ cannabis:
 cart:
   # Number of uses before a cart item is consumed.
   durability-uses: 16
+
+bong:
+  # Number of hits a bong can be used before it breaks.
+  durability-uses: 24
