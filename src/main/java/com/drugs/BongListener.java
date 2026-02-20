@@ -50,8 +50,8 @@ public class BongListener implements Listener {
         if (clicked == null || !clicked.getType().isSolid()) return;
 
         Block target = clicked.getRelative(event.getBlockFace());
-        if (!target.getType().isAir() || !target.getRelative(0, 1, 0).getType().isAir()) {
-            event.getPlayer().sendMessage("§cYou need a clear 1x1x2 space to place a bong.");
+        if (!target.getType().isAir()) {
+            event.getPlayer().sendMessage("§cYou need a clear space to place a bong.");
             return;
         }
 
@@ -167,7 +167,7 @@ public class BongListener implements Listener {
                         .rotateY((float) Math.toRadians(1))
                         .rotateZ((float) Math.toRadians(1))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.30, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.225, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
             spawned.setInteractionWidth(0.55f);
             spawned.setInteractionHeight(0.45f);
