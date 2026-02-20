@@ -62,7 +62,7 @@ public class BongListener implements Listener {
             return;
         }
 
-        float placementYaw = snapToCardinalYaw(event.getPlayer().getLocation().getYaw());
+        float placementYaw = snapToOctantYaw(event.getPlayer().getLocation().getYaw());
         spawnOrReplace(anchor, placementYaw);
         event.setCancelled(true);
 
@@ -210,8 +210,8 @@ public class BongListener implements Listener {
         return new Vector3f(rotatedX + 0.5f, offset.y, rotatedZ + 0.5f);
     }
 
-    private float snapToCardinalYaw(float yaw) {
-        return Math.round(yaw / 90.0f) * 90.0f;
+    private float snapToOctantYaw(float yaw) {
+        return Math.round(yaw / 45.0f) * 45.0f;
     }
 
     private ItemStack createWaterHead() {
