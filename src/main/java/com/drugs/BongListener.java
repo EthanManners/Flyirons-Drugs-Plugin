@@ -151,20 +151,20 @@ public class BongListener implements Listener {
                 new Quaternionf()));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 0.62f, 0.5f),
+                new Vector3f(0.5f, 0.48f, 0.5f),
                 new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 0.86f, 0.5f),
+                new Vector3f(0.5f, 0.72f, 0.5f),
                 new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
 
-        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GOLDEN_SHOVEL),
-                new Vector3f(0.74f, 0.38f, 0.58f),
-                new Vector3f(0.20f, 0.20f, 0.20f),
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.STONE_SHOVEL),
+                new Vector3f(0.74f, 0.28f, 0.50f),
+                new Vector3f(0.25f, 0.25f, 0.25f),
                 new Quaternionf()
-                        .rotateY((float) Math.toRadians(82))
-                        .rotateZ((float) Math.toRadians(-38))));
+                        .rotateY((float) Math.toRadians(1))
+                        .rotateZ((float) Math.toRadians(1))));
 
         Location interactionLocation = anchor.clone().add(0.5, 0.64, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
