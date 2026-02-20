@@ -85,15 +85,55 @@ public class DrugUseListener implements Listener {
         profile.applyEffects(player, item);
 
         if (player.getGameMode() != GameMode.CREATIVE) {
+            if (drugId.equalsIgnoreCase("cart")) {
+                handleCartDurability(player, item);
+            } else {
+                int newAmount = item.getAmount() - 1;
+                if (newAmount <= 0) {
+                    player.getInventory().setItemInMainHand(null);
+                } else {
+                    item.setAmount(newAmount);
+                }
+            }
+        }
+    }
+    
+
+    private void handleCartDurability(Player player, ItemStack item) {
+        if (item == null || !item.hasItemMeta()) {
+            return;
+        }
+
+        var meta = item.getItemMeta();
+        int maxDurability = MechanicsConfig.getCartDurabilityUses();
+        Integer currentDurability = DrugItemMetadata.getCartDurability(meta);
+
+        if (currentDurability == null || currentDurability <= 0 || currentDurability > maxDurability) {
+            currentDurability = maxDurability;
+        }
+
+        int nextDurability = currentDurability - 1;
+        if (nextDurability <= 0) {
             int newAmount = item.getAmount() - 1;
             if (newAmount <= 0) {
                 player.getInventory().setItemInMainHand(null);
             } else {
                 item.setAmount(newAmount);
+                var refreshedMeta = item.getItemMeta();
+                if (refreshedMeta != null) {
+                    DrugItemMetadata.setCartDurability(refreshedMeta, maxDurability);
+                    DrugItemMetadata.applyCartDurabilityLore(refreshedMeta, maxDurability, maxDurability);
+                    item.setItemMeta(refreshedMeta);
+                }
             }
+            return;
         }
+
+        DrugItemMetadata.setCartDurability(meta, nextDurability);
+        DrugItemMetadata.applyCartDurabilityLore(meta, nextDurability, maxDurability);
+        item.setItemMeta(meta);
     }
-    
+
     /**
      * Tracks drug usage for the connoisseur achievement
      */

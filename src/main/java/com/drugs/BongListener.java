@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -43,6 +44,11 @@ public class BongListener implements Listener {
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
+    public BongListener() {
+        DrugsV2 plugin = DrugsV2.getInstance();
+        plugin.getServer().getScheduler().runTaskTimer(plugin, this::cleanupUnsupportedBongs, 20L, 20L);
+    }
+
     @EventHandler
     public void onPlace(PlayerInteractEvent event) {
         if (!BongConfigLoader.isEnabled()) return;
@@ -53,8 +59,12 @@ public class BongListener implements Listener {
 
         Block clicked = event.getClickedBlock();
         if (clicked == null || !clicked.getType().isSolid()) return;
+        if (event.getBlockFace() != BlockFace.UP) {
+            event.getPlayer().sendMessage("§cBongs can only be placed on top of blocks.");
+            return;
+        }
 
-        Block target = clicked.getRelative(event.getBlockFace());
+        Block target = clicked.getRelative(BlockFace.UP);
         if (!target.getType().isAir()) {
             event.getPlayer().sendMessage("§cYou need a clear space to place a bong.");
             return;
@@ -149,6 +159,23 @@ public class BongListener implements Listener {
         player.playSound(anchor, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.9f);
     }
 
+
+    private void cleanupUnsupportedBongs() {
+        for (BongRegistry.BongData data : BongRegistry.getSnapshot().values()) {
+            Location anchor = data.getAnchor();
+            if (anchor == null || anchor.getWorld() == null) {
+                continue;
+            }
+
+            Block support = anchor.getBlock().getRelative(BlockFace.DOWN);
+            if (support.getType().isSolid()) {
+                continue;
+            }
+
+            BongRegistry.remove(anchor);
+            anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1));
+        }
+    }
 
     public void removeOrphanEntitiesAtAnchor(Location anchor) {
         if (anchor == null || anchor.getWorld() == null) return;

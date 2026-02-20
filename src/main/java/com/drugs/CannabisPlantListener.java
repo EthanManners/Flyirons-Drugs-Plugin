@@ -2,6 +2,8 @@ package com.drugs;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,10 +13,17 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Map;
+
 /**
  * Handles placing and harvesting of strain-tagged fern plants.
  */
 public class CannabisPlantListener implements Listener {
+
+    public CannabisPlantListener() {
+        DrugsV2 plugin = DrugsV2.getInstance();
+        plugin.getServer().getScheduler().runTaskTimer(plugin, this::tickAutoGrowth, 20L, 20L);
+    }
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
@@ -74,6 +83,49 @@ public class CannabisPlantListener implements Listener {
 
         // Keep strain anchored at bottom block after bonemeal growth into large fern.
         CannabisPlantRegistry.setPlant(block.getLocation(), parentStrain);
+    }
+
+    private void tickAutoGrowth() {
+        Map<org.bukkit.Location, String> plants = CannabisPlantRegistry.getPlantsSnapshot();
+        if (plants.isEmpty()) {
+            return;
+        }
+
+        int growthSeconds = MechanicsConfig.getCannabisGrowthSeconds();
+        double growthChance = Math.min(1.0D, 1.0D / growthSeconds);
+
+        for (org.bukkit.Location location : plants.keySet()) {
+            Block root = location.getBlock();
+            if (root.getType() != Material.FERN) {
+                continue;
+            }
+
+            Block top = root.getRelative(0, 1, 0);
+            if (!top.getType().isAir() || !root.getRelative(0, -1, 0).getType().isSolid()) {
+                continue;
+            }
+
+            if (Math.random() <= growthChance) {
+                growToLargeFern(root, top);
+            }
+        }
+    }
+
+    private void growToLargeFern(Block root, Block top) {
+        root.setType(Material.LARGE_FERN, false);
+        top.setType(Material.LARGE_FERN, false);
+
+        BlockData lowerData = root.getBlockData();
+        if (lowerData instanceof Bisected bisectedLower) {
+            bisectedLower.setHalf(Bisected.Half.BOTTOM);
+            root.setBlockData(bisectedLower, false);
+        }
+
+        BlockData upperData = top.getBlockData();
+        if (upperData instanceof Bisected bisectedUpper) {
+            bisectedUpper.setHalf(Bisected.Half.TOP);
+            top.setBlockData(bisectedUpper, false);
+        }
     }
 
     private Block getRootFernBlock(Block block) {

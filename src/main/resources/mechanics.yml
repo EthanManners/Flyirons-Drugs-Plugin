@@ -1,0 +1,7 @@
+cannabis:
+  # Average time in seconds for a planted weed fern to auto-grow into a large fern.
+  growth-seconds: 600
+
+cart:
+  # Number of uses before a cart item is consumed.
+  durability-uses: 16

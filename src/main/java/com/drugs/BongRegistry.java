@@ -84,6 +84,11 @@ public final class BongRegistry {
         return null;
     }
 
+
+    public static Map<String, BongData> getSnapshot() {
+        return new HashMap<>(bongs);
+    }
+
     public static void remove(Location location) {
         BongData data = get(location);
         if (data != null) {

@@ -40,6 +40,18 @@ public class CannabisPlantRegistry {
         plants.remove(key(location));
     }
 
+
+    public static Map<Location, String> getPlantsSnapshot() {
+        Map<Location, String> snapshot = new HashMap<>();
+        for (Map.Entry<String, String> entry : plants.entrySet()) {
+            Location location = parseKey(entry.getKey());
+            if (location != null) {
+                snapshot.put(location, entry.getValue());
+            }
+        }
+        return snapshot;
+    }
+
     public static void save() {
         if (file == null) return;
         YamlConfiguration yaml = new YamlConfiguration();
@@ -65,29 +77,33 @@ public class CannabisPlantRegistry {
         }
     }
 
+
+    private static Location parseKey(String key) {
+        String[] parts = key.split(":");
+        if (parts.length != 4) {
+            return null;
+        }
+
+        try {
+            World world = Bukkit.getWorld(UUID.fromString(parts[0]));
+            if (world == null) {
+                return null;
+            }
+
+            int x = Integer.parseInt(parts[1]);
+            int y = Integer.parseInt(parts[2]);
+            int z = Integer.parseInt(parts[3]);
+            return new Location(world, x, y, z);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
     public static void cleanupInvalidPlants() {
         Map<String, String> snapshot = new HashMap<>(plants);
         for (String key : snapshot.keySet()) {
-            String[] parts = key.split(":");
-            if (parts.length != 4) {
-                plants.remove(key);
-                continue;
-            }
-
-            try {
-                World world = Bukkit.getWorld(UUID.fromString(parts[0]));
-                if (world == null) {
-                    plants.remove(key);
-                    continue;
-                }
-
-                int x = Integer.parseInt(parts[1]);
-                int y = Integer.parseInt(parts[2]);
-                int z = Integer.parseInt(parts[3]);
-                if (world.getBlockAt(x, y, z).getType().isAir()) {
-                    plants.remove(key);
-                }
-            } catch (Exception ignored) {
+            Location location = parseKey(key);
+            if (location == null || location.getBlock().getType().isAir()) {
                 plants.remove(key);
             }
         }
