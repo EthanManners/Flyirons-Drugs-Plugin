@@ -35,7 +35,7 @@ import java.util.UUID;
 public class BongListener implements Listener {
 
     private static final String WATER_IN_GLASS_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0YzgyMTRhYjhkZDAwNGJlYmE2YTQxODg2MDQ0NzBhODM4ZmViMWFlOTJlZTYyZDFkMTVlMGRmMGNlYmZmNyJ9fX0=";
-    private static final float NORTH_FACING_YAW = 180.0f;
+    private static final float BASE_MODEL_YAW = 180.0f;
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
@@ -62,7 +62,8 @@ public class BongListener implements Listener {
             return;
         }
 
-        spawnOrReplace(anchor, NORTH_FACING_YAW);
+        float placementYaw = snapToOctantYaw(event.getPlayer().getLocation().getYaw());
+        spawnOrReplace(anchor, placementYaw);
         event.setCancelled(true);
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -147,23 +148,25 @@ public class BongListener implements Listener {
     public void spawnOrReplace(Location anchor, float yaw) {
         BongRegistry.remove(anchor);
 
+        float rotationOffset = yaw - BASE_MODEL_YAW;
+
         List<UUID> displayIds = new ArrayList<>();
         displayIds.add(spawnDisplay(anchor, yaw, createWaterHead(),
-                new Vector3f(0.5f, 0.36f, 0.5f),
+                rotateOffset(new Vector3f(0.5f, 0.36f, 0.5f), rotationOffset),
                 new Vector3f(0.78f, 0.78f, 0.78f),
                 new Quaternionf()));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 0.48f, 0.5f),
+                rotateOffset(new Vector3f(0.5f, 0.48f, 0.5f), rotationOffset),
                 new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 0.72f, 0.5f),
+                rotateOffset(new Vector3f(0.5f, 0.72f, 0.5f), rotationOffset),
                 new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.STONE_SHOVEL),
-                new Vector3f(0.74f, 0.28f, 0.50f),
+                rotateOffset(new Vector3f(0.74f, 0.28f, 0.50f), rotationOffset),
                 new Vector3f(0.25f, 0.25f, 0.25f),
                 new Quaternionf()
                         .rotateY((float) Math.toRadians(1))
@@ -184,7 +187,7 @@ public class BongListener implements Listener {
         ItemDisplay display = anchor.getWorld().spawn(displayLocation, ItemDisplay.class, spawned -> {
             spawned.setPersistent(true);
             spawned.setItemStack(displayItem);
-            spawned.setRotation(NORTH_FACING_YAW, 0.0f);
+            spawned.setRotation(yaw, 0.0f);
             spawned.setTransformation(new Transformation(
                     new Vector3f(0f, 0f, 0f),
                     new Quaternionf(),
@@ -193,6 +196,22 @@ public class BongListener implements Listener {
             ));
         });
         return display.getUniqueId();
+    }
+
+    private Vector3f rotateOffset(Vector3f offset, float yawDegrees) {
+        float radians = (float) Math.toRadians(yawDegrees);
+        float centeredX = offset.x - 0.5f;
+        float centeredZ = offset.z - 0.5f;
+        float cos = (float) Math.cos(radians);
+        float sin = (float) Math.sin(radians);
+
+        float rotatedX = centeredX * cos - centeredZ * sin;
+        float rotatedZ = centeredX * sin + centeredZ * cos;
+        return new Vector3f(rotatedX + 0.5f, offset.y, rotatedZ + 0.5f);
+    }
+
+    private float snapToOctantYaw(float yaw) {
+        return Math.round(yaw / 45.0f) * 45.0f;
     }
 
     private ItemStack createWaterHead() {
