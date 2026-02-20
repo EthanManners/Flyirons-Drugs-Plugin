@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -145,8 +146,21 @@ public class BongListener implements Listener {
         player.playSound(anchor, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.9f);
     }
 
+
+    public void removeOrphanEntitiesAtAnchor(Location anchor) {
+        if (anchor == null || anchor.getWorld() == null) return;
+
+        Location center = anchor.clone().add(0.5, 0.5, 0.5);
+        for (Entity nearby : anchor.getWorld().getNearbyEntities(center, 0.75, 1.2, 0.75)) {
+            if (nearby instanceof Interaction || nearby instanceof ItemDisplay) {
+                nearby.remove();
+            }
+        }
+    }
+
     public void spawnOrReplace(Location anchor, float yaw) {
         BongRegistry.remove(anchor);
+        removeOrphanEntitiesAtAnchor(anchor);
 
         float rotationOffset = yaw - BASE_MODEL_YAW;
 

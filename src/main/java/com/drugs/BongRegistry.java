@@ -163,6 +163,10 @@ public final class BongRegistry {
                 continue;
             }
 
+            if (!anchor.getChunk().isLoaded()) {
+                anchor.getChunk().load();
+            }
+
             Entity existingInteraction = getEntity(data.interactionId);
             boolean allDisplaysPresent = !data.displayIds.isEmpty();
             for (UUID displayId : data.displayIds) {
@@ -176,6 +180,7 @@ public final class BongRegistry {
                 continue;
             }
 
+            listener.removeOrphanEntitiesAtAnchor(anchor);
             listener.spawnOrReplace(anchor, data.yaw);
         }
     }
