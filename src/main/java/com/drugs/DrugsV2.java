@@ -16,6 +16,7 @@ public class DrugsV2 extends JavaPlugin {
     private static DrugsV2 instance;
     private FileConfiguration recipesConfig;
     private File recipesFile;
+    private BongListener bongListener;
 
     public static DrugsV2 getInstance() {
         return instance;
@@ -34,6 +35,7 @@ public class DrugsV2 extends JavaPlugin {
         saveOverdoseConfig();
         saveAddictionConfig();
         saveStrainsConfig();
+        saveBongConfig();
 
         // Initialize performance optimizer first
         PerformanceOptimizer.initialize();
@@ -51,7 +53,9 @@ public class DrugsV2 extends JavaPlugin {
         // Load addiction settings and cure definitions
         AddictionConfigLoader.load(this);
         StrainConfigLoader.load(getDataFolder());
+        BongConfigLoader.load(getDataFolder());
         CannabisPlantRegistry.init(getDataFolder());
+        BongRegistry.init(getDataFolder());
 
         // Initialize core drug system
         DrugRegistry.init(this);
@@ -69,7 +73,11 @@ public class DrugsV2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CannabisPlantListener(), this);
         getServer().getPluginManager().registerEvents(new StrainCraftingListener(), this);
         getServer().getPluginManager().registerEvents(new StrainsMenuListener(), this);
+        bongListener = new BongListener();
+        getServer().getPluginManager().registerEvents(bongListener, this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
+
+        BongRegistry.respawnMissing(bongListener);
 
         // Register commands
         getCommand("drugs").setExecutor(new DrugsCommand());
@@ -89,6 +97,7 @@ public class DrugsV2 extends JavaPlugin {
     @Override
     public void onDisable() {
         CannabisPlantRegistry.save();
+        BongRegistry.save();
         AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
     }
@@ -148,7 +157,18 @@ public class DrugsV2 extends JavaPlugin {
         }
     }
 
+    public void saveBongConfig() {
+        File file = new File(getDataFolder(), "bong.yml");
+        if (!file.exists()) {
+            saveResource("bong.yml", false);
+        }
+    }
+
     public FileConfiguration getRecipesConfig() {
         return recipesConfig;
+    }
+
+    public BongListener getBongListener() {
+        return bongListener;
     }
 }

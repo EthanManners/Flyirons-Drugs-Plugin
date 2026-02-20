@@ -68,6 +68,7 @@ public class DrugsTabCompleter implements TabCompleter {
         if (args.length == 3 && args[0].equalsIgnoreCase("give")) {
             List<String> itemIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
             itemIds.addAll(CureRegistry.getRegisteredCureNames());
+            itemIds.add("bong");
             itemIds.add("all");
             return partialMatch(args[2], itemIds);
         }

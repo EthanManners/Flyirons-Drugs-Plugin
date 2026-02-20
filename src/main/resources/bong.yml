@@ -1,0 +1,8 @@
+enabled: true
+base-drug-id: blunt
+cooldown-ms: 1500
+
+item:
+  material: GLASS_BOTTLE
+  display-name: '&bGlass Bong'
+  custom-model-data: 0
