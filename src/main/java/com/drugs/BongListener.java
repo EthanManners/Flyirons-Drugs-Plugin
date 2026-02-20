@@ -1,5 +1,6 @@
 package com.drugs;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,19 +11,27 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Transformation;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class BongListener implements Listener {
+
+    private static final String WATER_IN_GLASS_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0YzgyMTRhYjhkZDAwNGJlYmE2YTQxODg2MDQ0NzBhODM4ZmViMWFlOTJlZTYyZDFkMTVlMGRmMGNlYmZmNyJ9fX0=";
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
@@ -38,8 +47,8 @@ public class BongListener implements Listener {
         if (clicked == null || !clicked.getType().isSolid()) return;
 
         Block target = clicked.getRelative(event.getBlockFace());
-        if (!target.getType().isAir()) {
-            event.getPlayer().sendMessage("§cYou need an empty block to place a bong.");
+        if (!target.getType().isAir() || !target.getRelative(0, 1, 0).getType().isAir() || !target.getRelative(0, 2, 0).getType().isAir()) {
+            event.getPlayer().sendMessage("§cYou need a clear 1x1x3 space to place a bong.");
             return;
         }
 
@@ -69,16 +78,6 @@ public class BongListener implements Listener {
 
         event.setCancelled(true);
         Player player = event.getPlayer();
-
-        if (player.isSneaking() && player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            Location anchor = data.getAnchor();
-            if (anchor != null) {
-                BongRegistry.remove(anchor);
-                anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1));
-            }
-            player.sendMessage("§7You packed up the bong.");
-            return;
-        }
 
         if (isOnCooldown(player)) {
             player.sendMessage("§7The bong is still warm. Give it a second.");
@@ -120,30 +119,118 @@ public class BongListener implements Listener {
         player.sendMessage("§2You take a bong hit. §7(Strain: §a" + strainName + "§7)");
     }
 
+    @EventHandler
+    public void onPunch(EntityDamageByEntityEvent event) {
+        if (!BongConfigLoader.isEnabled()) return;
+        if (!(event.getDamager() instanceof Player player)) return;
+
+        BongRegistry.BongData data = BongRegistry.findByEntity(event.getEntity().getUniqueId());
+        if (data == null) return;
+
+        event.setCancelled(true);
+        Location anchor = data.getAnchor();
+        if (anchor == null) return;
+
+        BongRegistry.remove(anchor);
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            anchor.getWorld().dropItemNaturally(anchor.clone().add(0.5, 0.2, 0.5), BongItemFactory.createBongItem(1));
+        }
+
+        player.playSound(anchor, Sound.BLOCK_GLASS_BREAK, 1.0f, 0.9f);
+    }
+
     public void spawnOrReplace(Location anchor, float yaw) {
         BongRegistry.remove(anchor);
 
-        Location displayLocation = anchor.clone().add(0.5, 0.15, 0.5);
+        List<UUID> displayIds = new ArrayList<>();
+        displayIds.add(spawnDisplay(anchor, yaw, createWaterHead(),
+                new Vector3f(0.5f, 0.15f, 0.5f),
+                new Vector3f(1.05f, 1.05f, 1.05f),
+                new Quaternionf()));
+
+        float radius = 0.14f;
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
+                new Vector3f(0.5f + radius, 1.20f, 0.5f),
+                new Vector3f(0.20f, 2.0f, 0.20f),
+                new Quaternionf()));
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
+                new Vector3f(0.5f - radius, 1.20f, 0.5f),
+                new Vector3f(0.20f, 2.0f, 0.20f),
+                new Quaternionf()));
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
+                new Vector3f(0.5f, 1.20f, 0.5f + radius),
+                new Vector3f(0.20f, 2.0f, 0.20f),
+                new Quaternionf().rotateX((float) Math.toRadians(90))));
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
+                new Vector3f(0.5f, 1.20f, 0.5f - radius),
+                new Vector3f(0.20f, 2.0f, 0.20f),
+                new Quaternionf().rotateX((float) Math.toRadians(90))));
+
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GOLDEN_SHOVEL),
+                new Vector3f(0.80f, 0.62f, 0.5f),
+                new Vector3f(0.7f, 0.7f, 0.7f),
+                new Quaternionf().rotateZ((float) Math.toRadians(95))));
+
+        Location interactionLocation = anchor.clone().add(0.5, 1.1, 0.5);
+        Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
+            spawned.setInteractionWidth(0.9f);
+            spawned.setInteractionHeight(2.2f);
+            spawned.setPersistent(true);
+        });
+
+        BongRegistry.put(anchor, new BongRegistry.BongData(anchor, yaw, displayIds, hitbox.getUniqueId()));
+    }
+
+    private UUID spawnDisplay(Location anchor, float yaw, ItemStack displayItem, Vector3f offset, Vector3f scale, Quaternionf rightRotation) {
+        Location displayLocation = anchor.clone().add(offset.x, offset.y, offset.z);
         ItemDisplay display = anchor.getWorld().spawn(displayLocation, ItemDisplay.class, spawned -> {
             spawned.setPersistent(true);
-            spawned.setItemStack(BongItemFactory.createBongItem(1));
+            spawned.setItemStack(displayItem);
             spawned.setRotation(yaw, 0.0f);
             spawned.setTransformation(new Transformation(
                     new Vector3f(0f, 0f, 0f),
                     new Quaternionf(),
-                    new Vector3f(1.0f, 1.0f, 1.0f),
-                    new Quaternionf()
+                    scale,
+                    rightRotation
             ));
         });
+        return display.getUniqueId();
+    }
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.35, 0.5);
-        Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
-            spawned.setInteractionWidth(0.6f);
-            spawned.setInteractionHeight(0.8f);
-            spawned.setPersistent(true);
-        });
+    private ItemStack createWaterHead() {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) head.getItemMeta();
+        if (meta == null) {
+            return head;
+        }
 
-        BongRegistry.put(anchor, new BongRegistry.BongData(anchor, yaw, display.getUniqueId(), hitbox.getUniqueId()));
+        meta.setDisplayName("§6§n§lWater in Glass");
+        meta.setLore(List.of("§7Custom Head ID: 118716", "§9www.minecraft-heads.com"));
+        applyBase64Texture(meta, WATER_IN_GLASS_TEXTURE);
+        head.setItemMeta(meta);
+        return head;
+    }
+
+    private void applyBase64Texture(SkullMeta meta, String textureValue) {
+        try {
+            Class<?> profileClass = Class.forName("com.mojang.authlib.GameProfile");
+            Class<?> propertyClass = Class.forName("com.mojang.authlib.properties.Property");
+            Object profile = profileClass.getConstructor(UUID.class, String.class)
+                    .newInstance(UUID.randomUUID(), "bong-head");
+
+            Method getProperties = profileClass.getMethod("getProperties");
+            Object properties = getProperties.invoke(profile);
+            Method put = properties.getClass().getMethod("put", Object.class, Object.class);
+            Object property = propertyClass.getConstructor(String.class, String.class)
+                    .newInstance("textures", textureValue);
+            put.invoke(properties, "textures", property);
+
+            Method setProfile = meta.getClass().getDeclaredMethod("setProfile", profileClass);
+            setProfile.setAccessible(true);
+            setProfile.invoke(meta, profile);
+        } catch (Exception ex) {
+            Bukkit.getLogger().warning("[DrugsV2] Failed to apply bong head texture: " + ex.getMessage());
+        }
     }
 
     private boolean isOnCooldown(Player player) {

@@ -8,7 +8,9 @@ import org.bukkit.entity.Entity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,16 +23,16 @@ public final class BongRegistry {
         private final int y;
         private final int z;
         private final float yaw;
-        private UUID displayId;
+        private final List<UUID> displayIds;
         private UUID interactionId;
 
-        public BongData(Location anchor, float yaw, UUID displayId, UUID interactionId) {
+        public BongData(Location anchor, float yaw, List<UUID> displayIds, UUID interactionId) {
             this.worldId = anchor.getWorld().getUID().toString();
             this.x = anchor.getBlockX();
             this.y = anchor.getBlockY();
             this.z = anchor.getBlockZ();
             this.yaw = yaw;
-            this.displayId = displayId;
+            this.displayIds = displayIds == null ? new ArrayList<>() : new ArrayList<>(displayIds);
             this.interactionId = interactionId;
         }
 
@@ -38,6 +40,11 @@ public final class BongRegistry {
             World world = Bukkit.getWorld(UUID.fromString(worldId));
             if (world == null) return null;
             return new Location(world, x, y, z);
+        }
+
+        public boolean hasEntity(UUID entityId) {
+            if (entityId == null) return false;
+            return entityId.equals(interactionId) || displayIds.contains(entityId);
         }
     }
 
@@ -69,10 +76,20 @@ public final class BongRegistry {
         return null;
     }
 
+    public static BongData findByEntity(UUID entityId) {
+        if (entityId == null) return null;
+        for (BongData data : bongs.values()) {
+            if (data.hasEntity(entityId)) return data;
+        }
+        return null;
+    }
+
     public static void remove(Location location) {
         BongData data = get(location);
         if (data != null) {
-            removeEntity(data.displayId);
+            for (UUID displayId : data.displayIds) {
+                removeEntity(displayId);
+            }
             removeEntity(data.interactionId);
             bongs.remove(key(location));
         }
@@ -89,7 +106,7 @@ public final class BongRegistry {
             yaml.set(base + ".y", data.y);
             yaml.set(base + ".z", data.z);
             yaml.set(base + ".yaw", data.yaw);
-            yaml.set(base + ".display", data.displayId == null ? null : data.displayId.toString());
+            yaml.set(base + ".displays", data.displayIds.stream().map(UUID::toString).toList());
             yaml.set(base + ".interaction", data.interactionId == null ? null : data.interactionId.toString());
         }
         try {
@@ -114,11 +131,25 @@ public final class BongRegistry {
             int y = yaml.getInt(node + ".y");
             int z = yaml.getInt(node + ".z");
             float yaw = (float) yaml.getDouble(node + ".yaw", 0.0);
-            UUID display = parseUuid(yaml.getString(node + ".display"));
+
+            List<UUID> displays = new ArrayList<>();
+            for (String display : yaml.getStringList(node + ".displays")) {
+                UUID parsed = parseUuid(display);
+                if (parsed != null) {
+                    displays.add(parsed);
+                }
+            }
+            if (displays.isEmpty()) {
+                UUID legacyDisplay = parseUuid(yaml.getString(node + ".display"));
+                if (legacyDisplay != null) {
+                    displays.add(legacyDisplay);
+                }
+            }
+
             UUID interaction = parseUuid(yaml.getString(node + ".interaction"));
 
             Location location = new Location(world, x, y, z);
-            bongs.put(key(location), new BongData(location, yaw, display, interaction));
+            bongs.put(key(location), new BongData(location, yaw, displays, interaction));
         }
     }
 
@@ -132,9 +163,16 @@ public final class BongRegistry {
                 continue;
             }
 
-            Entity existingDisplay = getEntity(data.displayId);
             Entity existingInteraction = getEntity(data.interactionId);
-            if (existingDisplay != null && existingInteraction != null) {
+            boolean allDisplaysPresent = !data.displayIds.isEmpty();
+            for (UUID displayId : data.displayIds) {
+                if (getEntity(displayId) == null) {
+                    allDisplaysPresent = false;
+                    break;
+                }
+            }
+
+            if (existingInteraction != null && allDisplaysPresent) {
                 continue;
             }
 
