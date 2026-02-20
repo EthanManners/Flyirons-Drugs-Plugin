@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.bukkit.util.Transformation;
@@ -37,6 +39,7 @@ public class BongListener implements Listener {
 
     private static final String WATER_IN_GLASS_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0YzgyMTRhYjhkZDAwNGJlYmE2YTQxODg2MDQ0NzBhODM4ZmViMWFlOTJlZTYyZDFkMTVlMGRmMGNlYmZmNyJ9fX0=";
     private static final float BASE_MODEL_YAW = 180.0f;
+    private static final String BONG_ANCHOR_PDC = "bong_anchor";
 
     private final Map<String, Long> cooldowns = new HashMap<>();
 
@@ -150,9 +153,15 @@ public class BongListener implements Listener {
     public void removeOrphanEntitiesAtAnchor(Location anchor) {
         if (anchor == null || anchor.getWorld() == null) return;
 
+        String anchorTag = getAnchorTag(anchor);
         Location center = anchor.clone().add(0.5, 0.5, 0.5);
-        for (Entity nearby : anchor.getWorld().getNearbyEntities(center, 0.75, 1.2, 0.75)) {
-            if (nearby instanceof Interaction || nearby instanceof ItemDisplay) {
+        for (Entity nearby : anchor.getWorld().getNearbyEntities(center, 0.85, 1.25, 0.85)) {
+            if (!(nearby instanceof Interaction || nearby instanceof ItemDisplay)) {
+                continue;
+            }
+
+            String taggedAnchor = nearby.getPersistentDataContainer().get(getAnchorDataKey(), PersistentDataType.STRING);
+            if (anchorTag.equals(taggedAnchor) || isLegacyEntityAtAnchor(nearby, anchor)) {
                 nearby.remove();
             }
         }
@@ -191,6 +200,7 @@ public class BongListener implements Listener {
             spawned.setInteractionWidth(0.55f);
             spawned.setInteractionHeight(0.45f);
             spawned.setPersistent(true);
+            spawned.getPersistentDataContainer().set(getAnchorDataKey(), PersistentDataType.STRING, getAnchorTag(anchor));
         });
 
         BongRegistry.put(anchor, new BongRegistry.BongData(anchor, yaw, displayIds, hitbox.getUniqueId()));
@@ -208,8 +218,26 @@ public class BongListener implements Listener {
                     scale,
                     rightRotation
             ));
+            spawned.getPersistentDataContainer().set(getAnchorDataKey(), PersistentDataType.STRING, getAnchorTag(anchor));
         });
         return display.getUniqueId();
+    }
+
+    private NamespacedKey getAnchorDataKey() {
+        return new NamespacedKey(DrugsV2.getInstance(), BONG_ANCHOR_PDC);
+    }
+
+    private String getAnchorTag(Location anchor) {
+        return anchor.getWorld().getUID() + ":" + anchor.getBlockX() + ":" + anchor.getBlockY() + ":" + anchor.getBlockZ();
+    }
+
+    private boolean isLegacyEntityAtAnchor(Entity entity, Location anchor) {
+        Location entityLocation = entity.getLocation();
+        return entityLocation.getWorld() != null
+                && entityLocation.getWorld().getUID().equals(anchor.getWorld().getUID())
+                && entityLocation.getBlockX() == anchor.getBlockX()
+                && entityLocation.getBlockY() == anchor.getBlockY()
+                && entityLocation.getBlockZ() == anchor.getBlockZ();
     }
 
     private Vector3f rotateOffset(Vector3f offset, float yawDegrees) {
