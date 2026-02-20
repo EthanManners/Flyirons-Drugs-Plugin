@@ -151,25 +151,25 @@ public class BongListener implements Listener {
                 new Quaternionf()));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 0.88f, 0.5f),
+                new Vector3f(0.5f, 0.74f, 0.5f),
                 new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
-                new Vector3f(0.5f, 1.08f, 0.5f),
-                new Vector3f(0.22f, 0.22f, 0.22f),
+                new Vector3f(0.5f, 0.98f, 0.5f),
+                new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GOLDEN_SHOVEL),
-                new Vector3f(0.68f, 0.58f, 0.5f),
-                new Vector3f(0.25f, 0.25f, 0.25f),
+                new Vector3f(0.60f, 0.50f, 0.5f),
+                new Vector3f(0.20f, 0.20f, 0.20f),
                 new Quaternionf()
                         .rotateY((float) Math.toRadians(90))
-                        .rotateZ((float) Math.toRadians(-35))));
+                        .rotateZ((float) Math.toRadians(-28))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 0.72, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.64, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
             spawned.setInteractionWidth(0.8f);
-            spawned.setInteractionHeight(1.25f);
+            spawned.setInteractionHeight(1.15f);
             spawned.setPersistent(true);
         });
 
