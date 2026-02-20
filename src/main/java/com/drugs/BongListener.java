@@ -18,11 +18,13 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 import org.bukkit.util.Transformation;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +49,8 @@ public class BongListener implements Listener {
         if (clicked == null || !clicked.getType().isSolid()) return;
 
         Block target = clicked.getRelative(event.getBlockFace());
-        if (!target.getType().isAir() || !target.getRelative(0, 1, 0).getType().isAir() || !target.getRelative(0, 2, 0).getType().isAir()) {
-            event.getPlayer().sendMessage("§cYou need a clear 1x1x3 space to place a bong.");
+        if (!target.getType().isAir() || !target.getRelative(0, 1, 0).getType().isAir()) {
+            event.getPlayer().sendMessage("§cYou need a clear 1x1x2 space to place a bong.");
             return;
         }
 
@@ -144,37 +146,30 @@ public class BongListener implements Listener {
 
         List<UUID> displayIds = new ArrayList<>();
         displayIds.add(spawnDisplay(anchor, yaw, createWaterHead(),
-                new Vector3f(0.5f, 0.15f, 0.5f),
-                new Vector3f(1.05f, 1.05f, 1.05f),
+                new Vector3f(0.5f, 0.36f, 0.5f),
+                new Vector3f(0.78f, 0.78f, 0.78f),
                 new Quaternionf()));
 
-        float radius = 0.14f;
-        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
-                new Vector3f(0.5f + radius, 1.20f, 0.5f),
-                new Vector3f(0.20f, 2.0f, 0.20f),
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
+                new Vector3f(0.5f, 0.88f, 0.5f),
+                new Vector3f(0.24f, 0.24f, 0.24f),
                 new Quaternionf()));
-        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
-                new Vector3f(0.5f - radius, 1.20f, 0.5f),
-                new Vector3f(0.20f, 2.0f, 0.20f),
+        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS),
+                new Vector3f(0.5f, 1.08f, 0.5f),
+                new Vector3f(0.22f, 0.22f, 0.22f),
                 new Quaternionf()));
-        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
-                new Vector3f(0.5f, 1.20f, 0.5f + radius),
-                new Vector3f(0.20f, 2.0f, 0.20f),
-                new Quaternionf().rotateX((float) Math.toRadians(90))));
-        displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GLASS_PANE),
-                new Vector3f(0.5f, 1.20f, 0.5f - radius),
-                new Vector3f(0.20f, 2.0f, 0.20f),
-                new Quaternionf().rotateX((float) Math.toRadians(90))));
 
         displayIds.add(spawnDisplay(anchor, yaw, new ItemStack(Material.GOLDEN_SHOVEL),
-                new Vector3f(0.80f, 0.62f, 0.5f),
-                new Vector3f(0.7f, 0.7f, 0.7f),
-                new Quaternionf().rotateZ((float) Math.toRadians(95))));
+                new Vector3f(0.68f, 0.58f, 0.5f),
+                new Vector3f(0.25f, 0.25f, 0.25f),
+                new Quaternionf()
+                        .rotateY((float) Math.toRadians(90))
+                        .rotateZ((float) Math.toRadians(-35))));
 
-        Location interactionLocation = anchor.clone().add(0.5, 1.1, 0.5);
+        Location interactionLocation = anchor.clone().add(0.5, 0.72, 0.5);
         Interaction hitbox = anchor.getWorld().spawn(interactionLocation, Interaction.class, spawned -> {
-            spawned.setInteractionWidth(0.9f);
-            spawned.setInteractionHeight(2.2f);
+            spawned.setInteractionWidth(0.8f);
+            spawned.setInteractionHeight(1.25f);
             spawned.setPersistent(true);
         });
 
@@ -206,31 +201,37 @@ public class BongListener implements Listener {
 
         meta.setDisplayName("§6§n§lWater in Glass");
         meta.setLore(List.of("§7Custom Head ID: 118716", "§9www.minecraft-heads.com"));
-        applyBase64Texture(meta, WATER_IN_GLASS_TEXTURE);
+        applyHeadTexture(meta);
         head.setItemMeta(meta);
         return head;
     }
 
-    private void applyBase64Texture(SkullMeta meta, String textureValue) {
+    private void applyHeadTexture(SkullMeta meta) {
         try {
-            Class<?> profileClass = Class.forName("com.mojang.authlib.GameProfile");
-            Class<?> propertyClass = Class.forName("com.mojang.authlib.properties.Property");
-            Object profile = profileClass.getConstructor(UUID.class, String.class)
-                    .newInstance(UUID.randomUUID(), "bong-head");
-
-            Method getProperties = profileClass.getMethod("getProperties");
-            Object properties = getProperties.invoke(profile);
-            Method put = properties.getClass().getMethod("put", Object.class, Object.class);
-            Object property = propertyClass.getConstructor(String.class, String.class)
-                    .newInstance("textures", textureValue);
-            put.invoke(properties, "textures", property);
-
-            Method setProfile = meta.getClass().getDeclaredMethod("setProfile", profileClass);
-            setProfile.setAccessible(true);
-            setProfile.invoke(meta, profile);
+            PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID());
+            PlayerTextures textures = profile.getTextures();
+            textures.setSkin(URI.create(extractTextureUrl(WATER_IN_GLASS_TEXTURE)).toURL());
+            profile.setTextures(textures);
+            meta.setOwnerProfile(profile);
         } catch (Exception ex) {
             Bukkit.getLogger().warning("[DrugsV2] Failed to apply bong head texture: " + ex.getMessage());
         }
+    }
+
+    private String extractTextureUrl(String base64Texture) {
+        byte[] decoded = java.util.Base64.getDecoder().decode(base64Texture);
+        String json = new String(decoded, java.nio.charset.StandardCharsets.UTF_8);
+        String marker = "\"url\":\"";
+        int start = json.indexOf(marker);
+        if (start < 0) {
+            return "http://textures.minecraft.net/texture/f04c8214ab8dd004beba6a4188604470a838feb1ae92ee62d1d15e0df0cebff7";
+        }
+        start += marker.length();
+        int end = json.indexOf('"', start);
+        if (end < 0) {
+            return "http://textures.minecraft.net/texture/f04c8214ab8dd004beba6a4188604470a838feb1ae92ee62d1d15e0df0cebff7";
+        }
+        return json.substring(start, end);
     }
 
     private boolean isOnCooldown(Player player) {
