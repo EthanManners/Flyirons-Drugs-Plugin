@@ -44,6 +44,10 @@ public class DrugMenuGUI {
             }
         }
 
+        if (BongConfigLoader.isEnabled()) {
+            menuItems.add(BongItemFactory.createBongItem(1));
+        }
+
         int maxPage = Math.max(1, (int) Math.ceil(menuItems.size() / (double) ITEMS_PER_PAGE));
 
         // Clamp page number
