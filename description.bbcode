@@ -6,18 +6,20 @@
 
 [URL='https://discord.gg/SaxTyAFHV9'][B]Discord[/B][/URL]
 
-Flyiron’s Drugs is a [B]persistent drug, addiction, overdose, and withdrawal system[/B] designed for survival and PvP SMP servers.
+Flyiron’s Drugs is a [B]persistent drug, addiction, overdose, and withdrawal system[/B] designed first for [B]survival SMP servers[/B], and also works well in PvP/economy/factions environments.
 It adds a long-term gameplay layer built around [B]risk, supply chains, tolerance, addiction, overdose, and recovery[/B], rather than short-lived novelty buffs.
 
 This is a fork and extension of the original [B]Norses Drugs[/B] plugin, with a strong focus on:
 
 [LIST]
 [*]Persistent addiction mechanics
-[*]Config-driven overdose risk
+[*]Config-driven overdose risk and outcomes
 [*]Resource-heavy drug production
 [*]Meaningful tradeoffs between power and long-term consequences
 [/LIST]
-Default configs are [B]intentionally designed and balanced[/B] and are ready to use out of the box.
+
+[B]Out of the box by design:[/B] the default configs are intentionally balanced relative to each other and are meant to be dropped into a live survival server with minimal setup.
+You [I]can[/I] rebalance everything, but the default experience is already engineered to create stable gameplay loops.
 
 [SIZE=5][B]Disclaimer[/B][/SIZE]
 This plugin is a [B]fictional gameplay system[/B] created for use in Minecraft servers.
@@ -41,6 +43,7 @@ Use cases include:
 [*]Team coordination and visibility
 [*]Risk/reward decision making
 [/LIST]
+
 [SIZE=4][B]Addiction & Tolerance[/B][/SIZE]
 Repeated use of drugs builds [B]tolerance[/B]. Once tolerance reaches a threshold, the player becomes [B]addicted[/B].
 
@@ -52,24 +55,27 @@ Key points:
 [*]High-risk drugs can cause addiction after very few uses
 [*]Tolerance reduces effectiveness of repeated doses
 [/LIST]
+
 [SIZE=4][B]Overdose System[/B][/SIZE]
 Using drugs too frequently or at high tolerance levels can result in an [B]overdose[/B].
 
 Overdose mechanics:
 
 [LIST]
-[*]Are configured per-drug
+[*]Are configurable per drug
 [*]Scale with tolerance and recent usage
 [*]Can result in severe effects or death
 [*]Trigger custom death messages indicating the drug involved
 [/LIST]
+
 Overdose risk varies by drug:
 
 [LIST]
 [*]Some drugs are [B]non-lethal[/B]
-[*]Others are extremely unforgiving and intended to be dangerous
+[*]Others are intentionally unforgiving
 [/LIST]
-This makes powerful drugs risky even for experienced players.
+
+This keeps high-power strategies risky even for experienced players.
 
 [SIZE=4][B]Withdrawal System[/B][/SIZE]
 Once addicted, players suffer [B]persistent withdrawal effects[/B].
@@ -79,37 +85,52 @@ Withdrawal:
 [LIST]
 [*]Does [B]not expire automatically[/B]
 [*]Persists until cured or temporarily blocked
-[*]Is different depending on the drug class
+[*]Varies by drug class
 [/LIST]
+
 To escape withdrawal, a player must either:
 
 [LIST]
 [*]Use the drug again (temporary relief), or
 [*]Use the appropriate [B]cure item[/B]
 [/LIST]
+
 [SIZE=4][B]Cures & Recovery[/B][/SIZE]
 Different addictions require different cures:
 
 [LIST]
 [*][B]Suboxone[/B]
 [LIST]
-[*]Cures opioid addiction (Heroin, Fent)
+[*]Cures opioid addiction (Heroin, Fent, and configured profiles)
 [/LIST]
 [*][B]CBD[/B]
 [LIST]
-[*]Cures weed addiction
-[*]Weed withdrawal only causes hunger
+[*]Cures weed addiction paths
+[*]Weed withdrawal is hunger-based
 [/LIST]
 [*][B]Sleeping[/B]
 [LIST]
-[*]Cures stimulant addictions (Cocaine, Meth)
+[*]Cures configured stimulant addictions (including Meth)
 [/LIST]
 [*][B]Enchanted Golden Apple[/B]
 [LIST]
-[*]Universal cure
-[*]Removes all addictions and withdrawals instantly
+[*]Universal cure path
+[*]Removes addictions/withdrawals instantly
 [/LIST]
 [/LIST]
+
+[SIZE=5][B]Game Design Dynamics (Why the Defaults Matter)[/B][/SIZE]
+The balancing is engineered to shape [B]server behavior[/B], not just item effects.
+
+[LIST]
+[*][B]Survival SMPs (primary target):[/B] players form farms, trade routes, and cure supply chains; repeated users create demand pressure and territorial hotspots.
+[*][B]Economy servers:[/B] consumables become sinks and profit drivers; cure scarcity and dangerous recipes create meaningful pricing and market cycles.
+[*][B]PvP/Factions:[/B] short combat spikes are powerful, but addiction/tolerance punishes endless spam, creating timing-based fights and resource attrition.
+[*][B]Long-running worlds:[/B] persistent consequences produce player stories (dependence, recovery, overdoses, black-market trading, logistics wars).
+[/LIST]
+
+In short, the plugin is designed so power has upkeep costs, and those upkeep costs create emergent social/economic outcomes.
+
 [SIZE=5][B]Drug List, Effects, Addiction & Overdose[/B][/SIZE]
 [SIZE=4][B]Heroin[/B][/SIZE]
 [LIST]
@@ -118,13 +139,15 @@ Different addictions require different cures:
 [*][B]Overdose Risk[/B]: High
 [*][B]Notes[/B]: Long-lasting damage resistance at the cost of mobility
 [/LIST]
+
 [SIZE=4][B]Fent[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Strength I, Resistance III, Absorption II, Slowness IV
 [*][B]Addiction[/B]: Extremely High
 [*][B]Overdose Risk[/B]: Very High
-[*][B]Notes[/B]: Cheap, powerful, and extremely dangerous — rapid addiction and lethal overdose potential
+[*][B]Notes[/B]: Cheap, powerful, and extremely dangerous
 [/LIST]
+
 [SIZE=4][B]Cocaine[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Speed IV, Strength I, Saturation III
@@ -132,6 +155,7 @@ Different addictions require different cures:
 [*][B]Overdose Risk[/B]: High
 [*][B]Notes[/B]: Short-duration burst drug with rapid tolerance gain
 [/LIST]
+
 [SIZE=4][B]Meth[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Speed III, Haste II, Weakness II
@@ -139,6 +163,7 @@ Different addictions require different cures:
 [*][B]Overdose Risk[/B]: Medium
 [*][B]Notes[/B]: Strong mining utility with combat drawbacks
 [/LIST]
+
 [SIZE=4][B]Molly[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Regeneration II, Absorption II, Glowing
@@ -146,6 +171,7 @@ Different addictions require different cures:
 [*][B]Overdose Risk[/B]: Low
 [*][B]Notes[/B]: Glowing is a tactical tradeoff in PvP
 [/LIST]
+
 [SIZE=4][B]Shrooms[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Jump Boost II, Luck X, Nausea X
@@ -153,6 +179,7 @@ Different addictions require different cures:
 [*][B]Overdose Risk[/B]: None
 [*][B]Notes[/B]: Non-lethal, visual and exploration-focused
 [/LIST]
+
 [SIZE=4][B]Weed (Blunt / Joint / Edible / Cart)[/B][/SIZE]
 All weed variants share:
 
@@ -160,16 +187,18 @@ All weed variants share:
 [*][B]Effects[/B]: Resistance, Slowness, Hunger
 [*][B]Addiction[/B]: Low
 [*][B]Withdrawal[/B]: Hunger only
-[*][B]Overdose Risk[/B]: None
+[*][B]Overdose Risk[/B]: Non-lethal profile
 [/LIST]
+
 Variants differ in strength, duration, and convenience:
 
 [LIST]
 [*]Blunt
 [*]Joint
 [*]Edible
-[*]Cart (non-stackable, intentional)
+[*]Cart (durability-limited)
 [/LIST]
+
 [SIZE=4][B]Glue[/B][/SIZE]
 [LIST]
 [*][B]Effects[/B]: Poison, Mining Fatigue
@@ -177,24 +206,49 @@ Variants differ in strength, duration, and convenience:
 [*][B]Overdose Risk[/B]: High
 [*][B]Notes[/B]: Cheap, destructive, and intentionally unrewarding
 [/LIST]
-[SIZE=5][B]Crafting & Supply Chains[/B][/SIZE]
-Drug recipes are intentionally tied to [B]non-AFK, high-effort resources[/B], including:
 
+[SIZE=5][B]Cannabis Strains, Bongs, and New Mechanics[/B][/SIZE]
 [LIST]
-[*]Ferns (manual growth)
-[*]Wither Roses
-[*]Blaze items
-[*]Ender Dragon resources
-[*]Nether and End progression
+[*]Large strain registry with progression and mutation logic
+[*]/strains GUI for browsing strain data
+[*]Placeable bong system with usage durability
+[*]Cart durability and feedback systems
+[*]Configurable cannabis growth timing
 [/LIST]
+
+[SIZE=5][B]Commands[/B][/SIZE]
+[SIZE=4][B]Player Commands[/B][/SIZE]
+[LIST]
+[*][B]/drugs[/B] - Open the main menu
+[*][B]/drugs help[/B] - Show command help
+[*][B]/tolerance[/B] - View current tolerance/potency levels
+[*][B]/strains[/B] - Open strains menu
+[*][B]/drugs achievements[/B] - View achievement progress
+[/LIST]
+
+[SIZE=4][B]Admin Commands[/B][/SIZE]
+[LIST]
+[*][B]/drugs give <player> <drugId|cureId|bong|all> [amount][/B]
+[*][B]/drugs purge <player>[/B]
+[*][B]/drugs reload[/B]
+[*][B]/drugs list[/B]
+[*][B]/drugs overdose reload[/B]
+[*][B]/drugs overdose reset <player>[/B]
+[*][B]/drugs achievements toggle[/B]
+[/LIST]
+
+[SIZE=5][B]Crafting & Supply Chains[/B][/SIZE]
+Drug recipes are intentionally tied to [B]non-AFK, high-effort resources[/B], including progression-gated materials.
+
 This encourages:
 
 [LIST]
-[*]Farms
-[*]Trade
-[*]Territorial control
-[*]Active player participation over automation
+[*]Farms and active gathering
+[*]Trade and specialization
+[*]Territorial control around resources
+[*]Active participation over passive automation
 [/LIST]
+
 [SIZE=5][B]Recommended Resource Pack[/B][/SIZE]
 This plugin is designed to be used with the included resource pack: [URL='https://github.com/EthanManners/Flyirons-Drugs-Plugin/blob/master/RECOMMENDEDResourcePack.zip']RECOMMENDEDResourcePack.zip[/URL]
 
@@ -204,23 +258,18 @@ The resource pack:
 [*]Adds custom textures only
 [*]Does not alter gameplay
 [/LIST]
+
 [SIZE=5][B]Server Use Case[/B][/SIZE]
 Flyiron’s Drugs is intended for:
 
 [LIST]
-[*]PvP SMPs
+[*]Survival SMPs (primary)
 [*]Economy-driven servers
 [*]Faction-style gameplay
-[*]Survival servers with persistent consequences
+[*]PvP servers with persistent consequences
 [/LIST]
-This plugin adds:
 
-[LIST]
-[*]Long-term player behavior systems
-[*]Risk-based power scaling
-[*]Supply and maintenance loops
-[*]Real consequences for repeated drug use
-[/LIST]
-Install, start the server, and the system begins working immediately.
+Install, start the server, and the system begins working immediately with balanced defaults.
+
 [ATTACH=full]942394[/ATTACH]
 [ATTACH=full]942393[/ATTACH] [ATTACH=full]942391[/ATTACH] [ATTACH=full]942390[/ATTACH]
