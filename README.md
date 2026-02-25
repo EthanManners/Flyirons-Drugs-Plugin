@@ -1,169 +1,225 @@
-# PUBLIC SMP SERVER COMING SOON
-Discord: https://discord.gg/SaxTyAFHV9
+# Flyiron's Drugs Plugin (DrugsV2)
 
-# Flyirons Drugs Plugin
+Discord: https://discord.gg/SaxTyAFHV9  
+Public SMP: mc.swanky.wtf
 
-Flyirons Drugs is a fork of the original **Norses Drugs** plugin for survival SMP servers.
+Flyiron's Drugs Plugin is a heavily expanded survival/PvP gameplay system built around **powerful consumables**, **tolerance**, **addiction**, **withdrawal**, **overdose risk**, **cures**, **cannabis strains**, **bong/cart durability**, and **player achievements**.
 
-It adds craftable consumables that apply potion effects, along with a persistent addiction, tolerance, and overdose system. The plugin adds an extra gameplay layer that affects PvP, resource production, logistics, and long-term player decisions.
-
----
-
-## How This Plugin Is Meant to Be Used
-
-This plugin is designed to work **out of the box**.
-
-All drugs, effects, crafting recipes, addiction behavior, withdrawal rules, and overdose logic are already configured and balanced relative to each other. The config files define the actual gameplay and are not examples or placeholders.
-
-You *can* change the configs, but the default values are intentional and meant to be used as-is.
-
-Best suited for:
-- Survival SMP servers  
-- PvP-enabled servers  
-- Long-running worlds  
+This is a fork of the original Norses Drugs plugin and is designed to be playable immediately with the provided defaults.
 
 ---
 
-## Gameplay Overview
+## What’s New / Current Feature Set
 
-### Drug Effects
-- Each drug applies a fixed set of potion effects.
-- Effects are generally short in duration.
-- Buffs are paired with downsides such as slowness, hunger, weakness, nausea, or visibility.
+Compared to a basic consumable-effects plugin, this version includes:
 
-### Addiction & Tolerance
-- Repeated use increases tolerance and addiction.
-- Addiction persists across sessions.
-- Higher addiction increases overdose risk.
-- Different drugs have different addiction severity levels.
-
-### Withdrawal
-- Withdrawal begins when an addicted player stops using a drug.
-- Withdrawal persists until:
-  - a cure is used, or
-  - the drug is taken again (temporarily blocking withdrawal).
-- Most drugs apply **Poison** during withdrawal.
-- Cannabis-based drugs apply **Hunger** instead of Poison.
-
-### Overdose
-- Overdose chance scales based on addiction level and usage frequency.
-- Overdoses can kill the player.
-- Death messages indicate which drug caused the overdose.
-
-### Crafting & Supply
-- Drugs are crafted using survival resources.
-- Many recipes require dangerous, rare, or time-consuming materials.
-- Sustained drug use requires ongoing production and logistics.
+- Persistent, drug-specific tolerance and addiction tracking.
+- Configurable overdose behavior (global, per-drug, staged, and random modes).
+- Recovery systems (Suboxone, CBD, sleep-based cure logic, enchanted golden apple).
+- Cannabis-focused systems:
+  - Large strain registry with rarity and mutation weighting.
+  - Plant growth timing controls.
+  - `/strains` GUI index.
+- Bong support:
+  - Craftable bong item.
+  - Configurable cooldown.
+  - Configurable durability/uses.
+- Cart durability/uses mechanic.
+- Achievement system + GUI + configurable triggers.
+- PlaceholderAPI expansion for tolerance/effectiveness placeholders.
+- Admin tooling for reloading configs, purging player data, listing drugs, and resetting overdose counters.
 
 ---
 
-## Drugs
+## Quick Start (Server Admin)
 
-### Heroin
-- **Effects:** Strength, high Resistance, Slowness  
-- **Addiction:** High  
-- **Overdose Risk:** High  
-- **Withdrawal:** Poison  
-- **Role:** Short-term combat durability with heavy movement penalty
-- **Notes:** Strong defensive boost but difficult to fight or escape while using
-
-### Fent
-- **Effects:** Strength, Absorption, very high Resistance, extreme Slowness  
-- **Addiction:** Extreme  
-- **Overdose Risk:** Very High  
-- **Withdrawal:** Poison  
-- **Role:** Extremely strong damage reduction for a brief window
-- **Notes:** Meant to be dangerous and unsustainable without cures or maintenance
-
-### Cocaine
-- **Effects:** Speed, Strength, Saturation  
-- **Addiction:** High  
-- **Overdose Risk:** High  
-- **Withdrawal:** Poison  
-- **Role:** Short burst combat and movement
-- **Notes:** Very short duration, encourages repeated use
-
-### Meth
-- **Effects:** Speed, Haste, Weakness  
-- **Addiction:** Medium  
-- **Overdose Risk:** Medium  
-- **Withdrawal:** Poison  
-- **Role:** Fast mining and movement at the cost of combat effectiveness
-
-### Molly
-- **Effects:** Regeneration, Absorption, Glowing  
-- **Addiction:** Low  
-- **Overdose Risk:** Low  
-- **Withdrawal:** Poison  
-- **Role:** Team pushes and sustained fights, reduced stealth
-
-### Shrooms
-- **Effects:** Jump Boost, Luck, Nausea  
-- **Addiction:** Non-Addictive
-- **Overdose Risk:** Non-lethal  
-- **Withdrawal:** None
-- **Role:** Utility and exploration
-
-### Cannabis (Blunt / Joint / Edible / Cart)
-- **Effects:** Resistance, Hunger, Slowness  
-- **Addiction:** Low  
-- **Overdose Risk:** Non-lethal  
-- **Withdrawal:** Hunger  
-- **Role:** Low-risk defensive buffs with movement and food penalties  
-- **Notes:** Cart is non-stackable; other forms are stackable
-
-### Glue
-- **Effects:** Poison, Mining Fatigue  
-- **Addiction:** High  
-- **Overdose Risk:** High  
-- **Withdrawal:** Poison  
-- **Role:** Cheap and intentionally bad
+1. Build or download the plugin JAR.
+2. Put the JAR in `plugins/`.
+3. Start the server once to generate config files.
+4. (Recommended) Install `RECOMMENDEDResourcePack.zip` for custom textures.
+5. Review generated config files and adjust balance if needed.
+6. Use `/drugs reload` after config edits.
 
 ---
 
-## Cures
+## How to Use the Plugin (Gameplay + Admin Guide)
 
-### Enchanted Golden Apple
-- **Effect:** Clears all addiction
-- **Use Case:** Full reset / emergency cure
+## Player Flow
 
-### Suboxone
-- **Effect:** Cures opioid addiction  
-- **Applies To:** Heroin, Fent  
-- **Notes:** Intended for managing or exiting high-risk opioid dependence
+1. Craft or receive a drug item.
+2. Consume it to gain short-term buffs and tradeoff effects.
+3. Repeated use increases tolerance; potency drops over time.
+4. Continued use can cause addiction.
+5. If addicted, withdrawal effects begin after the configured delay.
+6. Recover with the matching cure, sleep (for configured stimulants), or golden apple reset.
+7. Track your status with `/tolerance`.
+8. Browse cannabis strain info with `/strains`.
+9. Track progression through `/drugs achievements`.
 
-### CBD
-- **Effect:** Cures cannabis addiction  
-- **Applies To:** Blunt, Joint, Edible, Cart  
-- **Notes:** Removes hunger-based withdrawal
+## Admin Flow
 
-### Sleeping
-- **Effect:** Clears stimulant addiction  
-- **Applies To:** Cocaine, Meth  
-- **Notes:** Requires actual sleep, not just time passing
-
----
-
-## Resource Pack (Recommended)
-
-The repo includes:
-
-**`RECOMMENDEDResourcePack.zip`**
-
-This resource pack only adds **custom textures** for drug items.  
-It is optional, but recommended for visual clarity.
+1. Give test items with `/drugs give`.
+2. Validate config edits with `/drugs reload`.
+3. Audit loaded drugs with `/drugs list`.
+4. Reset problem accounts with `/drugs purge <player>`.
+5. Reload overdose settings independently with `/drugs overdose reload`.
+6. Clear overdose counters only with `/drugs overdose reset <player>`.
 
 ---
 
-## Installation
+## Commands
 
-1. Drop the plugin JAR into your `plugins` folder.
-2. (Recommended) Install the included resource pack.
-3. Start or restart the server.
+## Player Commands
+
+- `/drugs`  
+  Opens the main drug menu GUI.
+
+- `/drugs help`  
+  Shows context-sensitive help based on permissions.
+
+- `/tolerance`  
+  Displays each registered drug tolerance level, max, and current potency %.
+
+- `/strains`  
+  Opens the cannabis strain index GUI.
+
+- `/drugs achievements`  
+  Opens the achievements GUI.
+
+## Admin Commands
+
+- `/drugs give <player> <drugId|cureId|bong|all> [amount]`  
+  Gives one specific item type or all registered types.
+
+- `/drugs purge <player>`  
+  Resets all tolerance and overdose counts for a player.
+
+- `/drugs reload`  
+  Reloads plugin configs and registries.
+
+- `/drugs list`  
+  Prints all loaded registered drugs and lore in chat.
+
+- `/drugs overdose reload`  
+  Reloads overdose settings file.
+
+- `/drugs overdose reset <player>`  
+  Resets overdose attempt counters for a player.
+
+- `/drugs achievements toggle`  
+  Admin helper command that instructs editing `achievement_settings.yml` (`enabled`) and then using `/drugs reload`.
+
+---
+
+## Permissions
+
+- `drugs.menu` (default: true)
+- `drugs.give` (default: op)
+- `drugs.tolerance` (default: true)
+- `drugs.strains` (default: true)
+- `drugs.achievements` (default: true)
+- `drugs.admin.reload` (default: op)
+- `drugs.admin.purge` (default: op)
+- `drugs.admin.list` (default: op)
+- `drugs.admin.achievements` (default: op)
+- `drugs.admin.overdose` (default: op)
+
+---
+
+## Included Drug Categories
+
+- Opioids / high-risk: `heroin`, `fent`, `glue`
+- Stimulants / combat-mobility: `cocaine`, `meth`, `molly`
+- Cannabis variants: `blunt`, `joint`, `edible`, `cart`
+- Utility/psychedelic: `shrooms`
+
+Each drug profile is fully configurable in `config.yml` (material, display name, lore, potion effects).
+
+---
+
+## Recovery / Cure System
+
+Defined in `addiction.yml` and craftable through `recipes.yml` where enabled:
+
+- **Suboxone**: cures configured opioid-related addictions.
+- **CBD**: cannabis-focused cure behavior.
+- **Sleep**: configured as cure logic for selected drugs.
+- **Enchanted Golden Apple**: full addiction reset behavior.
+
+Withdrawal behavior (effect types, timings, point decay) is per-drug and configurable.
+
+---
+
+## Cannabis Systems
+
+- `strains.yml` ships with an extensive strain tree, rarity, and mutation weights.
+- `mechanics.yml` controls cannabis growth timing.
+- `bong.yml` controls bong enable state, base-drug behavior, cooldown, and bong item settings.
+- `mechanics.yml` also controls cart and bong durability uses.
+
+---
+
+## Overdose System
+
+`overdose.yml` supports:
+
+- Global enable/disable.
+- Attempt threshold.
+- Per-drug vs global tracking mode.
+- Attempt expiry windows.
+- Broadcast toggles.
+- Default fallback effects.
+- Drug-specific overrides.
+- Optional staged progression and random effect pools.
+
+Default config includes non-lethal confusion/nausea overdose behavior for cannabis variants while preserving lethal behavior pathways for other drugs depending on configuration.
+
+---
+
+## Achievement System
+
+Achievements are split into:
+
+- `achievement_settings.yml` (system toggles + notifications + quick defaults)
+- `achievements.yml` (trigger definitions and custom achievements)
+
+Supported trigger styles include first use, all drugs used, max tolerance behavior, crafting-based triggers, use-count triggers, and overdose outcomes.
+
+---
+
+## PlaceholderAPI Support
+
+If PlaceholderAPI is installed, this plugin registers `%drugs_...%` placeholders:
+
+- `%drugs_<drugid>%` → current tolerance
+- `%drugs_<drugid>_max%` → max tolerance
+- `%drugs_<drugid>_effectiveness%` → potency percentage
+
+---
+
+## Files and Configuration Map
+
+- `config.yml` → drug item/effect definitions
+- `recipes.yml` → crafting recipes
+- `tolerance.yml` → tolerance caps, decay delay, scaling
+- `addiction.yml` → addiction points, withdrawal rules, cures
+- `overdose.yml` → overdose effects and policy
+- `strains.yml` → cannabis strains and mutation graph
+- `bong.yml` → bong behavior and item settings
+- `mechanics.yml` → growth + durability mechanics
+- `achievement_settings.yml` → achievement master toggles
+- `achievements.yml` → achievement definitions/triggers
+
+---
+
+## Compatibility
+
+- API version: `1.21`
+- Soft dependency: PlaceholderAPI
 
 ---
 
 ## Credits
 
-- Original Plugin: **Norses Drugs**
-- Fork and Balance Changes: **Flyiron**
+- Original base plugin: **Norses Drugs**
+- Fork + continued systems work/balance: **Flyiron**
