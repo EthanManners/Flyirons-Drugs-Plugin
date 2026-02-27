@@ -140,7 +140,10 @@ cbd:
 bong:
   shape:
     - " G "
-    - "G G"
-    - " G "
+    - "BGF"
+    - " W "
   ingredients:
     G: GLASS
+    B: BLAZE_ROD
+    F: FLINT_AND_STEEL
+    W: WATER_BUCKET
