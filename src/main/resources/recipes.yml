@@ -147,3 +147,13 @@ bong:
     B: BLAZE_ROD
     F: FLINT_AND_STEEL
     W: WATER_BUCKET
+farm-controller:
+  shape:
+    - "IRI"
+    - "CBC"
+    - "IRI"
+  ingredients:
+    I: IRON_INGOT
+    R: REDSTONE
+    C: COPPER_INGOT
+    B: BARREL

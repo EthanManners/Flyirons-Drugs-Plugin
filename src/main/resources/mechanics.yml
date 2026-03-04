@@ -9,3 +9,15 @@ cart:
 bong:
   # Number of hits a bong can be used before it breaks.
   durability-uses: 24
+
+weed-farm:
+  # Interval (ticks) between worker AI cycles.
+  worker-tick-interval: 15
+  # Maximum mature large ferns harvested each cycle per farm.
+  max-harvest-per-cycle: 8
+  # Maximum seeds planted each cycle per farm.
+  max-plant-per-cycle: 8
+  # Internal seed buffer size for each villager worker.
+  villager-inventory-size: 64
+  # STORE_IN_CHEST or DROP_AT_CONTROLLER
+  overflow-behavior: STORE_IN_CHEST
