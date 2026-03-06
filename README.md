@@ -28,7 +28,7 @@ Compared to a basic consumable-effects plugin, this version includes:
 - Achievement system + GUI + configurable triggers.
 - PlaceholderAPI expansion for tolerance/effectiveness placeholders.
 - Admin tooling for reloading configs, purging player data, listing drugs, and resetting overdose counters.
-
+- Villager Weed Workers (Farm Controller automation with worker villagers).
 ---
 
 ## Quick Start (Server Admin)
@@ -54,11 +54,13 @@ Compared to a basic consumable-effects plugin, this version includes:
 6. Recover with the matching cure, sleep (for configured stimulants), or golden apple reset.
 7. Track your status with `/tolerance`.
 8. Browse cannabis strain info with `/strains`.
-9. Track progression through `/drugs achievements`.
+9. Automate weed farms with Farm Controllers and worker villagers.
+10. Track progression through `/drugs achievements`.
+
 
 ## Admin Flow
 
-1. Give test items with `/drugs give`.
+1. Give test items (including `farm-controller`) with `/drugs give`.
 2. Validate config edits with `/drugs reload`.
 3. Audit loaded drugs with `/drugs list`.
 4. Reset problem accounts with `/drugs purge <player>`.
@@ -88,8 +90,8 @@ Compared to a basic consumable-effects plugin, this version includes:
 
 ## Admin Commands
 
-- `/drugs give <player> <drugId|cureId|bong|all> [amount]`  
-  Gives one specific item type or all registered types.
+- `/drugs give <player> <drugId|cureId|bong|farm-controller|all> [amount]`
+- Gives one specific item type or all registered types.
 
 - `/drugs purge <player>`  
   Resets all tolerance and overdose counts for a player.
@@ -159,6 +161,21 @@ Withdrawal behavior (effect types, timings, point decay) is per-drug and configu
 
 ---
 
+## Villager Weed Workers (v1.3)
+
+Automated weed farming is now available through Farm Controllers:
+
+- Craft/place a **Farm Controller** and right-click it to open management GUI.
+- Define farm region using a selection wand (max region size: **16x16**).
+- Start/Stop the farm from the controller GUI.
+- Purchase work contracts with emeralds and assign up to **5 villagers**.
+- Assigned villagers are set to **Farmer** profession and must be reachable to contribute output.
+- Dead/invalid villagers are removed from farm assignment data automatically.
+
+Worker throughput scales by reachable workers per cycle (1 to 5 workers), based on `mechanics.yml` weed-farm settings.
+
+---
+
 ## Overdose System
 
 `overdose.yml` supports:
@@ -206,9 +223,10 @@ If PlaceholderAPI is installed, this plugin registers `%drugs_...%` placeholders
 - `overdose.yml` → overdose effects and policy
 - `strains.yml` → cannabis strains and mutation graph
 - `bong.yml` → bong behavior and item settings
-- `mechanics.yml` → growth + durability mechanics
+- `mechanics.yml` → growth + durability mechanics + weed-farm cycle caps
 - `achievement_settings.yml` → achievement master toggles
 - `achievements.yml` → achievement definitions/triggers
+- `weed_farms.yml` → persisted farm controller/region/worker data
 
 ---
 
