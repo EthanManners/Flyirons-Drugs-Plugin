@@ -1,5 +1,7 @@
 package com.drugs;
 
+import com.drugs.weedfarm.WeedFarmItems;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -51,7 +53,7 @@ public class DrugsCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.GOLD + "-----[ DrugsV2 Help ]-----");
             sender.sendMessage(ChatColor.YELLOW + "/drugs" + ChatColor.GRAY + " - Open the drug selection GUI");
             if (sender.hasPermission("drugs.give")) {
-                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure|bong|all> [amount]" + ChatColor.GRAY + " - Give drugs/cures to someone");
+                sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure|bong|farm-controller|all> [amount]" + ChatColor.GRAY + " - Give drugs/cures to someone");
             }
             if (sender.hasPermission("drugs.tolerance")) {
                 sender.sendMessage(ChatColor.YELLOW + "/tolerance" + ChatColor.GRAY + " - View your current drug tolerance");
@@ -93,7 +95,7 @@ public class DrugsCommand implements CommandExecutor {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId|bong|all> [amount]");
+                sender.sendMessage(ChatColor.RED + "Usage: /drugs give <player> <drugId|cureId|bong|farm-controller|all> [amount]");
                 return true;
             }
 
@@ -133,6 +135,8 @@ public class DrugsCommand implements CommandExecutor {
                 }
                 target.getInventory().addItem(BongItemFactory.createBongItem(amount));
                 total++;
+                target.getInventory().addItem(WeedFarmItems.createControllerItem().asQuantity(amount));
+                total++;
                 sender.sendMessage(ChatColor.GREEN + "Gave " + total + " item types to " + target.getName());
                 target.sendMessage(ChatColor.GOLD + "You received " + total + " item types from " + sender.getName());
                 return true;
@@ -141,6 +145,9 @@ public class DrugsCommand implements CommandExecutor {
             ItemStack item = DrugRegistry.getDrugItem(drugId, amount);
             if (item == null && drugId.equalsIgnoreCase("bong")) {
                 item = BongItemFactory.createBongItem(amount);
+            }
+            if (item == null && drugId.equalsIgnoreCase("farm-controller")) {
+                item = WeedFarmItems.createControllerItem().asQuantity(amount);
             }
             if (item == null) {
                 item = CureRegistry.getCureItem(drugId, amount);

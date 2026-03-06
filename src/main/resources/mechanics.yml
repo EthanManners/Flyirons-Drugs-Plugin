@@ -13,11 +13,7 @@ bong:
 weed-farm:
   # Interval (ticks) between worker AI cycles.
   worker-tick-interval: 15
-  # Maximum mature large ferns harvested each cycle per farm.
+  # Base mature large ferns harvested per cycle (scaled by villagers up to 5x).
   max-harvest-per-cycle: 8
-  # Maximum seeds planted each cycle per farm.
+  # Base seeds planted per cycle (scaled by villagers up to 5x).
   max-plant-per-cycle: 8
-  # Internal seed buffer size for each villager worker.
-  villager-inventory-size: 64
-  # STORE_IN_CHEST or DROP_AT_CONTROLLER
-  overflow-behavior: STORE_IN_CHEST

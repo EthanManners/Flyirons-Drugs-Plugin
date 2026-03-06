@@ -69,6 +69,7 @@ public class DrugsTabCompleter implements TabCompleter {
             List<String> itemIds = new ArrayList<>(DrugRegistry.getRegisteredDrugNames());
             itemIds.addAll(CureRegistry.getRegisteredCureNames());
             itemIds.add("bong");
+            itemIds.add("farm-controller");
             itemIds.add("all");
             return partialMatch(args[2], itemIds);
         }

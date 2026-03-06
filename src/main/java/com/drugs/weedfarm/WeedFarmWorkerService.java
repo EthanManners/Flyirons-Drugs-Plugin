@@ -2,16 +2,21 @@ package com.drugs.weedfarm;
 
 import com.drugs.CannabisPlantListener;
 import com.drugs.MechanicsConfig;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class WeedFarmWorkerService implements Runnable {
     private final WeedFarmManager manager;
@@ -27,21 +32,21 @@ public class WeedFarmWorkerService implements Runnable {
             if (!farm.isEnabled() || farm.getAssignedVillagers().isEmpty() || !farm.hasRegion()) {
                 continue;
             }
+
             World world = Bukkit.getWorld(farm.getWorldId());
             if (world == null || world.getPlayers().stream().noneMatch(Player::isOnline)) {
                 continue;
             }
+
             processFarm(farm, world);
         }
     }
 
     private void processFarm(WeedFarm farm, World world) {
-        Inventory chestInventory = getChestInventory(farm);
-
         List<Villager> workers = new ArrayList<>();
         for (UUID workerId : farm.getAssignedVillagers()) {
             Entity entity = Bukkit.getEntity(workerId);
-            if (entity instanceof Villager villager && villager.getWorld().equals(world) && farm.contains(villager.getLocation().getBlock())) {
+            if (entity instanceof Villager villager && villager.getWorld().equals(world)) {
                 workers.add(villager);
             }
         }
@@ -49,28 +54,22 @@ public class WeedFarmWorkerService implements Runnable {
             return;
         }
 
+        int speedMultiplier = Math.min(WeedFarm.MAX_WORKERS, workers.size());
+        int maxHarvest = Math.max(1, MechanicsConfig.getMaxHarvestPerCycle() * speedMultiplier);
+        int maxPlant = Math.max(1, MechanicsConfig.getMaxPlantPerCycle() * speedMultiplier);
+
         List<ItemStack> workerSeeds = new ArrayList<>();
-        int heldSeeds = 0;
-
-        if (chestInventory != null) {
-            while (heldSeeds < MechanicsConfig.getVillagerInventorySize()) {
-                ItemStack seed = pullOneSeed(chestInventory);
-                if (seed == null) break;
-                workerSeeds.add(seed);
-                heldSeeds++;
-            }
-        }
-
         int harvests = 0;
         int plants = 0;
         int inspected = 0;
         int total = farmVolume(farm);
         int cursor = farm.getScanCursor();
-        while (inspected < total && (harvests < MechanicsConfig.getMaxHarvestPerCycle() || plants < MechanicsConfig.getMaxPlantPerCycle())) {
+
+        while (inspected < total && (harvests < maxHarvest || plants < maxPlant)) {
             int index = (cursor + inspected) % total;
             Block block = blockAtIndex(world, farm, index);
 
-            if (harvests < MechanicsConfig.getMaxHarvestPerCycle() && block.getType() == Material.LARGE_FERN) {
+            if (harvests < maxHarvest && block.getType() == Material.LARGE_FERN) {
                 CannabisPlantListener.HarvestResult result = CannabisPlantListener.harvestCannabis(block, true);
                 if (result != null) {
                     workerSeeds.addAll(result.getDrops());
@@ -80,7 +79,7 @@ public class WeedFarmWorkerService implements Runnable {
                 }
             }
 
-            if (plants < MechanicsConfig.getMaxPlantPerCycle() && !workerSeeds.isEmpty() && isPlantable(block)) {
+            if (plants < maxPlant && !workerSeeds.isEmpty() && isPlantable(block)) {
                 ItemStack seed = workerSeeds.remove(workerSeeds.size() - 1);
                 block.setType(Material.FERN, false);
                 if (CannabisPlantListener.applyPlacedCannabis(block, seed)) {
@@ -94,56 +93,17 @@ public class WeedFarmWorkerService implements Runnable {
 
             inspected++;
         }
+
         farm.setScanCursor((cursor + inspected) % Math.max(1, total));
 
-        if (!workerSeeds.isEmpty()) {
-            if (chestInventory != null && MechanicsConfig.isOverflowStoreInChest()) {
-                for (ItemStack seed : workerSeeds) {
-                    Map<Integer, ItemStack> leftovers = chestInventory.addItem(seed);
-                    if (!leftovers.isEmpty()) {
-                        leftovers.values().forEach(item -> world.dropItemNaturally(farm.getControllerLocation(), item));
-                    }
-                }
-            } else {
-                for (ItemStack seed : workerSeeds) {
-                    world.dropItemNaturally(farm.getControllerLocation(), seed);
-                }
-            }
+        for (ItemStack seed : workerSeeds) {
+            world.dropItemNaturally(farm.getControllerLocation(), seed);
         }
     }
 
     private void moveWorker(Villager villager, Location target) {
         villager.swingMainHand();
         villager.getPathfinder().moveTo(target);
-    }
-
-    private ItemStack pullOneSeed(Inventory chestInventory) {
-        for (int i = 0; i < chestInventory.getSize(); i++) {
-            ItemStack stack = chestInventory.getItem(i);
-            if (stack == null || stack.getType() != Material.FERN || !stack.hasItemMeta()) {
-                continue;
-            }
-            String type = com.drugs.DrugItemMetadata.getItemType(stack.getItemMeta());
-            if (type == null || !"cannabis_plant".equalsIgnoreCase(type)) {
-                continue;
-            }
-
-            ItemStack single = stack.clone();
-            single.setAmount(1);
-            stack.setAmount(stack.getAmount() - 1);
-            if (stack.getAmount() <= 0) {
-                chestInventory.setItem(i, null);
-            }
-            return single;
-        }
-        return null;
-    }
-
-    private Inventory getChestInventory(WeedFarm farm) {
-        if (farm.getChestLocation() == null || !(farm.getChestLocation().getBlock().getState() instanceof Chest chest)) {
-            return null;
-        }
-        return chest.getBlockInventory();
     }
 
     private boolean isPlantable(Block block) {

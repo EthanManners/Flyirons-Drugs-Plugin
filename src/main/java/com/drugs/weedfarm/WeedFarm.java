@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public class WeedFarm {
+    public static final int MAX_AREA_SIDE = 16;
+    public static final int MAX_WORKERS = 5;
+
     private final String farmId;
     private final Location controllerLocation;
     private UUID worldId;
@@ -18,7 +21,6 @@ public class WeedFarm {
     private int maxX;
     private int maxY;
     private int maxZ;
-    private Location chestLocation;
     private final Set<UUID> assignedVillagers = new HashSet<>();
     private boolean enabled = true;
     private int scanCursor = 0;
@@ -34,12 +36,17 @@ public class WeedFarm {
     public String getFarmId() { return farmId; }
     public UUID getWorldId() { return worldId; }
     public Location getControllerLocation() { return controllerLocation; }
-    public Location getChestLocation() { return chestLocation; }
     public Set<UUID> getAssignedVillagers() { return assignedVillagers; }
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     public int getScanCursor() { return scanCursor; }
     public void setScanCursor(int scanCursor) { this.scanCursor = scanCursor; }
+
+    public boolean canApplyRegion(Location first, Location second) {
+        int xSize = Math.abs(first.getBlockX() - second.getBlockX()) + 1;
+        int zSize = Math.abs(first.getBlockZ() - second.getBlockZ()) + 1;
+        return xSize <= MAX_AREA_SIDE && zSize <= MAX_AREA_SIDE;
+    }
 
     public void setRegion(World world, Location first, Location second) {
         this.worldId = world.getUID();
@@ -53,10 +60,6 @@ public class WeedFarm {
 
     public boolean hasRegion() {
         return maxX >= minX && maxY >= minY && maxZ >= minZ;
-    }
-
-    public void setChestLocation(Location chestLocation) {
-        this.chestLocation = chestLocation;
     }
 
     public boolean contains(Block block) {

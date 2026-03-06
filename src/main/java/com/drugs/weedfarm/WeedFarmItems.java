@@ -11,7 +11,6 @@ import java.util.Arrays;
 public final class WeedFarmItems {
     public static final String ITEM_TYPE_CONTROLLER = "farm_controller";
     public static final String ITEM_TYPE_AREA_WAND = "farm_area_wand";
-    public static final String ITEM_TYPE_CHEST_WAND = "farm_chest_wand";
     public static final String ITEM_TYPE_CONTRACT = "farm_work_contract";
 
     private WeedFarmItems() {}
@@ -29,24 +28,16 @@ public final class WeedFarmItems {
     }
 
     public static ItemStack createAreaWand(String farmId) {
-        ItemStack stack = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta meta = stack.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.AQUA + "Farm Area Wand");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "Left click: set pos1", ChatColor.GRAY + "Right click: set pos2", ChatColor.DARK_GRAY + "Farm: " + farmId));
-            DrugItemMetadata.setItemType(meta, ITEM_TYPE_AREA_WAND + ":" + farmId);
-            stack.setItemMeta(meta);
-        }
-        return stack;
-    }
-
-    public static ItemStack createChestWand(String farmId) {
         ItemStack stack = new ItemStack(Material.STICK);
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(ChatColor.GOLD + "Chest Link Wand");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "Right click a chest to link it", ChatColor.DARK_GRAY + "Farm: " + farmId));
-            DrugItemMetadata.setItemType(meta, ITEM_TYPE_CHEST_WAND + ":" + farmId);
+            meta.setDisplayName(ChatColor.AQUA + "Farm Area Wand");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Left click: set pos1",
+                    ChatColor.GRAY + "Right click: set pos2",
+                    ChatColor.GRAY + "Max area: 16x16",
+                    ChatColor.DARK_GRAY + "Farm: " + farmId));
+            DrugItemMetadata.setItemType(meta, ITEM_TYPE_AREA_WAND + ":" + farmId);
             stack.setItemMeta(meta);
         }
         return stack;
@@ -57,11 +48,21 @@ public final class WeedFarmItems {
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Work Contract");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + "Right click a villager while", ChatColor.GRAY + "looking at this farm controller.", ChatColor.DARK_GRAY + "Farm: " + farmId));
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Right click a villager while",
+                    ChatColor.GRAY + "looking at this farm controller.",
+                    ChatColor.GRAY + "Max villagers: 5",
+                    ChatColor.DARK_GRAY + "Farm: " + farmId));
             DrugItemMetadata.setItemType(meta, ITEM_TYPE_CONTRACT + ":" + farmId);
             stack.setItemMeta(meta);
         }
         return stack;
+    }
+
+    public static boolean isControllerItem(ItemStack stack) {
+        if (stack == null || !stack.hasItemMeta()) return false;
+        String type = DrugItemMetadata.getItemType(stack.getItemMeta());
+        return ITEM_TYPE_CONTROLLER.equalsIgnoreCase(type);
     }
 
     public static String parseFarmId(ItemStack stack, String prefix) {

@@ -44,12 +44,29 @@ public class WeedFarmManager {
     }
 
     public boolean assignVillager(WeedFarm farm, UUID villagerId) {
+        if (farm.getAssignedVillagers().size() >= WeedFarm.MAX_WORKERS && !farm.getAssignedVillagers().contains(villagerId)) {
+            return false;
+        }
+
         WeedFarm existing = getByVillager(villagerId);
         if (existing != null && existing != farm) {
             existing.getAssignedVillagers().remove(villagerId);
         }
         farmByVillager.put(villagerId, farm.getFarmId());
         return farm.getAssignedVillagers().add(villagerId);
+    }
+
+    public void removeFarm(WeedFarm farm) {
+        farmsById.remove(farm.getFarmId());
+        farmByController.remove(locKey(farm.getControllerLocation()));
+        for (UUID villagerId : farm.getAssignedVillagers()) {
+            farmByVillager.remove(villagerId);
+        }
+        farm.getAssignedVillagers().clear();
+    }
+
+    public WeedFarm getByFarmId(String farmId) {
+        return farmsById.get(farmId);
     }
 
     public void save() {
@@ -65,7 +82,6 @@ public class WeedFarmManager {
             yaml.set(base + ".region.maxX", farm.getMaxX());
             yaml.set(base + ".region.maxY", farm.getMaxY());
             yaml.set(base + ".region.maxZ", farm.getMaxZ());
-            yaml.set(base + ".chest", serializeLocation(farm.getChestLocation()));
             List<String> villagers = new ArrayList<>();
             for (UUID id : farm.getAssignedVillagers()) {
                 villagers.add(id.toString());
@@ -116,11 +132,13 @@ public class WeedFarmManager {
                         yaml.getInt(base + ".region.maxZ", controller.getBlockZ()));
                 farm.setRegion(world, first, second);
             }
-            farm.setChestLocation(deserializeLocation(yaml.getString(base + ".chest")));
 
             for (String villagerId : yaml.getStringList(base + ".villagers")) {
                 try {
                     UUID uuid = UUID.fromString(villagerId);
+                    if (farm.getAssignedVillagers().size() >= WeedFarm.MAX_WORKERS) {
+                        continue;
+                    }
                     farm.getAssignedVillagers().add(uuid);
                     farmByVillager.put(uuid, farmId);
                 } catch (IllegalArgumentException ignored) {
