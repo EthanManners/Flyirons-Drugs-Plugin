@@ -16,7 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -63,6 +65,15 @@ public class WeedFarmWorkerService implements Runnable {
         int speedMultiplier = Math.min(WeedFarm.MAX_WORKERS, workers.size());
         int maxHarvest = Math.max(1, MechanicsConfig.getMaxHarvestPerCycle() * speedMultiplier);
         int maxPlant = Math.max(1, MechanicsConfig.getMaxPlantPerCycle() * speedMultiplier);
+        int perWorkerHarvestLimit = Math.max(1, MechanicsConfig.getMaxHarvestPerCycle());
+        int perWorkerPlantLimit = Math.max(1, MechanicsConfig.getMaxPlantPerCycle());
+
+        Map<UUID, Integer> workerHarvestQuota = new HashMap<>();
+        Map<UUID, Integer> workerPlantQuota = new HashMap<>();
+        for (Villager worker : workers) {
+            workerHarvestQuota.put(worker.getUniqueId(), perWorkerHarvestLimit);
+            workerPlantQuota.put(worker.getUniqueId(), perWorkerPlantLimit);
+        }
 
         List<ItemStack> workerSeeds = new ArrayList<>();
         int harvests = 0;
@@ -76,11 +87,12 @@ public class WeedFarmWorkerService implements Runnable {
             Block block = blockAtIndex(world, farm, index);
 
             if (harvests < maxHarvest && block.getType() == Material.LARGE_FERN) {
-                Villager worker = selectReachableWorker(workers, block);
+                Villager worker = selectReachableWorker(workers, block, workerHarvestQuota);
                 if (worker != null) {
                     CannabisPlantListener.HarvestResult result = CannabisPlantListener.harvestCannabis(block, true);
                     if (result != null) {
                         workerSeeds.addAll(result.getDrops());
+                        consumeQuota(workerHarvestQuota, worker.getUniqueId());
                         harvests++;
                         moveWorker(worker, result.getRootBlock().getLocation().add(0.5, 0, 0.5));
                         result.getRootBlock().getWorld().spawnParticle(Particle.HAPPY_VILLAGER, result.getRootBlock().getLocation().add(0.5, 0.8, 0.5), 6, 0.2, 0.3, 0.2, 0.0);
@@ -89,14 +101,18 @@ public class WeedFarmWorkerService implements Runnable {
             }
 
             if (plants < maxPlant && !workerSeeds.isEmpty() && isPlantable(block)) {
-                ItemStack seed = workerSeeds.remove(workerSeeds.size() - 1);
-                block.setType(Material.FERN, false);
-                if (CannabisPlantListener.applyPlacedCannabis(block, seed)) {
-                    plants++;
-                    moveWorker(workers.get(random.nextInt(workers.size())), block.getLocation().add(0.5, 0, 0.5));
-                    world.spawnParticle(Particle.COMPOSTER, block.getLocation().add(0.5, 0.8, 0.5), 4, 0.2, 0.1, 0.2, 0.0);
-                } else {
-                    block.setType(Material.AIR, false);
+                Villager planter = selectReachableWorker(workers, block, workerPlantQuota);
+                if (planter != null) {
+                    ItemStack seed = workerSeeds.remove(workerSeeds.size() - 1);
+                    block.setType(Material.FERN, false);
+                    if (CannabisPlantListener.applyPlacedCannabis(block, seed)) {
+                        plants++;
+                        consumeQuota(workerPlantQuota, planter.getUniqueId());
+                        moveWorker(planter, block.getLocation().add(0.5, 0, 0.5));
+                        world.spawnParticle(Particle.COMPOSTER, block.getLocation().add(0.5, 0.8, 0.5), 4, 0.2, 0.1, 0.2, 0.0);
+                    } else {
+                        block.setType(Material.AIR, false);
+                    }
                 }
             }
 
@@ -110,15 +126,22 @@ public class WeedFarmWorkerService implements Runnable {
         }
     }
 
-    private Villager selectReachableWorker(List<Villager> workers, Block targetPlant) {
+    private Villager selectReachableWorker(List<Villager> workers, Block targetPlant, Map<UUID, Integer> quota) {
         List<Villager> shuffled = new ArrayList<>(workers);
         java.util.Collections.shuffle(shuffled, random);
         for (Villager worker : shuffled) {
-            if (canReach(worker, targetPlant)) {
+            if (quota.getOrDefault(worker.getUniqueId(), 0) > 0 && canReach(worker, targetPlant)) {
                 return worker;
             }
         }
         return null;
+    }
+
+    private void consumeQuota(Map<UUID, Integer> quota, UUID workerId) {
+        int current = quota.getOrDefault(workerId, 0);
+        if (current > 0) {
+            quota.put(workerId, current - 1);
+        }
     }
 
     private boolean canReach(Villager villager, Block targetPlant) {
