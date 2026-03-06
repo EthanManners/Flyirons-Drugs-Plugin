@@ -12,8 +12,8 @@ bong:
 
 weed-farm:
   # Interval (ticks) between worker AI cycles.
-  worker-tick-interval: 15
+  worker-tick-interval: 30
   # Base mature large ferns harvested per cycle (scaled by villagers up to 5x).
-  max-harvest-per-cycle: 8
+  max-harvest-per-cycle: 1
   # Base seeds planted per cycle (scaled by villagers up to 5x).
-  max-plant-per-cycle: 8
+  max-plant-per-cycle: 2
