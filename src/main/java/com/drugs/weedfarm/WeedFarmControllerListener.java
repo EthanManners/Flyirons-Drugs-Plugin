@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -63,6 +64,13 @@ public class WeedFarmControllerListener implements Listener {
     }
 
     @EventHandler
+    public void onVillagerDeath(EntityDeathEvent event) {
+        if (event.getEntity() instanceof Villager villager) {
+            manager.unassignVillager(villager.getUniqueId());
+        }
+    }
+
+    @EventHandler
     public void onInteractController(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock() == null || event.getClickedBlock().getType() != Material.BARREL) {
             return;
@@ -73,6 +81,7 @@ public class WeedFarmControllerListener implements Listener {
             return;
         }
 
+        manager.pruneInvalidVillagers(farm);
         event.setCancelled(true);
         openControllerGui(event.getPlayer(), farm);
     }
@@ -93,6 +102,8 @@ public class WeedFarmControllerListener implements Listener {
         if (farm == null || event.getCurrentItem() == null) {
             return;
         }
+
+        manager.pruneInvalidVillagers(farm);
 
         switch (event.getCurrentItem().getType()) {
             case STICK -> {
@@ -188,6 +199,7 @@ public class WeedFarmControllerListener implements Listener {
             return;
         }
 
+        villager.setProfession(Villager.Profession.FARMER);
         decrementHeld(event.getPlayer());
         event.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "Villager assigned to farm " + farm.getFarmId() + ".");
         event.setCancelled(true);

@@ -5,10 +5,16 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Villager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WeedFarmManager {
@@ -54,6 +60,33 @@ public class WeedFarmManager {
         }
         farmByVillager.put(villagerId, farm.getFarmId());
         return farm.getAssignedVillagers().add(villagerId);
+    }
+
+    public void unassignVillager(UUID villagerId) {
+        String farmId = farmByVillager.remove(villagerId);
+        if (farmId == null) {
+            return;
+        }
+        WeedFarm farm = farmsById.get(farmId);
+        if (farm != null) {
+            farm.getAssignedVillagers().remove(villagerId);
+        }
+    }
+
+    public int pruneInvalidVillagers(WeedFarm farm) {
+        List<UUID> toRemove = new ArrayList<>();
+        for (UUID villagerId : farm.getAssignedVillagers()) {
+            Entity entity = Bukkit.getEntity(villagerId);
+            if (!(entity instanceof Villager villager) || !villager.isValid() || villager.isDead()) {
+                toRemove.add(villagerId);
+            }
+        }
+
+        for (UUID villagerId : toRemove) {
+            farm.getAssignedVillagers().remove(villagerId);
+            farmByVillager.remove(villagerId);
+        }
+        return toRemove.size();
     }
 
     public void removeFarm(WeedFarm farm) {
