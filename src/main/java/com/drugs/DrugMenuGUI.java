@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.weedfarm.WeedFarmItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class DrugMenuGUI {
         if (BongConfigLoader.isEnabled()) {
             menuItems.add(BongItemFactory.createBongItem(1));
         }
+        menuItems.add(WeedFarmItems.createControllerItem());
 
         int maxPage = Math.max(1, (int) Math.ceil(menuItems.size() / (double) ITEMS_PER_PAGE));
 

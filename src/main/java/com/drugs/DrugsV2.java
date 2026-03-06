@@ -4,9 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import com.drugs.weedfarm.WeedFarmControllerListener;
+import com.drugs.weedfarm.WeedFarmItems;
+import com.drugs.weedfarm.WeedFarmManager;
+import com.drugs.weedfarm.WeedFarmWorkerService;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Main plugin class for DrugsV2.
@@ -17,6 +20,7 @@ public class DrugsV2 extends JavaPlugin {
     private FileConfiguration recipesConfig;
     private File recipesFile;
     private BongListener bongListener;
+    private WeedFarmManager weedFarmManager;
 
     public static DrugsV2 getInstance() {
         return instance;
@@ -58,11 +62,14 @@ public class DrugsV2 extends JavaPlugin {
         MechanicsConfig.load(getDataFolder());
         CannabisPlantRegistry.init(getDataFolder());
         BongRegistry.init(getDataFolder());
+        weedFarmManager = new WeedFarmManager(getDataFolder());
+        weedFarmManager.load();
 
         // Initialize core drug system
         DrugRegistry.init(this);
         CureRegistry.init(this);
         registerBongRecipe();
+        registerFarmControllerRecipe();
 
         AddictionManager.init(this);
 
@@ -79,6 +86,8 @@ public class DrugsV2 extends JavaPlugin {
         bongListener = new BongListener();
         getServer().getPluginManager().registerEvents(bongListener, this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
+        getServer().getPluginManager().registerEvents(new WeedFarmControllerListener(weedFarmManager), this);
+        getServer().getScheduler().runTaskTimer(this, new WeedFarmWorkerService(weedFarmManager), MechanicsConfig.getWorkerTickInterval(), MechanicsConfig.getWorkerTickInterval());
 
         BongRegistry.respawnMissing(bongListener);
 
@@ -101,6 +110,9 @@ public class DrugsV2 extends JavaPlugin {
     public void onDisable() {
         CannabisPlantRegistry.save();
         BongRegistry.save();
+        if (weedFarmManager != null) {
+            weedFarmManager.save();
+        }
         AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
     }
@@ -183,6 +195,16 @@ public class DrugsV2 extends JavaPlugin {
         DrugRecipeHelper.registerItemRecipe("bong", recipeSection, BongItemFactory.createBongItem(1), this);
     }
 
+
+
+    private void registerFarmControllerRecipe() {
+        if (recipesConfig == null) return;
+
+        var recipeSection = recipesConfig.getConfigurationSection("farm-controller");
+        if (recipeSection == null) return;
+
+        DrugRecipeHelper.registerItemRecipe("farm_controller", recipeSection, WeedFarmItems.createControllerItem(), this);
+    }
     public FileConfiguration getRecipesConfig() {
         return recipesConfig;
     }

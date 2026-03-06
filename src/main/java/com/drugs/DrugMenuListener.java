@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import com.drugs.weedfarm.WeedFarmItems;
 
 /**
  * Handles clicks and closes for the Drugs GUI system.
@@ -62,6 +63,11 @@ public class DrugMenuListener implements Listener {
 
                 if (BongItemFactory.isBongItem(clicked)) {
                     DrugRecipeViewer.openRecipe(player, "bong");
+                    return;
+                }
+
+                if (WeedFarmItems.isControllerItem(clicked)) {
+                    DrugRecipeViewer.openRecipe(player, "farm-controller");
                 }
             }
         }

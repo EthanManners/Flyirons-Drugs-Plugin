@@ -1,0 +1,76 @@
+package com.drugs.weedfarm;
+
+import com.drugs.DrugItemMetadata;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+
+public final class WeedFarmItems {
+    public static final String ITEM_TYPE_CONTROLLER = "farm_controller";
+    public static final String ITEM_TYPE_AREA_WAND = "farm_area_wand";
+    public static final String ITEM_TYPE_CONTRACT = "farm_work_contract";
+
+    private WeedFarmItems() {}
+
+    public static ItemStack createControllerItem() {
+        ItemStack stack = new ItemStack(Material.BARREL);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.GREEN + "Farm Controller");
+            meta.setLore(Arrays.asList(ChatColor.GRAY + "Place this barrel to create", ChatColor.GRAY + "an automated weed farm."));
+            DrugItemMetadata.setItemType(meta, ITEM_TYPE_CONTROLLER);
+            stack.setItemMeta(meta);
+        }
+        return stack;
+    }
+
+    public static ItemStack createAreaWand(String farmId) {
+        ItemStack stack = new ItemStack(Material.STICK);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.AQUA + "Farm Area Wand");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Left click: set pos1",
+                    ChatColor.GRAY + "Right click: set pos2",
+                    ChatColor.GRAY + "Max area: 16x16",
+                    ChatColor.DARK_GRAY + "Farm: " + farmId));
+            DrugItemMetadata.setItemType(meta, ITEM_TYPE_AREA_WAND + ":" + farmId);
+            stack.setItemMeta(meta);
+        }
+        return stack;
+    }
+
+    public static ItemStack createContract(String farmId) {
+        ItemStack stack = new ItemStack(Material.PAPER);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Work Contract");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Right click a villager while",
+                    ChatColor.GRAY + "looking at this farm controller.",
+                    ChatColor.GRAY + "Max villagers: 5",
+                    ChatColor.DARK_GRAY + "Farm: " + farmId));
+            DrugItemMetadata.setItemType(meta, ITEM_TYPE_CONTRACT + ":" + farmId);
+            stack.setItemMeta(meta);
+        }
+        return stack;
+    }
+
+    public static boolean isControllerItem(ItemStack stack) {
+        if (stack == null || !stack.hasItemMeta()) return false;
+        String type = DrugItemMetadata.getItemType(stack.getItemMeta());
+        return ITEM_TYPE_CONTROLLER.equalsIgnoreCase(type);
+    }
+
+    public static String parseFarmId(ItemStack stack, String prefix) {
+        if (stack == null || !stack.hasItemMeta()) return null;
+        String itemType = DrugItemMetadata.getItemType(stack.getItemMeta());
+        if (itemType == null || !itemType.startsWith(prefix + ":")) {
+            return null;
+        }
+        return itemType.substring(prefix.length() + 1);
+    }
+}

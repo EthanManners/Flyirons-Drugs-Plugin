@@ -9,3 +9,11 @@ cart:
 bong:
   # Number of hits a bong can be used before it breaks.
   durability-uses: 24
+
+weed-farm:
+  # Interval (ticks) between worker AI cycles.
+  worker-tick-interval: 15
+  # Base mature large ferns harvested per cycle (scaled by villagers up to 5x).
+  max-harvest-per-cycle: 8
+  # Base seeds planted per cycle (scaled by villagers up to 5x).
+  max-plant-per-cycle: 8
