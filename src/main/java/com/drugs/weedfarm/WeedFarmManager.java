@@ -59,7 +59,13 @@ public class WeedFarmManager {
             existing.getAssignedVillagers().remove(villagerId);
         }
         farmByVillager.put(villagerId, farm.getFarmId());
-        return farm.getAssignedVillagers().add(villagerId);
+        boolean assigned = farm.getAssignedVillagers().add(villagerId);
+        Entity entity = Bukkit.getEntity(villagerId);
+        if (entity instanceof Villager villager && villager.isValid() && !villager.isDead()) {
+            villager.setPersistent(true);
+            villager.setRemoveWhenFarAway(false);
+        }
+        return assigned;
     }
 
     public void unassignVillager(UUID villagerId) {
@@ -77,6 +83,13 @@ public class WeedFarmManager {
         List<UUID> toRemove = new ArrayList<>();
         for (UUID villagerId : farm.getAssignedVillagers()) {
             Entity entity = Bukkit.getEntity(villagerId);
+            // Bukkit#getEntity only returns loaded entities. A null value here can mean
+            // the villager is in an unloaded chunk (or the world has not finished loading).
+            // Keep the assignment so worker links persist across restarts/chunk unloads.
+            if (entity == null) {
+                continue;
+            }
+
             if (!(entity instanceof Villager villager) || !villager.isValid() || villager.isDead()) {
                 toRemove.add(villagerId);
             }
@@ -87,6 +100,16 @@ public class WeedFarmManager {
             farmByVillager.remove(villagerId);
         }
         return toRemove.size();
+    }
+
+    public void refreshVillagerPersistence(WeedFarm farm) {
+        for (UUID villagerId : farm.getAssignedVillagers()) {
+            Entity entity = Bukkit.getEntity(villagerId);
+            if (entity instanceof Villager villager && villager.isValid() && !villager.isDead()) {
+                villager.setPersistent(true);
+                villager.setRemoveWhenFarAway(false);
+            }
+        }
     }
 
     public void removeFarm(WeedFarm farm) {
@@ -180,6 +203,7 @@ public class WeedFarmManager {
 
             farmsById.put(farmId, farm);
             farmByController.put(locKey(controller), farmId);
+            refreshVillagerPersistence(farm);
         }
     }
 
