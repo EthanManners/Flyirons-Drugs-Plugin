@@ -3,6 +3,9 @@
 Discord: https://discord.gg/SaxTyAFHV9  
 Public SMP: mc.swanky.wtf
 
+Shoutout to supporters:
+DubSubz
+
 Flyiron's Drugs Plugin is a heavily expanded survival/PvP gameplay system built around **powerful consumables**, **tolerance**, **addiction**, **withdrawal**, **overdose risk**, **cures**, **cannabis strains**, **bong/cart durability**, and **player achievements**.
 
 This is a fork of the original Norses Drugs plugin and is designed to be playable immediately with the provided defaults.
