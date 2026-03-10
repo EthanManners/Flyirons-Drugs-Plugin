@@ -39,7 +39,7 @@ Compared to a basic consumable-effects plugin, this version includes:
 1. Build or download the plugin JAR.
 2. Put the JAR in `plugins/`.
 3. Start the server once to generate config files.
-4. (Recommended) Install `RECOMMENDEDResourcePack.zip` for custom textures.
+4. (Recommended) Install `FlyironDrugv1.3.1RP.zip` for custom textures.
 5. Review generated config files and adjust balance if needed.
 6. Use `/drugs reload` after config edits.
 
