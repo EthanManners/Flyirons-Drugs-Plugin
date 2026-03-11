@@ -6,6 +6,15 @@ Public SMP: mc.swanky.wtf
 Shoutout to supporters:
 DubSubz
 
+
+
+<a href="https://www.paypal.com/donate/?business=VFTGHCWNM8VFL&no_recurring=0&item_name=Dev+behind+the+most+feature-rich+Minecraft+drugs+plugin.+SwankySMP+%E2%80%94+a+logistics+sandbox+where+the+economy+runs+on+contraband&currency_code=USD">
+  <img src="https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png" alt="Donate with PayPal" />
+</a>
+
+
+
+
 Flyiron's Drugs Plugin is a heavily expanded survival/PvP gameplay system built around **powerful consumables**, **tolerance**, **addiction**, **withdrawal**, **overdose risk**, **cures**, **cannabis strains**, **bong/cart durability**, and **player achievements**.
 
 This is a fork of the original Norses Drugs plugin and is designed to be playable immediately with the provided defaults.
