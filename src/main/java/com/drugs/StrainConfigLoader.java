@@ -3,6 +3,8 @@ package com.drugs;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.util.*;
@@ -22,30 +24,92 @@ public class StrainConfigLoader {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         strains.clear();
 
-        for (String id : config.getKeys(false)) {
-            ConfigurationSection section = config.getConfigurationSection(id);
+        ConfigurationSection root = config.isConfigurationSection("strains")
+                ? config.getConfigurationSection("strains")
+                : config;
+        if (root == null) {
+            Bukkit.getLogger().warning("[DrugsV2] strains.yml is missing a valid root section");
+            return;
+        }
+
+        for (String id : root.getKeys(false)) {
+            ConfigurationSection section = root.getConfigurationSection(id);
             if (section == null) continue;
 
             Map<String, Integer> mutationWeights = new HashMap<>();
-            ConfigurationSection mut = section.getConfigurationSection("mutation-weights");
+            ConfigurationSection mut = section.getConfigurationSection("mutationWeights");
+            if (mut == null) {
+                mut = section.getConfigurationSection("mutation-weights");
+            }
             if (mut != null) {
                 for (String child : mut.getKeys(false)) {
                     mutationWeights.put(child.toLowerCase(), Math.max(0, mut.getInt(child)));
                 }
             }
 
+            double durationMultiplier = section.getDouble("durationMultiplier",
+                    section.getDouble("effect-modifiers.duration-multiplier", 1.0));
+            double amplifierMultiplier = section.getDouble("amplifierMultiplier",
+                    section.getDouble("effect-modifiers.amplifier-multiplier", 1.0));
+            double mutationChance = section.getDouble("mutationChance",
+                    section.getDouble("mutation-chance", 0.005));
+
+            List<PotionEffect> strainEffects = parseStrainEffects(section);
+
             StrainProfile profile = new StrainProfile(
                     id.toLowerCase(),
-                    section.getString("display-name", id),
+                    section.getString("display-name", section.getString("displayName", id)),
                     section.getString("rarity", "common"),
-                    section.getDouble("effect-modifiers.duration-multiplier", 1.0),
-                    section.getDouble("effect-modifiers.amplifier-multiplier", 1.0),
-                    section.getDouble("mutation-chance", 0.005),
-                    mutationWeights
+                    durationMultiplier,
+                    amplifierMultiplier,
+                    mutationChance,
+                    mutationWeights,
+                    strainEffects
             );
             strains.put(id.toLowerCase(), profile);
         }
         Bukkit.getLogger().info("[DrugsV2] Loaded " + strains.size() + " cannabis strains");
+    }
+
+    private static List<PotionEffect> parseStrainEffects(ConfigurationSection section) {
+        List<PotionEffect> effects = new ArrayList<>();
+
+        List<Map<?, ?>> effectMaps = section.getMapList("effects");
+        if (!effectMaps.isEmpty()) {
+            for (Map<?, ?> effectMap : effectMaps) {
+                Object typeRaw = effectMap.get("type");
+                if (typeRaw == null) continue;
+
+                PotionEffectType type = PotionEffectType.getByName(String.valueOf(typeRaw).toUpperCase(Locale.ROOT));
+                if (type == null) continue;
+
+                int duration = parseInt(effectMap.get("duration"), 200);
+                int amplifier = parseInt(effectMap.get("amplifier"), 0);
+                effects.add(new PotionEffect(type, Math.max(1, duration), Math.max(0, amplifier)));
+            }
+            return effects;
+        }
+
+        ConfigurationSection legacyEffects = section.getConfigurationSection("effects");
+        if (legacyEffects != null) {
+            return EffectUtils.parsePotionEffects(legacyEffects);
+        }
+
+        return effects;
+    }
+
+    private static int parseInt(Object value, int fallback) {
+        if (value instanceof Number number) {
+            return number.intValue();
+        }
+        if (value instanceof String stringValue) {
+            try {
+                return Integer.parseInt(stringValue);
+            } catch (NumberFormatException ignored) {
+                return fallback;
+            }
+        }
+        return fallback;
     }
 
     public static boolean isCannabisDrug(String drugId) {

@@ -131,7 +131,8 @@ public final class StrainsMenuGUI {
         lore.add(ChatColor.GRAY + "Rarity: " + ChatColor.YELLOW + capitalize(strain.getRarity()));
         lore.add(ChatColor.GRAY + "Duration Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getDurationMultiplier()));
         lore.add(ChatColor.GRAY + "Amplifier Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getAmplifierMultiplier()));
-        lore.add(ChatColor.GRAY + "Mutation Chance: " + ChatColor.WHITE + String.format("%.2f%%", strain.getMutationChance() * 100));
+        lore.add(ChatColor.GRAY + "Mutation Chance: " + ChatColor.WHITE + String.format("%.3f%%", strain.getMutationChance() * 100));
+        lore.add(ChatColor.GRAY + "Strain Effects: " + ChatColor.LIGHT_PURPLE + strain.getEffects().size());
         lore.add(ChatColor.DARK_GRAY + "Mutates Into:");
         strain.getMutationWeights().entrySet().stream()
                 .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))

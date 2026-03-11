@@ -89,32 +89,39 @@ public class DrugEffectProfile {
             return;
         }
 
-        // Apply scaled effects
-        for (PotionEffect baseEffect : effects) {
-            int newDuration = (int) (baseEffect.getDuration() * multiplier);
-            int amplifier = baseEffect.getAmplifier();
+        // Apply scaled base product effects
+        applyEffectList(player, effects, multiplier, strainProfile);
 
-            if (strainProfile != null) {
-                newDuration = (int) Math.max(1, Math.round(newDuration * strainProfile.getDurationMultiplier()));
-                amplifier = Math.max(0, (int) Math.round(amplifier * strainProfile.getAmplifierMultiplier()));
-            }
-
-            if (newDuration > 0) {
-                player.addPotionEffect(new PotionEffect(
-                        baseEffect.getType(),
-                        newDuration,
-                        amplifier,
-                        baseEffect.isAmbient(),
-                        baseEffect.hasParticles(),
-                        baseEffect.hasIcon()
-                ));
-            }
+        // Apply strain-specific effects for cannabis products
+        if (strainProfile != null && !strainProfile.getEffects().isEmpty()) {
+            applyEffectList(player, strainProfile.getEffects(), multiplier, strainProfile);
         }
 
         ToleranceTracker.onDrugUse(player, id);
         AddictionManager.onDrugUse(player, id);
     }
 
+
+    private void applyEffectList(Player player, List<PotionEffect> sourceEffects, double toleranceMultiplier, StrainProfile strainProfile) {
+        for (PotionEffect source : sourceEffects) {
+            int newDuration = (int) Math.max(1, Math.round(source.getDuration() * toleranceMultiplier));
+            int amplifier = Math.max(0, source.getAmplifier());
+
+            if (strainProfile != null) {
+                newDuration = (int) Math.max(1, Math.round(newDuration * strainProfile.getDurationMultiplier()));
+                amplifier = Math.max(0, (int) Math.round(amplifier * strainProfile.getAmplifierMultiplier()));
+            }
+
+            player.addPotionEffect(new PotionEffect(
+                    source.getType(),
+                    newDuration,
+                    amplifier,
+                    source.isAmbient(),
+                    source.hasParticles(),
+                    source.hasIcon()
+            ));
+        }
+    }
 
     private void spawnConsumptionParticles(Player player) {
         if (player == null) return;
