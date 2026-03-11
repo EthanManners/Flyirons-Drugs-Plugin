@@ -55,6 +55,8 @@ public class WeedFarmWorkerService implements Runnable {
         for (UUID workerId : farm.getAssignedVillagers()) {
             Entity entity = Bukkit.getEntity(workerId);
             if (entity instanceof Villager villager && villager.getWorld().equals(world) && villager.isValid() && !villager.isDead()) {
+                villager.setPersistent(true);
+                villager.setRemoveWhenFarAway(false);
                 workers.add(villager);
             }
         }
