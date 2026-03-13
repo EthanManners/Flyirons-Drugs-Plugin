@@ -7,7 +7,7 @@ strains:
     - type: SLOW
       duration: 60
       amplifier: 0
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 60
       amplifier: 0
     - type: CONFUSION
@@ -86,7 +86,7 @@ strains:
     rarity: common
     mutationChance: 0.0006
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 208
       amplifier: 0
     - type: DOLPHINS_GRACE
@@ -157,7 +157,7 @@ strains:
     rarity: common
     mutationChance: 0.0006
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 212
       amplifier: 0
     - type: HERO_OF_THE_VILLAGE
@@ -231,7 +231,7 @@ strains:
     rarity: common
     mutationChance: 0.0007
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 216
       amplifier: 0
     - type: SLOW_FALLING
@@ -311,7 +311,7 @@ strains:
     rarity: common
     mutationChance: 0.0007
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 220
       amplifier: 0
     - type: LUCK
@@ -391,7 +391,7 @@ strains:
     rarity: common
     mutationChance: 0.0007
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 143
       amplifier: 0
     - type: DOLPHINS_GRACE
@@ -421,7 +421,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 238
       amplifier: 0
     - type: SLOW_FALLING
@@ -472,7 +472,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 289
       amplifier: 0
     - type: HASTE
@@ -523,7 +523,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 239
       amplifier: 0
     - type: SLOW_FALLING
@@ -571,7 +571,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 290
       amplifier: 0
     - type: HASTE
@@ -623,7 +623,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 240
       amplifier: 0
     - type: SLOW_FALLING
@@ -674,7 +674,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 291
       amplifier: 0
     - type: HASTE
@@ -722,7 +722,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 241
       amplifier: 0
     - type: SLOW_FALLING
@@ -772,7 +772,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 292
       amplifier: 0
     - type: HASTE
@@ -821,7 +821,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 242
       amplifier: 0
     - type: SLOW_FALLING
@@ -870,7 +870,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 293
       amplifier: 0
     - type: HASTE
@@ -920,7 +920,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 243
       amplifier: 0
     - type: SLOW_FALLING
@@ -970,7 +970,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 294
       amplifier: 0
     - type: HASTE
@@ -1019,7 +1019,7 @@ strains:
     rarity: uncommon
     mutationChance: 0.0008
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 244
       amplifier: 0
     - type: SLOW_FALLING
@@ -1070,7 +1070,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 335
       amplifier: 1
     - type: ABSORPTION
@@ -1120,7 +1120,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 285
       amplifier: 0
     - type: HASTE
@@ -1171,7 +1171,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 336
       amplifier: 1
     - type: HASTE
@@ -1220,7 +1220,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 286
       amplifier: 0
     - type: HASTE
@@ -1269,7 +1269,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 337
       amplifier: 1
     - type: HASTE
@@ -1317,7 +1317,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 287
       amplifier: 0
     - type: HASTE
@@ -1366,7 +1366,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 338
       amplifier: 1
     - type: HASTE
@@ -1414,7 +1414,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 288
       amplifier: 0
     - type: HASTE
@@ -1464,7 +1464,7 @@ strains:
     rarity: rare
     mutationChance: 0.0009
     effects:
-    - type: WEAKNESS
+    - type: WEAVING
       duration: 339
       amplifier: 1
     - type: HASTE

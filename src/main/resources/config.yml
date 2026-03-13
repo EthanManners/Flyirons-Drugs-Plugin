@@ -92,21 +92,8 @@ blunt:
   display-name: "&2Blunt"
   lore:
     - "&7Cannabis wrapped in a leaf"
-    - "&a&oResistance II"
-    - "&c&oHunger I"
-    - "&c&oSlowness II"
     - "&7OD Risk: &2&lNon-Lethal"
     - "&7Abuse Potential: &3&lLow"
-  effects:
-    RESISTANCE:
-      duration: 600
-      amplifier: 1
-    HUNGER:
-      duration: 800
-      amplifier: 0
-    SLOW:
-      duration: 600
-      amplifier: 1
 
 cocaine:
   material: SUGAR
@@ -136,21 +123,8 @@ joint:
   display-name: "&2Joint"
   lore:
     - "&7Cannabis wrapped in paper"
-    - "&a&oResistance II"
-    - "&c&oHunger II"
-    - "&c&oSlowness I"
     - "&7OD Risk: &2&lNon-Lethal"
     - "&7Abuse Potential: &3&lLow"
-  effects:
-    RESISTANCE:
-      duration: 400
-      amplifier: 1
-    HUNGER:
-      duration: 600
-      amplifier: 1
-    SLOW:
-      duration: 400
-      amplifier: 0
       
       
       
@@ -159,43 +133,18 @@ cart:
   display-name: "&2Cart"
   lore:
     - "&7Digital Cannabis"
-    - "&a&oResistance III"
-    - "&c&oHunger II"
-    - "&c&oSlowness II"
     - "&7OD Risk: &2&lNon-Lethal"
     - "&7Abuse Potential: &3&lLow"
-  effects:
-    RESISTANCE:
-      duration: 400
-      amplifier: 2
-    HUNGER:
-      duration: 400
-      amplifier: 1
-    SLOW:
-      duration: 200
-      amplifier: 1
-      
+
       
 edible:
   material: Cookie
   display-name: "&2Edible"
   lore:
     - "&7Cannabis without the lung damage" 
-    - "&a&oResistance I"
-    - "&c&oHunger I"
-    - "&c&oSlowness I"
     - "&7OD Risk: &2&lNon-Lethal"
     - "&7Abuse Potential: &3&lLow"
-  effects:
-    RESISTANCE:
-      duration: 800
-      amplifier: 0
-    HUNGER:
-      duration: 1200
-      amplifier: 1
-    SLOW:
-      duration: 800
-      amplifier: 0
+
       
       
 glue:

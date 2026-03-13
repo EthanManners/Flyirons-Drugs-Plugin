@@ -124,7 +124,7 @@ drugs:
       enabled: true
       points_decay_per_minute: 1.0
     withdrawal_effects:
-      - type: HUNGER
+      - type: WEAKNESS
         amplifier: 1
 
   joint:
@@ -136,7 +136,7 @@ drugs:
       enabled: true
       points_decay_per_minute: 1.0
     withdrawal_effects:
-      - type: HUNGER
+      - type: WEAKNESS
         amplifier: 1
 
   edible:
@@ -148,7 +148,7 @@ drugs:
       enabled: true
       points_decay_per_minute: 1.0
     withdrawal_effects:
-      - type: HUNGER
+      - type: WEAKNESS
         amplifier: 1
 
   cart:
@@ -160,7 +160,7 @@ drugs:
       enabled: true
       points_decay_per_minute: 0.75
     withdrawal_effects:
-      - type: HUNGER
+      - type: WEAKNESS
         amplifier: 1
 
   molly:
