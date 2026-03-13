@@ -6,10 +6,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -64,6 +66,42 @@ public final class DrugItemMetadata {
         return pdc.has(key("drug_id"), PersistentDataType.STRING);
     }
 
+    public static void applyStrainLore(ItemMeta meta, StrainProfile strain) {
+        if (meta == null) return;
+
+        String strainName = strain != null ? strain.getDisplayName() : DEFAULT_STRAIN_ID;
+        List<String> lore = new ArrayList<>(meta.hasLore() ? Objects.requireNonNull(meta.getLore()) : Collections.emptyList());
+
+        lore.removeIf(line -> {
+            String stripped = ChatColor.stripColor(line);
+            if (stripped == null) return false;
+            String lowered = stripped.toLowerCase(Locale.ROOT);
+            return lowered.startsWith("strain:") || lowered.startsWith("effects:") || lowered.startsWith("effect:");
+        });
+
+        lore.add(ChatColor.DARK_GREEN + "Strain: " + ChatColor.GREEN + strainName);
+        if (strain != null && strain.getId().equalsIgnoreCase(DEFAULT_STRAIN_ID)) {
+            lore.add(ChatColor.DARK_GREEN + "Effects: " + ChatColor.GRAY + "Unknown");
+        } else {
+            lore.add(ChatColor.DARK_GREEN + "Effects:");
+            if (strain == null || strain.getEffects().isEmpty()) {
+                lore.add(ChatColor.GRAY + "Effect: None");
+            } else {
+                for (PotionEffect effect : strain.getEffects()) {
+                    lore.add(ChatColor.GRAY + "Effect: " + formatEffect(effect));
+                }
+            }
+        }
+
+        meta.setLore(lore);
+    }
+
+    private static String formatEffect(PotionEffect effect) {
+        String name = effect.getType().getName().toLowerCase(Locale.ROOT).replace('_', ' ');
+        String pretty = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        int seconds = Math.max(1, effect.getDuration() / 20);
+        return pretty + " " + (effect.getAmplifier() + 1) + " (" + seconds + "s)";
+    }
 
     public static void setBongDurability(ItemMeta meta, int durability) {
         meta.getPersistentDataContainer().set(key("bong_durability"), PersistentDataType.INTEGER, Math.max(0, durability));

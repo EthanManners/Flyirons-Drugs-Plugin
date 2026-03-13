@@ -129,20 +129,27 @@ public final class StrainsMenuGUI {
         meta.setDisplayName(ChatColor.GREEN + strain.getDisplayName());
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Rarity: " + ChatColor.YELLOW + capitalize(strain.getRarity()));
-        lore.add(ChatColor.GRAY + "Duration Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getDurationMultiplier()));
-        lore.add(ChatColor.GRAY + "Amplifier Modifier: " + ChatColor.AQUA + String.format("x%.2f", strain.getAmplifierMultiplier()));
-        lore.add(ChatColor.GRAY + "Mutation Chance: " + ChatColor.WHITE + String.format("%.2f%%", strain.getMutationChance() * 100));
-        lore.add(ChatColor.DARK_GRAY + "Mutates Into:");
-        strain.getMutationWeights().entrySet().stream()
-                .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
-                .limit(4)
-                .forEach(e -> lore.add(ChatColor.GRAY + " - " + e.getKey() + " (" + e.getValue() + ")"));
+        lore.add(ChatColor.GRAY + "Mutation Chance: " + ChatColor.WHITE + String.format("%.3f%%", strain.getMutationChance() * 100));
+        lore.add(ChatColor.DARK_GRAY + "Effects:");
+        if (DrugItemMetadata.DEFAULT_STRAIN_ID.equalsIgnoreCase(strain.getId())) {
+            lore.add(ChatColor.GRAY + " - Unknown (random debuff)");
+        } else {
+            strain.getEffects().forEach(effect -> lore.add(ChatColor.GRAY + " - " + formatEffect(effect)));
+        }
         meta.setLore(lore);
         DrugItemMetadata.setItemType(meta, "cannabis_plant");
         DrugItemMetadata.setStrainId(meta, strain.getId());
 
         item.setItemMeta(meta);
         return item;
+    }
+
+
+    private static String formatEffect(org.bukkit.potion.PotionEffect effect) {
+        String raw = effect.getType().getName().toLowerCase().replace('_', ' ');
+        String title = Character.toUpperCase(raw.charAt(0)) + raw.substring(1);
+        int seconds = Math.max(1, effect.getDuration() / 20);
+        return title + " " + (effect.getAmplifier() + 1) + " (" + seconds + "s)";
     }
 
     private static String capitalize(String value) {

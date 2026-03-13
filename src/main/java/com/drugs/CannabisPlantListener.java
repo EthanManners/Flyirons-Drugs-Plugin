@@ -180,11 +180,18 @@ public class CannabisPlantListener implements Listener {
             DrugItemMetadata.setItemType(meta, "cannabis_plant");
             DrugItemMetadata.setStrainId(meta, resolved);
             meta.setDisplayName("§2Weed §7(§f" + (profile != null ? profile.getDisplayName() : resolved) + "§7)");
-            meta.setLore(java.util.Arrays.asList(
-                    "§7Strain: §a" + (profile != null ? profile.getDisplayName() : resolved),
-                    "§7Rarity: §e" + (profile != null ? profile.getRarity() : "common"),
-                    "§7Mutation Chance: §f" + String.format("%.2f%%", (profile != null ? profile.getMutationChance() : 0.005) * 100.0)
-            ));
+            java.util.List<String> lore = new java.util.ArrayList<>();
+            lore.add("§7Rarity: §e" + (profile != null ? profile.getRarity() : "common"));
+            lore.add("§7Mutation Chance: §f" + String.format("%.3f%%", (profile != null ? profile.getMutationChance() : 0.0005) * 100.0));
+            if (profile != null && DrugItemMetadata.DEFAULT_STRAIN_ID.equalsIgnoreCase(profile.getId())) {
+                lore.add("§7Effects: §8Unknown");
+            } else if (profile != null) {
+                lore.add("§7Effects:");
+                for (org.bukkit.potion.PotionEffect effect : profile.getEffects()) {
+                    lore.add("§7 - §d" + effect.getType().getName() + " §f" + (effect.getAmplifier() + 1) + " §7(" + Math.max(1, effect.getDuration() / 20) + "s)");
+                }
+            }
+            meta.setLore(lore);
             item.setItemMeta(meta);
         }
         return item;
