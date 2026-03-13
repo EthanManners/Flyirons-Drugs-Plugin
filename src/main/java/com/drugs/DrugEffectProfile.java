@@ -90,6 +90,13 @@ public class DrugEffectProfile {
             return;
         }
 
+        if (id.equalsIgnoreCase("lsd")) {
+            DrugsV2 plugin = DrugsV2.getInstance();
+            if (plugin != null && plugin.getLsdEffectManager() != null) {
+                plugin.getLsdEffectManager().activate(player);
+            }
+        }
+
         // Apply scaled base product effects
         applyEffectList(player, effects, multiplier);
 
