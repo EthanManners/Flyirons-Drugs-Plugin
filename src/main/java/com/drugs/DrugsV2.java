@@ -95,7 +95,9 @@ public class DrugsV2 extends JavaPlugin {
         getCommand("drugs").setExecutor(new DrugsCommand());
         getCommand("drugs").setTabCompleter(new DrugsTabCompleter());
         getCommand("tolerance").setExecutor(new ToleranceCommand());
-        getCommand("strains").setExecutor(new StrainsCommand());
+        StrainsCommand strainsCommand = new StrainsCommand();
+        getCommand("strains").setExecutor(strainsCommand);
+        getCommand("strains").setTabCompleter(strainsCommand);
 
         // Register PlaceholderAPI expansion if available
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

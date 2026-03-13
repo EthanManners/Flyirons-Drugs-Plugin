@@ -33,6 +33,7 @@ public class DrugEffectProfile {
     private final String strippedDisplayName;
     private final ItemStack cachedItem;
     private final List<String> formattedLore;
+    private final Random random = new Random();
 
     public DrugEffectProfile(String id, List<PotionEffect> effects, Material material, String displayName, List<String> lore) {
         this.id = id;
@@ -89,25 +90,15 @@ public class DrugEffectProfile {
             return;
         }
 
-        // Apply scaled effects
-        for (PotionEffect baseEffect : effects) {
-            int newDuration = (int) (baseEffect.getDuration() * multiplier);
-            int amplifier = baseEffect.getAmplifier();
+        // Apply scaled base product effects
+        applyEffectList(player, effects, multiplier);
 
-            if (strainProfile != null) {
-                newDuration = (int) Math.max(1, Math.round(newDuration * strainProfile.getDurationMultiplier()));
-                amplifier = Math.max(0, (int) Math.round(amplifier * strainProfile.getAmplifierMultiplier()));
-            }
-
-            if (newDuration > 0) {
-                player.addPotionEffect(new PotionEffect(
-                        baseEffect.getType(),
-                        newDuration,
-                        amplifier,
-                        baseEffect.isAmbient(),
-                        baseEffect.hasParticles(),
-                        baseEffect.hasIcon()
-                ));
+        // Apply strain-specific effects for cannabis products
+        if (strainProfile != null && !strainProfile.getEffects().isEmpty()) {
+            if (DrugItemMetadata.DEFAULT_STRAIN_ID.equalsIgnoreCase(strainProfile.getId())) {
+                applyRandomReggieDebuff(player, strainProfile.getEffects(), multiplier);
+            } else {
+                applyEffectList(player, strainProfile.getEffects(), multiplier);
             }
         }
 
@@ -115,6 +106,41 @@ public class DrugEffectProfile {
         AddictionManager.onDrugUse(player, id);
     }
 
+
+    private void applyEffectList(Player player, List<PotionEffect> sourceEffects, double toleranceMultiplier) {
+        for (PotionEffect source : sourceEffects) {
+            int newDuration = (int) Math.max(1, Math.round(source.getDuration() * toleranceMultiplier));
+            int amplifier = Math.max(0, source.getAmplifier());
+
+            player.addPotionEffect(new PotionEffect(
+                    source.getType(),
+                    newDuration,
+                    amplifier,
+                    source.isAmbient(),
+                    source.hasParticles(),
+                    source.hasIcon()
+            ));
+        }
+    }
+
+    private void applyRandomReggieDebuff(Player player, List<PotionEffect> possibleDebuffs, double toleranceMultiplier) {
+        if (possibleDebuffs == null || possibleDebuffs.isEmpty()) {
+            return;
+        }
+
+        PotionEffect base = possibleDebuffs.get(random.nextInt(possibleDebuffs.size()));
+        int randomDuration = 20 + random.nextInt(1200);
+        int adjustedDuration = (int) Math.max(1, Math.round(randomDuration * toleranceMultiplier));
+
+        player.addPotionEffect(new PotionEffect(
+                base.getType(),
+                adjustedDuration,
+                Math.max(0, base.getAmplifier()),
+                base.isAmbient(),
+                base.hasParticles(),
+                base.hasIcon()
+        ));
+    }
 
     private void spawnConsumptionParticles(Player player) {
         if (player == null) return;
@@ -156,10 +182,7 @@ public class DrugEffectProfile {
 
         String resolved = strain != null ? strain.getId() : DrugItemMetadata.DEFAULT_STRAIN_ID;
         DrugItemMetadata.setStrainId(meta, resolved);
-        List<String> lore = new ArrayList<>(meta.hasLore() ? Objects.requireNonNull(meta.getLore()) : Collections.emptyList());
-        lore.removeIf(line -> ChatColor.stripColor(line).toLowerCase().startsWith("strain:"));
-        lore.add(ChatColor.DARK_GREEN + "Strain: " + ChatColor.GREEN + (strain != null ? strain.getDisplayName() : resolved));
-        meta.setLore(lore);
+        DrugItemMetadata.applyStrainLore(meta, strain);
         item.setItemMeta(meta);
         return item;
     }
@@ -176,16 +199,13 @@ public class DrugEffectProfile {
             DrugItemMetadata.setItemType(meta, id);
 
             List<String> loreWithStrain = new ArrayList<>(formattedLore);
+            meta.setLore(loreWithStrain);
             if (StrainConfigLoader.isCannabisDrug(id)) {
                 String defaultStrain = DrugItemMetadata.DEFAULT_STRAIN_ID;
                 DrugItemMetadata.setStrainId(meta, defaultStrain);
                 StrainProfile profile = StrainConfigLoader.getStrain(defaultStrain);
-                if (profile != null) {
-                    loreWithStrain.add(ChatColor.DARK_GREEN + "Strain: " + ChatColor.GREEN + profile.getDisplayName());
-                }
+                DrugItemMetadata.applyStrainLore(meta, profile);
             }
-
-            meta.setLore(loreWithStrain);
             if (id.equalsIgnoreCase("cart")) {
                 int maxDurability = MechanicsConfig.getCartDurabilityUses();
                 DrugItemMetadata.setCartDurability(meta, maxDurability);
