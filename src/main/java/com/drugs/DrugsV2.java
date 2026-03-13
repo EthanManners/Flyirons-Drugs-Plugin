@@ -21,6 +21,8 @@ public class DrugsV2 extends JavaPlugin {
     private File recipesFile;
     private BongListener bongListener;
     private WeedFarmManager weedFarmManager;
+    private LsdEffectManager lsdEffectManager;
+    private FakePortalManager fakePortalManager;
 
     public static DrugsV2 getInstance() {
         return instance;
@@ -73,6 +75,10 @@ public class DrugsV2 extends JavaPlugin {
 
         AddictionManager.init(this);
 
+        lsdEffectManager = new LsdEffectManager(this);
+        fakePortalManager = new FakePortalManager(this);
+        fakePortalManager.loadPersistedPortals();
+
         // Start tolerance decay
         ToleranceTracker.startDecayTask();
 
@@ -87,6 +93,8 @@ public class DrugsV2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(bongListener, this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
         getServer().getPluginManager().registerEvents(new WeedFarmControllerListener(weedFarmManager), this);
+        getServer().getPluginManager().registerEvents(lsdEffectManager, this);
+        getServer().getPluginManager().registerEvents(fakePortalManager, this);
         getServer().getScheduler().runTaskTimer(this, new WeedFarmWorkerService(weedFarmManager), MechanicsConfig.getWorkerTickInterval(), MechanicsConfig.getWorkerTickInterval());
 
         BongRegistry.respawnMissing(bongListener);
@@ -114,6 +122,12 @@ public class DrugsV2 extends JavaPlugin {
         BongRegistry.save();
         if (weedFarmManager != null) {
             weedFarmManager.save();
+        }
+        if (lsdEffectManager != null) {
+            lsdEffectManager.shutdown();
+        }
+        if (fakePortalManager != null) {
+            fakePortalManager.shutdown();
         }
         AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
@@ -213,5 +227,9 @@ public class DrugsV2 extends JavaPlugin {
 
     public BongListener getBongListener() {
         return bongListener;
+    }
+
+    public LsdEffectManager getLsdEffectManager() {
+        return lsdEffectManager;
     }
 }

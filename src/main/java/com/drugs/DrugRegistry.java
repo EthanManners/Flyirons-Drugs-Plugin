@@ -57,6 +57,11 @@ public class DrugRegistry {
                 continue;
             }
 
+            if (!section.contains("material")) {
+                Bukkit.getLogger().info("[DrugsV2] Skipping non-drug config section: " + key);
+                continue;
+            }
+
             try {
                 String name = key;
                 Material material = Material.valueOf(section.getString("material", "SUGAR").toUpperCase());

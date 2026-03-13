@@ -191,3 +191,22 @@ molly:
  
 
 
+
+lsd:
+  material: CHORUS_FRUIT
+  display-name: "&5LSD"
+  lore:
+    - "&7A mind-bending trip with portal visuals"
+    - "&d&oNausea"
+    - "&5&oPortal Overlay"
+    - "&7OD Risk: &3&lLow"
+    - "&7Abuse Potential: &e&lMedium"
+  activation-delay-ticks: 40
+  duration-ticks: 2400
+  nausea-amplifier: 0
+  effects: {}
+
+fake-portals:
+  particle-period-ticks: 10
+  teleport-cooldown-ms: 1500
+  saved: {}
