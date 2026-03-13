@@ -2,18 +2,28 @@ strains:
   reggie:
     display-name: Reggie
     rarity: common
-    durationMultiplier: 0.72
-    amplifierMultiplier: 0.45
     mutationChance: 0.0005
     effects:
-    - type: SPEED
-      duration: 70
+    - type: SLOW
+      duration: 60
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 90
+    - type: WEAKNESS
+      duration: 60
       amplifier: 0
-    - type: JUMP
-      duration: 110
+    - type: CONFUSION
+      duration: 60
+      amplifier: 0
+    - type: HUNGER
+      duration: 60
+      amplifier: 0
+    - type: BLINDNESS
+      duration: 60
+      amplifier: 0
+    - type: DARKNESS
+      duration: 60
+      amplifier: 0
+    - type: SLOW_DIGGING
+      duration: 60
       amplifier: 0
     mutationWeights:
       reggie: 60
@@ -32,36 +42,26 @@ strains:
   blue_dream:
     display-name: Blue Dream
     rarity: common
-    durationMultiplier: 0.801
-    amplifierMultiplier: 0.561
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 99
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 121
+    - type: HUNGER
+      duration: 157
       amplifier: 0
-    - type: REGENERATION
-      duration: 143
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 239
+      amplifier: 0
     mutationWeights:
       blue_dream: 100
   durban_poison:
     display-name: Durban Poison
     rarity: common
-    durationMultiplier: 0.802
-    amplifierMultiplier: 0.562
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 103
+    - type: CONFUSION
+      duration: 174
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 125
-      amplifier: 1
-    - type: HASTE
-      duration: 147
+    - type: SLOW_FALLING
+      duration: 258
       amplifier: 0
     mutationWeights:
       durban_poison: 62
@@ -70,56 +70,41 @@ strains:
   gelato_41:
     display-name: 'Gelato #41'
     rarity: common
-    durationMultiplier: 0.803
-    amplifierMultiplier: 0.563
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 107
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 129
+    - type: SLOW
+      duration: 191
       amplifier: 0
-    - type: SATURATION
-      duration: 151
-      amplifier: 1
+    - type: LUCK
+      duration: 277
+      amplifier: 0
     mutationWeights:
       gelato_41: 62
       bubba_kush: 38
   gg4:
     display-name: GG4
     rarity: common
-    durationMultiplier: 0.804
-    amplifierMultiplier: 0.564
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 111
+    - type: WEAKNESS
+      duration: 208
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 133
-      amplifier: 1
-    - type: LUCK
-      duration: 155
+    - type: DOLPHINS_GRACE
+      duration: 296
       amplifier: 0
     mutationWeights:
       gg4: 100
   gmo_cookies:
     display-name: GMO Cookies
     rarity: common
-    durationMultiplier: 0.805
-    amplifierMultiplier: 0.565
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 115
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 137
+    - type: BLINDNESS
+      duration: 144
       amplifier: 0
-    - type: RESISTANCE
-      duration: 159
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 234
+      amplifier: 0
     mutationWeights:
       gmo_cookies: 62
       strawberry_cough: 19
@@ -127,18 +112,13 @@ strains:
   ice_cream_cake:
     display-name: Ice Cream Cake
     rarity: common
-    durationMultiplier: 0.806
-    amplifierMultiplier: 0.566
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 119
+    - type: HUNGER
+      duration: 161
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 141
-      amplifier: 1
-    - type: WATER_BREATHING
-      duration: 163
+    - type: SLOW_FALLING
+      duration: 253
       amplifier: 0
     mutationWeights:
       ice_cream_cake: 62
@@ -147,37 +127,27 @@ strains:
   jack_herer:
     display-name: Jack Herer
     rarity: common
-    durationMultiplier: 0.807
-    amplifierMultiplier: 0.567
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 123
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 145
+    - type: CONFUSION
+      duration: 178
       amplifier: 0
-    - type: SLOW_FALLING
-      duration: 167
-      amplifier: 1
+    - type: LUCK
+      duration: 272
+      amplifier: 0
     mutationWeights:
       jack_herer: 62
       gsc: 38
   pineapple_express:
     display-name: Pineapple Express
     rarity: common
-    durationMultiplier: 0.808
-    amplifierMultiplier: 0.568
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 127
+    - type: SLOW
+      duration: 195
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 149
-      amplifier: 1
     - type: DOLPHINS_GRACE
-      duration: 171
+      duration: 291
       amplifier: 0
     mutationWeights:
       pineapple_express: 62
@@ -185,36 +155,26 @@ strains:
   runtz:
     display-name: Runtz
     rarity: common
-    durationMultiplier: 0.809
-    amplifierMultiplier: 0.569
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 131
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 153
+    - type: WEAKNESS
+      duration: 212
       amplifier: 0
-    - type: ABSORPTION
-      duration: 175
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 229
+      amplifier: 0
     mutationWeights:
       runtz: 100
   skywalker_og:
     display-name: Skywalker OG
     rarity: common
-    durationMultiplier: 0.81
-    amplifierMultiplier: 0.57
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 135
+    - type: BLINDNESS
+      duration: 148
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 157
-      amplifier: 1
-    - type: HEALTH_BOOST
-      duration: 179
+    - type: SLOW_FALLING
+      duration: 248
       amplifier: 0
     mutationWeights:
       skywalker_og: 62
@@ -222,37 +182,27 @@ strains:
   sour_diesel:
     display-name: Sour Diesel
     rarity: common
-    durationMultiplier: 0.811
-    amplifierMultiplier: 0.571
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 139
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 161
+    - type: HUNGER
+      duration: 165
       amplifier: 0
-    - type: INVISIBILITY
-      duration: 183
-      amplifier: 1
+    - type: LUCK
+      duration: 267
+      amplifier: 0
     mutationWeights:
       sour_diesel: 62
       white_widow: 38
   wedding_cake:
     display-name: Wedding Cake
     rarity: common
-    durationMultiplier: 0.812
-    amplifierMultiplier: 0.572
     mutationChance: 0.0006
     effects:
-    - type: SPEED
-      duration: 143
+    - type: CONFUSION
+      duration: 182
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 165
-      amplifier: 1
-    - type: FIRE_RESISTANCE
-      duration: 187
+    - type: DOLPHINS_GRACE
+      duration: 286
       amplifier: 0
     mutationWeights:
       wedding_cake: 62
@@ -261,19 +211,14 @@ strains:
   bubba_kush:
     display-name: Bubba Kush
     rarity: common
-    durationMultiplier: 0.813
-    amplifierMultiplier: 0.573
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 147
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 169
+    - type: SLOW
+      duration: 199
       amplifier: 0
-    - type: STRENGTH
-      duration: 191
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 224
+      amplifier: 0
     mutationWeights:
       bubba_kush: 64
       area_41: 8
@@ -284,18 +229,13 @@ strains:
   chemdawg:
     display-name: Chemdawg
     rarity: common
-    durationMultiplier: 0.814
-    amplifierMultiplier: 0.574
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 151
+    - type: WEAKNESS
+      duration: 216
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 173
-      amplifier: 1
-    - type: CONFUSION
-      duration: 195
+    - type: SLOW_FALLING
+      duration: 243
       amplifier: 0
     mutationWeights:
       chemdawg: 64
@@ -306,37 +246,27 @@ strains:
   dosidos:
     display-name: Dosidos
     rarity: common
-    durationMultiplier: 0.815
-    amplifierMultiplier: 0.575
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 155
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 177
+    - type: BLINDNESS
+      duration: 152
       amplifier: 0
-    - type: HUNGER
-      duration: 199
-      amplifier: 1
+    - type: LUCK
+      duration: 262
+      amplifier: 0
     mutationWeights:
       dosidos: 64
       bubba_fett: 36
   granddaddy_purple:
     display-name: Granddaddy Purple
     rarity: common
-    durationMultiplier: 0.816
-    amplifierMultiplier: 0.576
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 159
+    - type: HUNGER
+      duration: 169
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 181
-      amplifier: 1
-    - type: WEAKNESS
-      duration: 203
+    - type: DOLPHINS_GRACE
+      duration: 281
       amplifier: 0
     mutationWeights:
       granddaddy_purple: 64
@@ -348,19 +278,14 @@ strains:
   green_crack:
     display-name: Green Crack
     rarity: common
-    durationMultiplier: 0.817
-    amplifierMultiplier: 0.577
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 163
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 185
+    - type: CONFUSION
+      duration: 186
       amplifier: 0
-    - type: SLOW
-      duration: 207
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 300
+      amplifier: 0
     mutationWeights:
       green_crack: 64
       cereal_milk: 12
@@ -369,18 +294,13 @@ strains:
   gsc:
     display-name: GSC (Girl Scout Cookies)
     rarity: common
-    durationMultiplier: 0.818
-    amplifierMultiplier: 0.578
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 167
+    - type: SLOW
+      duration: 203
       amplifier: 0
-    - type: NIGHT_VISION
-      duration: 189
-      amplifier: 1
-    - type: BLINDNESS
-      duration: 211
+    - type: SLOW_FALLING
+      duration: 238
       amplifier: 0
     mutationWeights:
       gsc: 64
@@ -389,19 +309,14 @@ strains:
   mac_1:
     display-name: MAC 1
     rarity: common
-    durationMultiplier: 0.819
-    amplifierMultiplier: 0.579
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 171
-      amplifier: 1
-    - type: NIGHT_VISION
-      duration: 193
+    - type: WEAKNESS
+      duration: 220
       amplifier: 0
-    - type: POISON
-      duration: 215
-      amplifier: 1
+    - type: LUCK
+      duration: 257
+      amplifier: 0
     mutationWeights:
       mac_1: 64
       animal_face: 18
@@ -409,18 +324,13 @@ strains:
   northern_lights:
     display-name: Northern Lights
     rarity: common
-    durationMultiplier: 0.82
-    amplifierMultiplier: 0.58
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 175
+    - type: BLINDNESS
+      duration: 156
       amplifier: 0
-    - type: JUMP
-      duration: 197
-      amplifier: 1
-    - type: REGENERATION
-      duration: 219
+    - type: DOLPHINS_GRACE
+      duration: 276
       amplifier: 0
     mutationWeights:
       northern_lights: 64
@@ -429,19 +339,14 @@ strains:
   strawberry_cough:
     display-name: Strawberry Cough
     rarity: common
-    durationMultiplier: 0.821
-    amplifierMultiplier: 0.581
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 179
-      amplifier: 1
-    - type: JUMP
-      duration: 201
+    - type: HUNGER
+      duration: 173
       amplifier: 0
-    - type: HASTE
-      duration: 223
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 295
+      amplifier: 0
     mutationWeights:
       strawberry_cough: 64
       biscotti: 8
@@ -452,18 +357,13 @@ strains:
   sunset_sherbert:
     display-name: Sunset Sherbert
     rarity: common
-    durationMultiplier: 0.822
-    amplifierMultiplier: 0.582
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 183
+    - type: CONFUSION
+      duration: 190
       amplifier: 0
-    - type: JUMP
-      duration: 205
-      amplifier: 1
-    - type: SATURATION
-      duration: 227
+    - type: SLOW_FALLING
+      duration: 233
       amplifier: 0
     mutationWeights:
       sunset_sherbert: 64
@@ -473,19 +373,14 @@ strains:
   super_lemon_haze:
     display-name: Super Lemon Haze
     rarity: common
-    durationMultiplier: 0.823
-    amplifierMultiplier: 0.583
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 187
-      amplifier: 1
-    - type: JUMP
-      duration: 209
+    - type: SLOW
+      duration: 207
       amplifier: 0
     - type: LUCK
-      duration: 231
-      amplifier: 1
+      duration: 252
+      amplifier: 0
     mutationWeights:
       super_lemon_haze: 64
       jokerz: 12
@@ -494,18 +389,13 @@ strains:
   trainwreck:
     display-name: Trainwreck
     rarity: common
-    durationMultiplier: 0.824
-    amplifierMultiplier: 0.584
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 191
+    - type: WEAKNESS
+      duration: 143
       amplifier: 0
-    - type: JUMP
-      duration: 213
-      amplifier: 1
-    - type: RESISTANCE
-      duration: 235
+    - type: DOLPHINS_GRACE
+      duration: 271
       amplifier: 0
     mutationWeights:
       trainwreck: 64
@@ -514,19 +404,14 @@ strains:
   white_widow:
     display-name: White Widow
     rarity: common
-    durationMultiplier: 0.825
-    amplifierMultiplier: 0.585
     mutationChance: 0.0007
     effects:
-    - type: SPEED
-      duration: 195
-      amplifier: 1
-    - type: JUMP
-      duration: 217
+    - type: BLINDNESS
+      duration: 160
       amplifier: 0
-    - type: WATER_BREATHING
-      duration: 239
-      amplifier: 1
+    - type: HERO_OF_THE_VILLAGE
+      duration: 290
+      amplifier: 0
     mutationWeights:
       white_widow: 64
       california_octane: 18
@@ -534,225 +419,201 @@ strains:
   animal_face:
     display-name: Animal Face
     rarity: uncommon
-    durationMultiplier: 1.006
-    amplifierMultiplier: 0.806
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 229
+    - type: WEAKNESS
+      duration: 238
       amplifier: 0
-    - type: JUMP
-      duration: 251
-      amplifier: 1
     - type: SLOW_FALLING
-      duration: 273
+      duration: 370
       amplifier: 0
+    - type: WATER_BREATHING
+      duration: 389
+      amplifier: 1
     mutationWeights:
       animal_face: 66
       compound_z: 34
   apples_and_bananas:
     display-name: Apples and Bananas
     rarity: uncommon
-    durationMultiplier: 1.007
-    amplifierMultiplier: 0.807
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 233
-      amplifier: 1
-    - type: JUMP
+    - type: HUNGER
       duration: 255
       amplifier: 0
-    - type: DOLPHINS_GRACE
-      duration: 277
+    - type: WATER_BREATHING
+      duration: 389
       amplifier: 1
+    - type: LUCK
+      duration: 408
+      amplifier: 0
     mutationWeights:
       apples_and_bananas: 66
       blue_zushi: 34
   area_41:
     display-name: Area 41
     rarity: uncommon
-    durationMultiplier: 1.008
-    amplifierMultiplier: 0.808
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 237
+    - type: SLOW
+      duration: 272
       amplifier: 0
-    - type: JUMP
-      duration: 259
+    - type: LUCK
+      duration: 408
+      amplifier: 0
+    - type: HASTE
+      duration: 427
       amplifier: 1
-    - type: ABSORPTION
-      duration: 281
-      amplifier: 0
     mutationWeights:
       area_41: 66
       lantz: 34
   bananaconda:
     display-name: Bananaconda
     rarity: uncommon
-    durationMultiplier: 1.009
-    amplifierMultiplier: 0.809
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 241
-      amplifier: 1
-    - type: JUMP
-      duration: 263
+    - type: WEAKNESS
+      duration: 289
       amplifier: 0
-    - type: HEALTH_BOOST
-      duration: 285
+    - type: HASTE
+      duration: 427
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 335
+      amplifier: 0
     mutationWeights:
       bananaconda: 66
       whitethorn_rose: 34
   biscotti:
     display-name: Biscotti
     rarity: uncommon
-    durationMultiplier: 1.01
-    amplifierMultiplier: 0.81
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 245
+    - type: HUNGER
+      duration: 205
       amplifier: 0
-    - type: JUMP
-      duration: 267
+    - type: DOLPHINS_GRACE
+      duration: 335
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 354
       amplifier: 1
-    - type: INVISIBILITY
-      duration: 289
-      amplifier: 0
     mutationWeights:
       biscotti: 66
       first_class_funk: 34
   biskante:
     display-name: Biskante
     rarity: uncommon
-    durationMultiplier: 1.011
-    amplifierMultiplier: 0.811
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 249
-      amplifier: 1
-    - type: JUMP
-      duration: 271
+    - type: SLOW
+      duration: 222
       amplifier: 0
-    - type: FIRE_RESISTANCE
-      duration: 293
+    - type: NIGHT_VISION
+      duration: 354
       amplifier: 1
+    - type: SLOW_FALLING
+      duration: 373
+      amplifier: 0
     mutationWeights:
       biskante: 66
       blueberry_caviar: 34
   blueberry_cupcake:
     display-name: Blueberry Cupcake
     rarity: uncommon
-    durationMultiplier: 1.012
-    amplifierMultiplier: 0.812
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 253
+    - type: WEAKNESS
+      duration: 239
       amplifier: 0
-    - type: JUMP
-      duration: 275
+    - type: SLOW_FALLING
+      duration: 373
+      amplifier: 0
+    - type: WATER_BREATHING
+      duration: 392
       amplifier: 1
-    - type: STRENGTH
-      duration: 297
-      amplifier: 0
     mutationWeights:
       blueberry_cupcake: 100
   bubba_fett:
     display-name: Bubba Fett
     rarity: uncommon
-    durationMultiplier: 1.013
-    amplifierMultiplier: 0.813
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 257
-      amplifier: 1
-    - type: JUMP
-      duration: 279
+    - type: HUNGER
+      duration: 256
       amplifier: 0
-    - type: CONFUSION
-      duration: 301
+    - type: WATER_BREATHING
+      duration: 392
       amplifier: 1
+    - type: LUCK
+      duration: 411
+      amplifier: 0
     mutationWeights:
       bubba_fett: 100
   california_octane:
     display-name: California Octane
     rarity: uncommon
-    durationMultiplier: 1.014
-    amplifierMultiplier: 0.814
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 261
+    - type: SLOW
+      duration: 273
       amplifier: 0
-    - type: JUMP
-      duration: 283
+    - type: LUCK
+      duration: 411
+      amplifier: 0
+    - type: HASTE
+      duration: 430
       amplifier: 1
-    - type: HUNGER
-      duration: 305
-      amplifier: 0
     mutationWeights:
       california_octane: 100
   cereal_milk:
     display-name: Cereal Milk
     rarity: uncommon
-    durationMultiplier: 1.015
-    amplifierMultiplier: 0.815
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 265
-      amplifier: 1
-    - type: JUMP
-      duration: 287
-      amplifier: 0
     - type: WEAKNESS
-      duration: 309
+      duration: 290
+      amplifier: 0
+    - type: HASTE
+      duration: 430
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 338
+      amplifier: 0
     mutationWeights:
       cereal_milk: 66
       jade_dragon: 34
   gary_payton:
     display-name: Gary Payton
     rarity: uncommon
-    durationMultiplier: 1.016
-    amplifierMultiplier: 0.816
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 269
+    - type: HUNGER
+      duration: 206
       amplifier: 0
-    - type: JUMP
-      duration: 291
+    - type: DOLPHINS_GRACE
+      duration: 338
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 357
       amplifier: 1
-    - type: SLOW
-      duration: 313
-      amplifier: 0
     mutationWeights:
       gary_payton: 66
       pav: 34
   gelonade:
     display-name: Gelonade
     rarity: uncommon
-    durationMultiplier: 1.017
-    amplifierMultiplier: 0.817
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 273
-      amplifier: 1
-    - type: JUMP
-      duration: 295
+    - type: SLOW
+      duration: 223
       amplifier: 0
-    - type: BLINDNESS
-      duration: 317
+    - type: NIGHT_VISION
+      duration: 357
       amplifier: 1
+    - type: SLOW_FALLING
+      duration: 376
+      amplifier: 0
     mutationWeights:
       gelonade: 66
       gozer_og: 17
@@ -760,19 +621,17 @@ strains:
   gushers:
     display-name: Gushers
     rarity: uncommon
-    durationMultiplier: 1.018
-    amplifierMultiplier: 0.818
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 277
+    - type: WEAKNESS
+      duration: 240
       amplifier: 0
-    - type: JUMP
-      duration: 299
+    - type: SLOW_FALLING
+      duration: 376
+      amplifier: 0
+    - type: WATER_BREATHING
+      duration: 395
       amplifier: 1
-    - type: POISON
-      duration: 321
-      amplifier: 0
     mutationWeights:
       gushers: 66
       azure_haze: 17
@@ -780,517 +639,461 @@ strains:
   head_cracker:
     display-name: Head Cracker
     rarity: uncommon
-    durationMultiplier: 1.019
-    amplifierMultiplier: 0.819
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 281
-      amplifier: 1
-    - type: REGENERATION
-      duration: 303
+    - type: HUNGER
+      duration: 257
       amplifier: 0
-    - type: HASTE
-      duration: 325
+    - type: WATER_BREATHING
+      duration: 395
       amplifier: 1
+    - type: LUCK
+      duration: 414
+      amplifier: 0
     mutationWeights:
       head_cracker: 66
       velcroz: 34
   hella_jelly:
     display-name: Hella Jelly
     rarity: uncommon
-    durationMultiplier: 1.02
-    amplifierMultiplier: 0.82
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 285
+    - type: SLOW
+      duration: 274
       amplifier: 0
-    - type: REGENERATION
-      duration: 307
+    - type: LUCK
+      duration: 414
+      amplifier: 0
+    - type: HASTE
+      duration: 322
       amplifier: 1
-    - type: SATURATION
-      duration: 329
-      amplifier: 0
     mutationWeights:
       hella_jelly: 100
   jealousy:
     display-name: Jealousy
     rarity: uncommon
-    durationMultiplier: 1.021
-    amplifierMultiplier: 0.821
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 289
-      amplifier: 1
-    - type: REGENERATION
-      duration: 311
+    - type: WEAKNESS
+      duration: 291
       amplifier: 0
-    - type: LUCK
-      duration: 333
+    - type: HASTE
+      duration: 322
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 341
+      amplifier: 0
     mutationWeights:
       jealousy: 100
   jelly_donutz:
     display-name: Jelly Donutz
     rarity: uncommon
-    durationMultiplier: 1.022
-    amplifierMultiplier: 0.822
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 293
+    - type: HUNGER
+      duration: 207
       amplifier: 0
-    - type: REGENERATION
-      duration: 315
+    - type: DOLPHINS_GRACE
+      duration: 341
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 360
       amplifier: 1
-    - type: RESISTANCE
-      duration: 337
-      amplifier: 0
     mutationWeights:
       jelly_donutz: 100
   jokerz:
     display-name: Jokerz
     rarity: uncommon
-    durationMultiplier: 1.023
-    amplifierMultiplier: 0.823
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 297
-      amplifier: 1
-    - type: REGENERATION
-      duration: 319
+    - type: SLOW
+      duration: 224
       amplifier: 0
-    - type: WATER_BREATHING
-      duration: 341
+    - type: NIGHT_VISION
+      duration: 360
       amplifier: 1
+    - type: SLOW_FALLING
+      duration: 379
+      amplifier: 0
     mutationWeights:
       jokerz: 100
   krypto_chronic:
     display-name: Krypto Chronic
     rarity: uncommon
-    durationMultiplier: 1.024
-    amplifierMultiplier: 0.824
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 301
+    - type: WEAKNESS
+      duration: 241
       amplifier: 0
-    - type: REGENERATION
-      duration: 323
-      amplifier: 1
     - type: SLOW_FALLING
-      duration: 345
+      duration: 379
       amplifier: 0
+    - type: WATER_BREATHING
+      duration: 398
+      amplifier: 1
     mutationWeights:
       krypto_chronic: 66
       neptunes_beard: 34
   kush_mints:
     display-name: Kush Mints
     rarity: uncommon
-    durationMultiplier: 1.025
-    amplifierMultiplier: 0.825
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 305
-      amplifier: 1
-    - type: REGENERATION
-      duration: 327
+    - type: HUNGER
+      duration: 258
       amplifier: 0
-    - type: DOLPHINS_GRACE
-      duration: 349
+    - type: WATER_BREATHING
+      duration: 398
       amplifier: 1
+    - type: LUCK
+      duration: 417
+      amplifier: 0
     mutationWeights:
       kush_mints: 66
       bubblegum_popperz: 34
   lemon_cherry_gelato:
     display-name: Lemon Cherry Gelato
     rarity: uncommon
-    durationMultiplier: 1.026
-    amplifierMultiplier: 0.826
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 309
+    - type: SLOW
+      duration: 275
       amplifier: 0
-    - type: REGENERATION
-      duration: 331
+    - type: LUCK
+      duration: 417
+      amplifier: 0
+    - type: HASTE
+      duration: 325
       amplifier: 1
-    - type: ABSORPTION
-      duration: 353
-      amplifier: 0
     mutationWeights:
       lemon_cherry_gelato: 100
   lorange:
     display-name: L'Orange
     rarity: uncommon
-    durationMultiplier: 1.027
-    amplifierMultiplier: 0.827
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 313
-      amplifier: 1
-    - type: REGENERATION
-      duration: 335
+    - type: WEAKNESS
+      duration: 292
       amplifier: 0
-    - type: HEALTH_BOOST
-      duration: 357
+    - type: HASTE
+      duration: 325
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 344
+      amplifier: 0
     mutationWeights:
       lorange: 100
   lumpys_apple_fritter:
     display-name: Lumpy's Apple Fritter
     rarity: uncommon
-    durationMultiplier: 1.028
-    amplifierMultiplier: 0.828
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 317
+    - type: HUNGER
+      duration: 208
       amplifier: 0
-    - type: REGENERATION
-      duration: 339
+    - type: DOLPHINS_GRACE
+      duration: 344
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 363
       amplifier: 1
-    - type: INVISIBILITY
-      duration: 361
-      amplifier: 0
     mutationWeights:
       lumpys_apple_fritter: 100
   mimosa:
     display-name: Mimosa
     rarity: uncommon
-    durationMultiplier: 1.029
-    amplifierMultiplier: 0.829
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 321
-      amplifier: 1
-    - type: REGENERATION
-      duration: 343
+    - type: SLOW
+      duration: 225
       amplifier: 0
-    - type: FIRE_RESISTANCE
-      duration: 365
+    - type: NIGHT_VISION
+      duration: 363
       amplifier: 1
+    - type: SLOW_FALLING
+      duration: 382
+      amplifier: 0
     mutationWeights:
       mimosa: 66
       hyper_za: 34
   modified_grapes:
     display-name: Modified Grapes
     rarity: uncommon
-    durationMultiplier: 1.03
-    amplifierMultiplier: 0.83
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 325
+    - type: WEAKNESS
+      duration: 242
       amplifier: 0
-    - type: REGENERATION
-      duration: 347
+    - type: SLOW_FALLING
+      duration: 382
+      amplifier: 0
+    - type: WATER_BREATHING
+      duration: 401
       amplifier: 1
-    - type: STRENGTH
-      duration: 369
-      amplifier: 0
     mutationWeights:
       modified_grapes: 100
   oreoz:
     display-name: Oreoz
     rarity: uncommon
-    durationMultiplier: 1.031
-    amplifierMultiplier: 0.831
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 329
-      amplifier: 1
-    - type: REGENERATION
-      duration: 351
+    - type: HUNGER
+      duration: 259
       amplifier: 0
-    - type: CONFUSION
-      duration: 373
+    - type: WATER_BREATHING
+      duration: 401
       amplifier: 1
+    - type: LUCK
+      duration: 420
+      amplifier: 0
     mutationWeights:
       oreoz: 100
   pancakes:
     display-name: Pancakes
     rarity: uncommon
-    durationMultiplier: 1.032
-    amplifierMultiplier: 0.832
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 333
+    - type: SLOW
+      duration: 276
       amplifier: 0
-    - type: REGENERATION
-      duration: 355
+    - type: LUCK
+      duration: 420
+      amplifier: 0
+    - type: HASTE
+      duration: 328
       amplifier: 1
-    - type: HUNGER
-      duration: 377
-      amplifier: 0
     mutationWeights:
       pancakes: 66
       solar_flare: 34
   peanut_butter_breath:
     display-name: Peanut Butter Breath
     rarity: uncommon
-    durationMultiplier: 1.033
-    amplifierMultiplier: 0.833
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 337
-      amplifier: 1
-    - type: REGENERATION
-      duration: 359
-      amplifier: 0
     - type: WEAKNESS
-      duration: 381
+      duration: 293
+      amplifier: 0
+    - type: HASTE
+      duration: 328
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 347
+      amplifier: 0
     mutationWeights:
       peanut_butter_breath: 66
       bangers_and_mac_1: 34
   permanent_marker:
     display-name: Permanent Marker
     rarity: uncommon
-    durationMultiplier: 1.034
-    amplifierMultiplier: 0.834
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 341
+    - type: HUNGER
+      duration: 209
       amplifier: 0
-    - type: REGENERATION
-      duration: 363
+    - type: DOLPHINS_GRACE
+      duration: 347
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 366
       amplifier: 1
-    - type: SLOW
-      duration: 385
-      amplifier: 0
     mutationWeights:
       permanent_marker: 66
       think_tank: 34
   pink_rosay:
     display-name: Pink Rosay
     rarity: uncommon
-    durationMultiplier: 1.035
-    amplifierMultiplier: 0.835
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 345
-      amplifier: 1
-    - type: REGENERATION
-      duration: 367
+    - type: SLOW
+      duration: 226
       amplifier: 0
-    - type: BLINDNESS
-      duration: 389
+    - type: NIGHT_VISION
+      duration: 366
       amplifier: 1
+    - type: SLOW_FALLING
+      duration: 385
+      amplifier: 0
     mutationWeights:
       pink_rosay: 100
   pink_runtz:
     display-name: Pink Runtz
     rarity: uncommon
-    durationMultiplier: 1.036
-    amplifierMultiplier: 0.836
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 349
+    - type: WEAKNESS
+      duration: 243
       amplifier: 0
-    - type: REGENERATION
-      duration: 371
+    - type: SLOW_FALLING
+      duration: 385
+      amplifier: 0
+    - type: WATER_BREATHING
+      duration: 404
       amplifier: 1
-    - type: POISON
-      duration: 393
-      amplifier: 0
     mutationWeights:
       pink_runtz: 66
       steal_yo_face: 34
   puff_pastry:
     display-name: Puff Pastry
     rarity: uncommon
-    durationMultiplier: 1.037
-    amplifierMultiplier: 0.837
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 353
-      amplifier: 1
-    - type: HASTE
-      duration: 375
+    - type: HUNGER
+      duration: 260
       amplifier: 0
-    - type: SATURATION
-      duration: 397
+    - type: WATER_BREATHING
+      duration: 404
       amplifier: 1
+    - type: LUCK
+      duration: 423
+      amplifier: 0
     mutationWeights:
       puff_pastry: 100
   rainbow_belts_3_0:
     display-name: Rainbow Belts 3.0
     rarity: uncommon
-    durationMultiplier: 1.038
-    amplifierMultiplier: 0.838
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 357
+    - type: SLOW
+      duration: 277
+      amplifier: 0
+    - type: LUCK
+      duration: 423
       amplifier: 0
     - type: HASTE
-      duration: 379
+      duration: 331
       amplifier: 1
-    - type: LUCK
-      duration: 401
-      amplifier: 0
     mutationWeights:
       rainbow_belts_3_0: 66
       zereal_killer: 34
   rs11:
     display-name: RS11
     rarity: uncommon
-    durationMultiplier: 1.039
-    amplifierMultiplier: 0.839
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 361
-      amplifier: 1
-    - type: HASTE
-      duration: 383
+    - type: WEAKNESS
+      duration: 294
       amplifier: 0
-    - type: RESISTANCE
-      duration: 405
+    - type: HASTE
+      duration: 331
       amplifier: 1
+    - type: DOLPHINS_GRACE
+      duration: 350
+      amplifier: 0
     mutationWeights:
       rs11: 100
   slurricane_ix:
     display-name: Slurricane IX
     rarity: uncommon
-    durationMultiplier: 1.04
-    amplifierMultiplier: 0.84
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 365
+    - type: HUNGER
+      duration: 210
       amplifier: 0
-    - type: HASTE
-      duration: 387
+    - type: DOLPHINS_GRACE
+      duration: 350
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 369
       amplifier: 1
-    - type: WATER_BREATHING
-      duration: 409
-      amplifier: 0
     mutationWeights:
       slurricane_ix: 66
       mule_fuel: 34
   super_boof:
     display-name: Super Boof
     rarity: uncommon
-    durationMultiplier: 1.041
-    amplifierMultiplier: 0.841
     mutationChance: 0.0008
     effects:
-    - type: SPEED
+    - type: SLOW
+      duration: 227
+      amplifier: 0
+    - type: NIGHT_VISION
       duration: 369
       amplifier: 1
-    - type: HASTE
-      duration: 391
-      amplifier: 0
     - type: SLOW_FALLING
-      duration: 413
-      amplifier: 1
+      duration: 388
+      amplifier: 0
     mutationWeights:
       super_boof: 100
   white_truffle:
     display-name: White Truffle
     rarity: uncommon
-    durationMultiplier: 1.042
-    amplifierMultiplier: 0.842
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 373
+    - type: WEAKNESS
+      duration: 244
       amplifier: 0
-    - type: HASTE
-      duration: 395
+    - type: SLOW_FALLING
+      duration: 388
+      amplifier: 0
+    - type: WATER_BREATHING
+      duration: 407
       amplifier: 1
-    - type: DOLPHINS_GRACE
-      duration: 417
-      amplifier: 0
     mutationWeights:
       white_truffle: 66
       ghost_orchid_og: 34
   zkittlez:
     display-name: Zkittlez
     rarity: uncommon
-    durationMultiplier: 1.043
-    amplifierMultiplier: 0.843
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 377
-      amplifier: 1
-    - type: HASTE
-      duration: 399
+    - type: HUNGER
+      duration: 261
       amplifier: 0
-    - type: ABSORPTION
-      duration: 421
+    - type: WATER_BREATHING
+      duration: 407
       amplifier: 1
+    - type: LUCK
+      duration: 426
+      amplifier: 0
     mutationWeights:
       zkittlez: 66
       melted_strawberries: 34
   zoap:
     display-name: Zoap
     rarity: uncommon
-    durationMultiplier: 1.044
-    amplifierMultiplier: 0.844
     mutationChance: 0.0008
     effects:
-    - type: SPEED
-      duration: 381
+    - type: SLOW
+      duration: 278
+      amplifier: 0
+    - type: LUCK
+      duration: 426
       amplifier: 0
     - type: HASTE
-      duration: 403
+      duration: 334
       amplifier: 1
-    - type: HEALTH_BOOST
-      duration: 425
-      amplifier: 0
     mutationWeights:
       zoap: 66
       gas_face: 34
   azure_haze:
     display-name: Azure Haze
     rarity: rare
-    durationMultiplier: 1.225
-    amplifierMultiplier: 1.045
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 415
-      amplifier: 2
-    - type: HASTE
-      duration: 437
+    - type: WEAKNESS
+      duration: 335
       amplifier: 1
-    - type: INVISIBILITY
-      duration: 459
-      amplifier: 2
+    - type: ABSORPTION
+      duration: 486
+      amplifier: 1
+    - type: RESISTANCE
+      duration: 505
+      amplifier: 1
     mutationWeights:
       azure_haze: 100
   bangers_and_mac_1:
     display-name: 'Bangers and Mac #1'
     rarity: rare
-    durationMultiplier: 1.226
-    amplifierMultiplier: 1.046
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 419
+    - type: HUNGER
+      duration: 251
+      amplifier: 0
+    - type: ABSORPTION
+      duration: 505
       amplifier: 1
     - type: HASTE
-      duration: 441
-      amplifier: 2
-    - type: FIRE_RESISTANCE
-      duration: 463
+      duration: 524
       amplifier: 1
     mutationWeights:
       bangers_and_mac_1: 68
@@ -1298,56 +1101,50 @@ strains:
   blue_zushi:
     display-name: Blue Zushi
     rarity: rare
-    durationMultiplier: 1.227
-    amplifierMultiplier: 1.047
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 423
-      amplifier: 2
-    - type: HASTE
-      duration: 445
+    - type: SLOW
+      duration: 268
       amplifier: 1
-    - type: STRENGTH
-      duration: 467
-      amplifier: 2
+    - type: RESISTANCE
+      duration: 524
+      amplifier: 1
+    - type: HASTE
+      duration: 543
+      amplifier: 1
     mutationWeights:
       blue_zushi: 68
       hindu_kush: 32
   blueberry_caviar:
     display-name: Blueberry Caviar
     rarity: rare
-    durationMultiplier: 1.228
-    amplifierMultiplier: 1.048
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 427
-      amplifier: 1
+    - type: WEAKNESS
+      duration: 285
+      amplifier: 0
     - type: HASTE
-      duration: 449
-      amplifier: 2
-    - type: CONFUSION
-      duration: 471
+      duration: 543
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 431
       amplifier: 1
     mutationWeights:
       blueberry_caviar: 100
   bubblegum_popperz:
     display-name: Bubblegum Popperz
     rarity: rare
-    durationMultiplier: 1.229
-    amplifierMultiplier: 1.049
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 431
-      amplifier: 2
-    - type: HASTE
-      duration: 453
-      amplifier: 1
     - type: HUNGER
-      duration: 475
-      amplifier: 2
+      duration: 302
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 431
+      amplifier: 1
+    - type: RESISTANCE
+      duration: 450
+      amplifier: 1
     mutationWeights:
       bubblegum_popperz: 68
       lambs_bread: 11
@@ -1356,54 +1153,48 @@ strains:
   compound_z:
     display-name: Compound Z
     rarity: rare
-    durationMultiplier: 1.23
-    amplifierMultiplier: 1.05
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 435
+    - type: SLOW
+      duration: 319
+      amplifier: 0
+    - type: RESISTANCE
+      duration: 450
       amplifier: 1
     - type: HASTE
-      duration: 457
-      amplifier: 2
-    - type: WEAKNESS
-      duration: 479
+      duration: 469
       amplifier: 1
     mutationWeights:
       compound_z: 100
   first_class_funk:
     display-name: First Class Funk
     rarity: rare
-    durationMultiplier: 1.231
-    amplifierMultiplier: 1.051
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 439
-      amplifier: 2
-    - type: HASTE
-      duration: 461
+    - type: WEAKNESS
+      duration: 336
       amplifier: 1
-    - type: SLOW
-      duration: 483
-      amplifier: 2
+    - type: HASTE
+      duration: 469
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 488
+      amplifier: 1
     mutationWeights:
       first_class_funk: 100
   gas_face:
     display-name: Gas Face
     rarity: rare
-    durationMultiplier: 1.232
-    amplifierMultiplier: 1.052
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 443
+    - type: HUNGER
+      duration: 252
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 488
       amplifier: 1
-    - type: HASTE
-      duration: 465
-      amplifier: 2
-    - type: BLINDNESS
-      duration: 487
+    - type: RESISTANCE
+      duration: 507
       amplifier: 1
     mutationWeights:
       gas_face: 68
@@ -1411,72 +1202,64 @@ strains:
   ghost_orchid_og:
     display-name: Ghost Orchid OG
     rarity: rare
-    durationMultiplier: 1.233
-    amplifierMultiplier: 1.053
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 447
-      amplifier: 2
-    - type: HASTE
-      duration: 469
+    - type: SLOW
+      duration: 269
       amplifier: 1
-    - type: POISON
-      duration: 491
-      amplifier: 2
+    - type: RESISTANCE
+      duration: 507
+      amplifier: 1
+    - type: HASTE
+      duration: 526
+      amplifier: 1
     mutationWeights:
       ghost_orchid_og: 100
   glitter_bomb:
     display-name: Glitter Bomb
     rarity: rare
-    durationMultiplier: 1.234
-    amplifierMultiplier: 1.054
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 451
+    - type: WEAKNESS
+      duration: 286
+      amplifier: 0
+    - type: HASTE
+      duration: 526
       amplifier: 1
-    - type: SATURATION
-      duration: 473
-      amplifier: 2
-    - type: LUCK
-      duration: 495
+    - type: NIGHT_VISION
+      duration: 545
       amplifier: 1
     mutationWeights:
       glitter_bomb: 100
   gozer_og:
     display-name: Gozer OG
     rarity: rare
-    durationMultiplier: 1.235
-    amplifierMultiplier: 1.055
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 455
-      amplifier: 2
-    - type: SATURATION
-      duration: 477
+    - type: HUNGER
+      duration: 303
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 545
       amplifier: 1
     - type: RESISTANCE
-      duration: 499
-      amplifier: 2
+      duration: 433
+      amplifier: 1
     mutationWeights:
       gozer_og: 100
   hyper_za:
     display-name: Hyper Za
     rarity: rare
-    durationMultiplier: 1.236
-    amplifierMultiplier: 1.056
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 459
+    - type: SLOW
+      duration: 320
+      amplifier: 0
+    - type: RESISTANCE
+      duration: 433
       amplifier: 1
-    - type: SATURATION
-      duration: 481
-      amplifier: 2
-    - type: WATER_BREATHING
-      duration: 503
+    - type: HASTE
+      duration: 452
       amplifier: 1
     mutationWeights:
       hyper_za: 68
@@ -1484,108 +1267,96 @@ strains:
   jade_dragon:
     display-name: Jade Dragon
     rarity: rare
-    durationMultiplier: 1.237
-    amplifierMultiplier: 1.057
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 463
-      amplifier: 2
-    - type: SATURATION
-      duration: 485
+    - type: WEAKNESS
+      duration: 337
       amplifier: 1
-    - type: SLOW_FALLING
-      duration: 507
-      amplifier: 2
+    - type: HASTE
+      duration: 452
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 471
+      amplifier: 1
     mutationWeights:
       jade_dragon: 100
   lantz:
     display-name: Lantz
     rarity: rare
-    durationMultiplier: 1.238
-    amplifierMultiplier: 1.058
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 467
+    - type: HUNGER
+      duration: 253
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 471
       amplifier: 1
-    - type: SATURATION
-      duration: 489
-      amplifier: 2
-    - type: DOLPHINS_GRACE
-      duration: 511
+    - type: RESISTANCE
+      duration: 490
       amplifier: 1
     mutationWeights:
       lantz: 100
   melted_strawberries:
     display-name: Melted Strawberries
     rarity: rare
-    durationMultiplier: 1.239
-    amplifierMultiplier: 1.059
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 471
-      amplifier: 2
-    - type: SATURATION
-      duration: 493
+    - type: SLOW
+      duration: 270
       amplifier: 1
-    - type: ABSORPTION
-      duration: 515
-      amplifier: 2
+    - type: RESISTANCE
+      duration: 490
+      amplifier: 1
+    - type: HASTE
+      duration: 509
+      amplifier: 1
     mutationWeights:
       melted_strawberries: 100
   mule_fuel:
     display-name: Mule Fuel
     rarity: rare
-    durationMultiplier: 1.24
-    amplifierMultiplier: 1.06
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 475
+    - type: WEAKNESS
+      duration: 287
+      amplifier: 0
+    - type: HASTE
+      duration: 509
       amplifier: 1
-    - type: SATURATION
-      duration: 497
-      amplifier: 2
-    - type: HEALTH_BOOST
-      duration: 519
+    - type: NIGHT_VISION
+      duration: 528
       amplifier: 1
     mutationWeights:
       mule_fuel: 100
   neptunes_beard:
     display-name: Neptune's Beard
     rarity: rare
-    durationMultiplier: 1.241
-    amplifierMultiplier: 1.061
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 479
-      amplifier: 2
-    - type: SATURATION
-      duration: 501
+    - type: HUNGER
+      duration: 304
       amplifier: 1
-    - type: INVISIBILITY
-      duration: 523
-      amplifier: 2
+    - type: NIGHT_VISION
+      duration: 528
+      amplifier: 1
+    - type: RESISTANCE
+      duration: 547
+      amplifier: 1
     mutationWeights:
       neptunes_beard: 100
   pav:
     display-name: Pavé
     rarity: rare
-    durationMultiplier: 1.242
-    amplifierMultiplier: 1.062
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 483
+    - type: SLOW
+      duration: 321
+      amplifier: 0
+    - type: RESISTANCE
+      duration: 547
       amplifier: 1
-    - type: SATURATION
-      duration: 505
-      amplifier: 2
-    - type: FIRE_RESISTANCE
-      duration: 527
+    - type: HASTE
+      duration: 435
       amplifier: 1
     mutationWeights:
       pav: 68
@@ -1593,72 +1364,64 @@ strains:
   solar_flare:
     display-name: Solar Flare
     rarity: rare
-    durationMultiplier: 1.243
-    amplifierMultiplier: 1.063
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 487
-      amplifier: 2
-    - type: SATURATION
-      duration: 509
+    - type: WEAKNESS
+      duration: 338
       amplifier: 1
-    - type: STRENGTH
-      duration: 531
-      amplifier: 2
+    - type: HASTE
+      duration: 435
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 454
+      amplifier: 1
     mutationWeights:
       solar_flare: 100
   steal_yo_face:
     display-name: Steal Yo Face
     rarity: rare
-    durationMultiplier: 1.244
-    amplifierMultiplier: 1.064
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 491
+    - type: HUNGER
+      duration: 254
+      amplifier: 0
+    - type: NIGHT_VISION
+      duration: 454
       amplifier: 1
-    - type: SATURATION
-      duration: 513
-      amplifier: 2
-    - type: CONFUSION
-      duration: 535
+    - type: RESISTANCE
+      duration: 473
       amplifier: 1
     mutationWeights:
       steal_yo_face: 100
   think_tank:
     display-name: Think Tank
     rarity: rare
-    durationMultiplier: 1.245
-    amplifierMultiplier: 1.065
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 495
-      amplifier: 2
-    - type: SATURATION
-      duration: 517
+    - type: SLOW
+      duration: 271
       amplifier: 1
-    - type: HUNGER
-      duration: 539
-      amplifier: 2
+    - type: RESISTANCE
+      duration: 473
+      amplifier: 1
+    - type: HASTE
+      duration: 492
+      amplifier: 1
     mutationWeights:
       think_tank: 100
   velcroz:
     display-name: VelcroZ
     rarity: rare
-    durationMultiplier: 1.246
-    amplifierMultiplier: 1.066
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 499
-      amplifier: 1
-    - type: SATURATION
-      duration: 521
-      amplifier: 2
     - type: WEAKNESS
-      duration: 543
+      duration: 288
+      amplifier: 0
+    - type: HASTE
+      duration: 492
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 511
       amplifier: 1
     mutationWeights:
       velcroz: 68
@@ -1667,253 +1430,225 @@ strains:
   wagyu:
     display-name: Wagyu
     rarity: rare
-    durationMultiplier: 1.247
-    amplifierMultiplier: 1.067
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 503
-      amplifier: 2
-    - type: SATURATION
-      duration: 525
+    - type: HUNGER
+      duration: 305
       amplifier: 1
-    - type: SLOW
-      duration: 547
-      amplifier: 2
+    - type: NIGHT_VISION
+      duration: 511
+      amplifier: 1
+    - type: RESISTANCE
+      duration: 530
+      amplifier: 1
     mutationWeights:
       wagyu: 100
   whitethorn_rose:
     display-name: Whitethorn Rose
     rarity: rare
-    durationMultiplier: 1.248
-    amplifierMultiplier: 1.068
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 507
+    - type: SLOW
+      duration: 322
+      amplifier: 0
+    - type: RESISTANCE
+      duration: 530
       amplifier: 1
-    - type: SATURATION
-      duration: 529
-      amplifier: 2
-    - type: BLINDNESS
-      duration: 551
+    - type: HASTE
+      duration: 549
       amplifier: 1
     mutationWeights:
       whitethorn_rose: 100
   zereal_killer:
     display-name: Zereal Killer
     rarity: rare
-    durationMultiplier: 1.249
-    amplifierMultiplier: 1.069
     mutationChance: 0.0009
     effects:
-    - type: SPEED
-      duration: 511
-      amplifier: 2
-    - type: SATURATION
-      duration: 533
+    - type: WEAKNESS
+      duration: 339
       amplifier: 1
-    - type: POISON
-      duration: 555
-      amplifier: 2
+    - type: HASTE
+      duration: 549
+      amplifier: 1
+    - type: NIGHT_VISION
+      duration: 437
+      amplifier: 1
     mutationWeights:
       zereal_killer: 68
       colombian_gold: 32
   acapulco_gold:
     display-name: Acapulco Gold
     rarity: legendary
-    durationMultiplier: 1.49
-    amplifierMultiplier: 1.31
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 560
+    - type: HUNGER
+      duration: 400
       amplifier: 1
-    - type: LUCK
-      duration: 582
-      amplifier: 2
     - type: RESISTANCE
-      duration: 604
+      duration: 662
       amplifier: 1
+    - type: HEALTH_BOOST
+      duration: 681
+      amplifier: 2
     mutationWeights:
       acapulco_gold: 100
   afghani:
     display-name: Afghani
     rarity: legendary
-    durationMultiplier: 1.491
-    amplifierMultiplier: 1.311
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 564
-      amplifier: 2
-    - type: LUCK
-      duration: 586
+    - type: SLOW
+      duration: 417
       amplifier: 1
-    - type: WATER_BREATHING
-      duration: 608
+    - type: HEALTH_BOOST
+      duration: 681
       amplifier: 2
+    - type: FIRE_RESISTANCE
+      duration: 700
+      amplifier: 1
     mutationWeights:
       afghani: 100
   colombian_gold:
     display-name: Colombian Gold
     rarity: legendary
-    durationMultiplier: 1.492
-    amplifierMultiplier: 1.312
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 568
+    - type: HUNGER
+      duration: 293
       amplifier: 1
-    - type: LUCK
-      duration: 590
+    - type: FIRE_RESISTANCE
+      duration: 700
+      amplifier: 1
+    - type: JUMP
+      duration: 719
       amplifier: 2
-    - type: SLOW_FALLING
-      duration: 612
-      amplifier: 1
     mutationWeights:
       colombian_gold: 100
   hindu_kush:
     display-name: Hindu Kush
     rarity: legendary
-    durationMultiplier: 1.493
-    amplifierMultiplier: 1.313
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 572
-      amplifier: 2
-    - type: LUCK
-      duration: 594
+    - type: SLOW
+      duration: 310
       amplifier: 1
-    - type: DOLPHINS_GRACE
-      duration: 616
+    - type: JUMP
+      duration: 719
       amplifier: 2
+    - type: INVISIBILITY
+      duration: 738
+      amplifier: 1
     mutationWeights:
       hindu_kush: 100
   lambs_bread:
     display-name: Lamb's Bread
     rarity: legendary
-    durationMultiplier: 1.494
-    amplifierMultiplier: 1.314
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 576
+    - type: HUNGER
+      duration: 327
       amplifier: 1
-    - type: LUCK
-      duration: 598
+    - type: INVISIBILITY
+      duration: 738
+      amplifier: 1
+    - type: RESISTANCE
+      duration: 757
       amplifier: 2
-    - type: ABSORPTION
-      duration: 620
-      amplifier: 1
     mutationWeights:
       lambs_bread: 100
   malawi_gold:
     display-name: Malawi Gold
     rarity: legendary
-    durationMultiplier: 1.495
-    amplifierMultiplier: 1.315
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 580
-      amplifier: 2
-    - type: LUCK
-      duration: 602
+    - type: SLOW
+      duration: 344
       amplifier: 1
-    - type: HEALTH_BOOST
-      duration: 624
+    - type: RESISTANCE
+      duration: 757
       amplifier: 2
+    - type: HEALTH_BOOST
+      duration: 575
+      amplifier: 1
     mutationWeights:
       malawi_gold: 100
   og_kush:
     display-name: OG Kush
     rarity: legendary
-    durationMultiplier: 1.496
-    amplifierMultiplier: 1.316
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 584
+    - type: HUNGER
+      duration: 361
       amplifier: 1
-    - type: LUCK
-      duration: 606
+    - type: HEALTH_BOOST
+      duration: 575
+      amplifier: 1
+    - type: FIRE_RESISTANCE
+      duration: 594
       amplifier: 2
-    - type: INVISIBILITY
-      duration: 628
-      amplifier: 1
     mutationWeights:
       og_kush: 100
   panama_red:
     display-name: Panama Red
     rarity: legendary
-    durationMultiplier: 1.497
-    amplifierMultiplier: 1.317
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 588
-      amplifier: 2
-    - type: LUCK
-      duration: 610
+    - type: SLOW
+      duration: 378
       amplifier: 1
     - type: FIRE_RESISTANCE
-      duration: 632
+      duration: 594
       amplifier: 2
+    - type: JUMP
+      duration: 613
+      amplifier: 1
     mutationWeights:
       panama_red: 100
   purple_haze:
     display-name: Purple Haze
     rarity: legendary
-    durationMultiplier: 1.498
-    amplifierMultiplier: 1.318
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 592
+    - type: HUNGER
+      duration: 395
       amplifier: 1
-    - type: LUCK
-      duration: 614
+    - type: JUMP
+      duration: 613
+      amplifier: 1
+    - type: INVISIBILITY
+      duration: 632
       amplifier: 2
-    - type: STRENGTH
-      duration: 636
-      amplifier: 1
     mutationWeights:
       purple_haze: 100
   skunk_1:
     display-name: 'Skunk #1'
     rarity: legendary
-    durationMultiplier: 1.499
-    amplifierMultiplier: 1.319
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 596
-      amplifier: 2
-    - type: LUCK
-      duration: 618
+    - type: SLOW
+      duration: 412
       amplifier: 1
-    - type: CONFUSION
-      duration: 640
+    - type: INVISIBILITY
+      duration: 632
       amplifier: 2
+    - type: RESISTANCE
+      duration: 651
+      amplifier: 1
     mutationWeights:
       skunk_1: 100
   thai_stick:
     display-name: Thai Stick
     rarity: legendary
-    durationMultiplier: 1.5
-    amplifierMultiplier: 1.32
     mutationChance: 0.001
     effects:
-    - type: SPEED
-      duration: 600
-      amplifier: 1
-    - type: LUCK
-      duration: 622
-      amplifier: 2
     - type: HUNGER
-      duration: 644
+      duration: 288
       amplifier: 1
+    - type: RESISTANCE
+      duration: 651
+      amplifier: 1
+    - type: HEALTH_BOOST
+      duration: 670
+      amplifier: 2
     mutationWeights:
       thai_stick: 100
