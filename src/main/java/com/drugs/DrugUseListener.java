@@ -87,6 +87,13 @@ public class DrugUseListener implements Listener {
         // ----------------------------------------
         profile.applyEffects(player, item);
 
+        if (drugId.equalsIgnoreCase("lsd")) {
+            DrugsV2 instance = DrugsV2.getInstance();
+            if (instance != null && instance.getLsdEffectManager() != null) {
+                instance.getLsdEffectManager().startEffect(player);
+            }
+        }
+
         if (player.getGameMode() != GameMode.CREATIVE) {
             if (drugId.equalsIgnoreCase("cart")) {
                 handleCartDurability(player, item);
