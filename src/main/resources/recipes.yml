@@ -157,3 +157,14 @@ farm-controller:
     R: REDSTONE
     C: COPPER_INGOT
     B: BARREL
+
+lsd:
+  shape:
+    - "PPP"
+    - "SES"
+    - "PPP"
+  ingredients:
+    P: PAPER
+    S: SPORE_BLOSSOM
+    E: ENDER_EYE
+

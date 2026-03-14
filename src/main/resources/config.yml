@@ -185,9 +185,15 @@ molly:
       duration: 1000
       amplifier: 1
 
-
-      
-      
- 
-
+lsd:
+  material: PURPLE_DYE
+  display-name: "&5LSD"
+  lore:
+    - "&7A vivid hallucinogenic tab"
+    - "&d&oNausea I"
+    - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &3&lLow"
+  delay: 5
+  duration: 180
+  effects: {}
 

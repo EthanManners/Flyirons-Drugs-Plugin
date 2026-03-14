@@ -21,6 +21,7 @@ public class DrugsV2 extends JavaPlugin {
     private File recipesFile;
     private BongListener bongListener;
     private WeedFarmManager weedFarmManager;
+    private LsdEffectManager lsdEffectManager;
 
     public static DrugsV2 getInstance() {
         return instance;
@@ -85,6 +86,8 @@ public class DrugsV2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new StrainsMenuListener(), this);
         bongListener = new BongListener();
         getServer().getPluginManager().registerEvents(bongListener, this);
+        lsdEffectManager = new LsdEffectManager(this);
+        getServer().getPluginManager().registerEvents(lsdEffectManager, this);
         Bukkit.getPluginManager().registerEvents(new AchievementsGUI(), DrugsV2.getInstance());
         getServer().getPluginManager().registerEvents(new WeedFarmControllerListener(weedFarmManager), this);
         getServer().getScheduler().runTaskTimer(this, new WeedFarmWorkerService(weedFarmManager), MechanicsConfig.getWorkerTickInterval(), MechanicsConfig.getWorkerTickInterval());
@@ -114,6 +117,9 @@ public class DrugsV2 extends JavaPlugin {
         BongRegistry.save();
         if (weedFarmManager != null) {
             weedFarmManager.save();
+        }
+        if (lsdEffectManager != null) {
+            lsdEffectManager.cleanupAll();
         }
         AddictionManager.shutdown();
         getLogger().info("DrugsV2 disabled.");
@@ -213,5 +219,9 @@ public class DrugsV2 extends JavaPlugin {
 
     public BongListener getBongListener() {
         return bongListener;
+    }
+
+    public LsdEffectManager getLsdEffectManager() {
+        return lsdEffectManager;
     }
 }
