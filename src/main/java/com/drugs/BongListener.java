@@ -60,6 +60,10 @@ public class BongListener implements Listener {
         ItemStack handItem = event.getPlayer().getInventory().getItemInMainHand();
         if (!BongItemFactory.isBongItem(handItem)) return;
 
+        // Prevent vanilla block placement for bong items (now backed by a placeable material).
+        // We always control placement ourselves so invalid placement attempts don't consume the item.
+        event.setCancelled(true);
+
         Block clicked = event.getClickedBlock();
         if (clicked == null || !clicked.getType().isSolid()) return;
         if (event.getBlockFace() != BlockFace.UP) {
