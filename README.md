@@ -1,4 +1,4 @@
-# Flyiron's Drugs Plugin (DrugsV2)
+# Flyiron's Drugs Plugin
 
 Discord: https://discord.gg/SaxTyAFHV9  
 Public SMP: mc.swanky.wtf
@@ -41,6 +41,7 @@ Compared to a basic consumable-effects plugin, this version includes:
 - PlaceholderAPI expansion for tolerance/effectiveness placeholders.
 - Admin tooling for reloading configs, purging player data, listing drugs, and resetting overdose counters.
 - Villager Weed Workers (Farm Controller automation with worker villagers).
+- Hallucinogen drugs: LSD (a client-side nether-portal trip + nausea) and Salvia (a dirt-block disguise).
 ---
 
 ## Quick Start (Server Admin)
@@ -145,7 +146,7 @@ Compared to a basic consumable-effects plugin, this version includes:
 - Opioids / high-risk: `heroin`, `fent`, `glue`
 - Stimulants / combat-mobility: `cocaine`, `meth`, `molly`
 - Cannabis variants: `blunt`, `joint`, `edible`, `cart`
-- Utility/psychedelic: `shrooms`
+- Hallucinogens / psychedelic: `shrooms`, `lsd`, `salvia`
 
 Each drug profile is fully configurable in `config.yml` (material, display name, lore, potion effects).
 
@@ -173,7 +174,7 @@ Withdrawal behavior (effect types, timings, point decay) is per-drug and configu
 
 ---
 
-## Villager Weed Workers (v1.3)
+## Villager Weed Workers
 
 Automated weed farming is now available through Farm Controllers:
 

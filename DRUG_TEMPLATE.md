@@ -1,4 +1,4 @@
-# 🧪 DrugsV2 - Create Your Own Drug
+# 🧪 Flyiron's Drugs - Create Your Own Drug
 
 ## Step-by-Step
 

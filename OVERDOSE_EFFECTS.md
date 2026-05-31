@@ -1,6 +1,6 @@
 # Configuring Overdose Effects
 
-This guide explains how to configure custom overdose effects in Norse's Drugs plugin.
+This guide explains how to configure custom overdose effects in Flyiron's Drugs plugin.
 
 ## Overview
 
@@ -8,7 +8,7 @@ The overdose system allows server owners to create unique consequences when play
 
 ## Configuration File
 
-All overdose settings are stored in `plugins/DrugsV2/overdose.yml`. The file is organized into several sections:
+All overdose settings are stored in `plugins/FlyironsDrugs/overdose.yml`. The file is organized into several sections:
 
 ```yaml
 settings:     # Global settings
