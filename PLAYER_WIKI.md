@@ -170,6 +170,22 @@ Variant feel:
 - **Risk profile:** High downside, high addiction/overdose pressure
 - **Use case:** Usually avoid unless roleplay/challenge scenario
 
+## LSD
+
+- **Main upsides:** A psychedelic "trip" — a moving nether-portal hallucination only you can see
+- **Main downsides:** Nausea and heavy visual disorientation for ~3 minutes
+- **Playstyle:** Novelty / roleplay flavor; it affects only you and changes no real blocks
+- **Risk profile:** Non-lethal; low abuse pressure
+- **Use case:** Trippy exploration, pranks, and roleplay — not a combat tool
+
+## Salvia
+
+- **Main upsides:** Turns you into a dirt block — invisible to others, who just see a block
+- **Main downsides:** Short window; a moving block is a giveaway, so it's best while still
+- **Playstyle:** Stealth / hide-in-plain-sight
+- **Risk profile:** Non-lethal; low abuse pressure
+- **Use case:** Ambushes, breaking line of sight, sneaky repositioning
+
 ---
 
 ## 6) Recovery Guide (How to Get Clean)

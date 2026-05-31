@@ -128,7 +128,7 @@ public final class BongRegistry {
         try {
             yaml.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("[DrugsV2] Failed to save bong registry: " + e.getMessage());
+            Bukkit.getLogger().warning("[FlyironsDrugs] Failed to save bong registry: " + e.getMessage());
         }
     }
 

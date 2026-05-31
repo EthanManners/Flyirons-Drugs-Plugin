@@ -325,7 +325,7 @@ public class BongListener implements Listener {
             profile.setTextures(textures);
             meta.setOwnerProfile(profile);
         } catch (Exception ex) {
-            Bukkit.getLogger().warning("[DrugsV2] Failed to apply bong head texture: " + ex.getMessage());
+            Bukkit.getLogger().warning("[FlyironsDrugs] Failed to apply bong head texture: " + ex.getMessage());
         }
     }
 

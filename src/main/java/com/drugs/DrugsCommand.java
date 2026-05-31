@@ -50,7 +50,7 @@ public class DrugsCommand implements CommandExecutor {
 
         // /drugs help
         if (args[0].equalsIgnoreCase("help")) {
-            sender.sendMessage(ChatColor.GOLD + "-----[ DrugsV2 Help ]-----");
+            sender.sendMessage(ChatColor.GOLD + "-----[ Flyiron's Drugs Help ]-----");
             sender.sendMessage(ChatColor.YELLOW + "/drugs" + ChatColor.GRAY + " - Open the drug selection GUI");
             if (sender.hasPermission("drugs.give")) {
                 sender.sendMessage(ChatColor.YELLOW + "/drugs give <player> <drug|cure|bong|farm-controller|all> [amount]" + ChatColor.GRAY + " - Give drugs/cures to someone");
@@ -221,7 +221,7 @@ public class DrugsCommand implements CommandExecutor {
             CureRegistry.init(DrugsV2.getInstance());
             AddictionManager.reload(DrugsV2.getInstance());
 
-            sender.sendMessage(ChatColor.GREEN + "DrugsV2 configs reloaded successfully.");
+            sender.sendMessage(ChatColor.GREEN + "Flyiron's Drugs configs reloaded successfully.");
             return true;
         }
 

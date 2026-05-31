@@ -28,7 +28,7 @@ public class StrainConfigLoader {
                 ? config.getConfigurationSection("strains")
                 : config;
         if (root == null) {
-            Bukkit.getLogger().warning("[DrugsV2] strains.yml is missing a valid root section");
+            Bukkit.getLogger().warning("[FlyironsDrugs] strains.yml is missing a valid root section");
             return;
         }
 
@@ -68,7 +68,7 @@ public class StrainConfigLoader {
             );
             strains.put(id.toLowerCase(), profile);
         }
-        Bukkit.getLogger().info("[DrugsV2] Loaded " + strains.size() + " cannabis strains");
+        Bukkit.getLogger().info("[FlyironsDrugs] Loaded " + strains.size() + " cannabis strains");
     }
 
     private static List<PotionEffect> parseStrainEffects(ConfigurationSection section) {

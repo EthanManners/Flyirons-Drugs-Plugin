@@ -108,7 +108,7 @@ public class OverdoseEffectManager {
             randomEffects.addAll(loadEffectList(randomSection.getConfigurationSection("effects")));
         }
         
-        Bukkit.getLogger().info("[DrugsV2] Loaded overdose effects configuration. Enabled: " + enabled);
+        Bukkit.getLogger().info("[FlyironsDrugs] Loaded overdose effects configuration. Enabled: " + enabled);
     }
     
     /**
@@ -148,7 +148,7 @@ public class OverdoseEffectManager {
                                     potionEffects.add(new PotionEffect(effectType, duration, amplifier));
                                 }
                             } catch (Exception e) {
-                                Bukkit.getLogger().warning("[DrugsV2] Invalid potion effect: " + effectName);
+                                Bukkit.getLogger().warning("[FlyironsDrugs] Invalid potion effect: " + effectName);
                             }
                         }
                     }
@@ -176,7 +176,7 @@ public class OverdoseEffectManager {
                         Sound sound = Sound.valueOf(soundName);
                         effects.add(new SoundEffect(sound, volume, pitch));
                     } catch (Exception e) {
-                        Bukkit.getLogger().warning("[DrugsV2] Invalid sound: " + soundName);
+                        Bukkit.getLogger().warning("[FlyironsDrugs] Invalid sound: " + soundName);
                     }
                     break;
                     

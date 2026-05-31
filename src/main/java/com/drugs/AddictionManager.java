@@ -241,7 +241,7 @@ public class AddictionManager {
             try {
                 dataFile.createNewFile();
             } catch (IOException e) {
-                Bukkit.getLogger().severe("[DrugsV2] Failed to create addiction_data.yml: " + e.getMessage());
+                Bukkit.getLogger().severe("[FlyironsDrugs] Failed to create addiction_data.yml: " + e.getMessage());
             }
         }
 
@@ -300,7 +300,7 @@ public class AddictionManager {
         try {
             config.save(dataFile);
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[DrugsV2] Failed to save addiction_data.yml: " + e.getMessage());
+            Bukkit.getLogger().severe("[FlyironsDrugs] Failed to save addiction_data.yml: " + e.getMessage());
         }
     }
 }
