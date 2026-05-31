@@ -148,7 +148,7 @@ public class WeedFarmManager {
         try {
             yaml.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("[DrugsV2] Failed to save weed farms: " + e.getMessage());
+            Bukkit.getLogger().warning("[FlyironsDrugs] Failed to save weed farms: " + e.getMessage());
         }
     }
 

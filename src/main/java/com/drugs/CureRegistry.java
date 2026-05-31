@@ -34,7 +34,7 @@ public class CureRegistry {
 
             ConfigurationSection recipeSection = recipes.getConfigurationSection(cureId);
             if (recipeSection != null) {
-                Bukkit.getLogger().info("[DrugsV2] Registering cure recipe for: " + cureId);
+                Bukkit.getLogger().info("[FlyironsDrugs] Registering cure recipe for: " + cureId);
                 DrugRecipeHelper.registerItemRecipe(cureId, recipeSection, profile.createItem(1), plugin);
             }
         }

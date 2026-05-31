@@ -93,7 +93,7 @@ public class ToleranceTracker {
     public static void startDecayTask() {
         // This is now handled by the PerformanceOptimizer
         // We'll keep this method for backwards compatibility
-        Bukkit.getLogger().info("[DrugsV2] Tolerance decay now managed by performance optimizer");
+        Bukkit.getLogger().info("[FlyironsDrugs] Tolerance decay now managed by performance optimizer");
     }
     
     /**

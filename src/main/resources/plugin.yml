@@ -1,5 +1,6 @@
-name: DrugsV2
-version: '2.1'
+name: FlyironsDrugs
+version: '${project.version}'
+description: "Flyiron's Drugs: persistent tolerance, addiction, withdrawal, overdose, cures, cannabis strains, and bongs."
 main: com.drugs.DrugsV2
 api-version: '1.21'
 softdepend: [PlaceholderAPI]

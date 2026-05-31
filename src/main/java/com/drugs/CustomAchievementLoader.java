@@ -60,14 +60,14 @@ public class CustomAchievementLoader {
                     String iconStr = section.getString("icon", "GRAY_DYE");
                     icon = Material.valueOf(iconStr.toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    Bukkit.getLogger().warning("[DrugsV2] Invalid icon material for achievement: " + key);
+                    Bukkit.getLogger().warning("[FlyironsDrugs] Invalid icon material for achievement: " + key);
                 }
                 
                 try {
                     String completedIconStr = section.getString("completed_icon", "BOOK");
                     completedIcon = Material.valueOf(completedIconStr.toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    Bukkit.getLogger().warning("[DrugsV2] Invalid completed_icon material for achievement: " + key);
+                    Bukkit.getLogger().warning("[FlyironsDrugs] Invalid completed_icon material for achievement: " + key);
                 }
                 
                 // Create the achievement
@@ -81,15 +81,15 @@ public class CustomAchievementLoader {
                 // Add to trigger map for quick lookup
                 triggerMap.computeIfAbsent(trigger, k -> new ArrayList<>()).add(achievement);
                 
-                Bukkit.getLogger().info("[DrugsV2] Loaded achievement: " + key + " (" + trigger + ")");
+                Bukkit.getLogger().info("[FlyironsDrugs] Loaded achievement: " + key + " (" + trigger + ")");
                 
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[DrugsV2] Failed to load achievement: " + key);
+                Bukkit.getLogger().severe("[FlyironsDrugs] Failed to load achievement: " + key);
                 e.printStackTrace();
             }
         }
         
-        Bukkit.getLogger().info("[DrugsV2] Loaded " + achievements.size() + " achievements");
+        Bukkit.getLogger().info("[FlyironsDrugs] Loaded " + achievements.size() + " achievements");
     }
     
     /**

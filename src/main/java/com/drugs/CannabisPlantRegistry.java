@@ -61,7 +61,7 @@ public class CannabisPlantRegistry {
         try {
             yaml.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("[DrugsV2] Failed to save cannabis plant registry: " + e.getMessage());
+            Bukkit.getLogger().warning("[FlyironsDrugs] Failed to save cannabis plant registry: " + e.getMessage());
         }
     }
 

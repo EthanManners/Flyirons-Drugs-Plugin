@@ -49,11 +49,11 @@ public class DrugRegistry {
         // Process in batches for better performance
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
-            Bukkit.getLogger().info("[DrugsV2] Loading drug config: " + key);
+            Bukkit.getLogger().info("[FlyironsDrugs] Loading drug config: " + key);
 
             ConfigurationSection section = config.getConfigurationSection(key);
             if (section == null) {
-                Bukkit.getLogger().warning("[DrugsV2] Skipping '" + key + "': config section is null.");
+                Bukkit.getLogger().warning("[FlyironsDrugs] Skipping '" + key + "': config section is null.");
                 continue;
             }
 
@@ -66,26 +66,26 @@ public class DrugRegistry {
 
                 DrugEffectProfile profile = new DrugEffectProfile(name, effects, material, displayName, lore);
                 drugProfiles.put(key.toLowerCase(), profile);
-                Bukkit.getLogger().info("[DrugsV2] Registered drug: " + key);
+                Bukkit.getLogger().info("[FlyironsDrugs] Registered drug: " + key);
 
                 // Register crafting recipe if it exists
                 if (recipes != null) {
                     ConfigurationSection recipeSection = recipes.getConfigurationSection(key);
                     if (recipeSection != null) {
-                        Bukkit.getLogger().info("[DrugsV2] Registering recipe for: " + key);
+                        Bukkit.getLogger().info("[FlyironsDrugs] Registering recipe for: " + key);
                         DrugRecipeHelper.registerDrugRecipe(key, recipeSection, plugin);
                     } else {
-                        Bukkit.getLogger().warning("[DrugsV2] No recipe found for: " + key);
+                        Bukkit.getLogger().warning("[FlyironsDrugs] No recipe found for: " + key);
                     }
                 }
 
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[DrugsV2] Failed to load drug '" + key + "': " + e.getMessage());
+                Bukkit.getLogger().severe("[FlyironsDrugs] Failed to load drug '" + key + "': " + e.getMessage());
                 e.printStackTrace();
             }
         }
         
-        Bukkit.getLogger().info("[DrugsV2] Loaded " + drugProfiles.size() + " drugs");
+        Bukkit.getLogger().info("[FlyironsDrugs] Loaded " + drugProfiles.size() + " drugs");
     }
 
     /**
@@ -181,7 +181,7 @@ public class DrugRegistry {
      */
     private static void scheduleItemCacheCleanup() {
         Bukkit.getScheduler().runTaskLaterAsynchronously(DrugsV2.getInstance(), () -> {
-            Bukkit.getLogger().info("[DrugsV2] Cleaning item match cache (" + itemMatchCache.size() + " entries)");
+            Bukkit.getLogger().info("[FlyironsDrugs] Cleaning item match cache (" + itemMatchCache.size() + " entries)");
             itemMatchCache.clear();
             needsCacheCleanup = false;
         }, 100L); // 5 seconds later

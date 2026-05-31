@@ -6,7 +6,7 @@
 
     <groupId>com.drugs</groupId>
     <artifactId>DrugsV2</artifactId>
-    <version>1.0</version>
+    <version>1.5.0</version>
     <packaging>jar</packaging>
 
     <name>DrugsV2</name>
@@ -17,6 +17,7 @@
     </properties>
 
     <build>
+        <finalName>FlyironsDrugsv1.5</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>

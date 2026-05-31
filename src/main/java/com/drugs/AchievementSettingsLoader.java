@@ -91,7 +91,7 @@ public class AchievementSettingsLoader {
             }
         }
         
-        Bukkit.getLogger().info("[DrugsV2] Loaded achievement settings. System enabled: " + enabled);
+        Bukkit.getLogger().info("[FlyironsDrugs] Loaded achievement settings. System enabled: " + enabled);
     }
     
     /**

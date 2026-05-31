@@ -111,7 +111,7 @@ public class DrugsV2 extends JavaPlugin {
             getLogger().info("PlaceholderAPI expansion registered successfully!");
         }
 
-        getLogger().info("DrugsV2 enabled!");
+        getLogger().info("Flyiron's Drugs enabled!");
     }
 
     @Override
@@ -128,7 +128,7 @@ public class DrugsV2 extends JavaPlugin {
             salviaEffectManager.cleanupAll();
         }
         AddictionManager.shutdown();
-        getLogger().info("DrugsV2 disabled.");
+        getLogger().info("Flyiron's Drugs disabled.");
     }
 
     public void saveRecipesConfig() {

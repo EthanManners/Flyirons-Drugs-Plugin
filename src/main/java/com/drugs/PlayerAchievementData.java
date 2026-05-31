@@ -13,7 +13,7 @@ public class PlayerAchievementData {
     private final UUID playerUUID;
     private final File file;
     private final YamlConfiguration config;
-    private static final File folder = new File(Bukkit.getPluginManager().getPlugin("DrugsV2").getDataFolder(), "data/achievements");
+    private static final File folder = new File(DrugsV2.getInstance().getDataFolder(), "data/achievements");
 
     public PlayerAchievementData(UUID uuid) {
         this.playerUUID = uuid;
@@ -25,7 +25,7 @@ public class PlayerAchievementData {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                Bukkit.getLogger().severe("[DrugsV2] Failed to create achievement file for " + uuid);
+                Bukkit.getLogger().severe("[FlyironsDrugs] Failed to create achievement file for " + uuid);
                 e.printStackTrace();
             }
         }
@@ -65,7 +65,7 @@ public class PlayerAchievementData {
         try {
             config.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[DrugsV2] Failed to save achievement file for " + playerUUID);
+            Bukkit.getLogger().severe("[FlyironsDrugs] Failed to save achievement file for " + playerUUID);
             e.printStackTrace();
         }
     }
