@@ -168,3 +168,12 @@ lsd:
     S: SPORE_BLOSSOM
     E: ENDER_EYE
 
+salvia:
+  shape:
+    - " L "
+    - "FDF"
+    - " L "
+  ingredients:
+    L: LEAF_LITTER
+    F: FERN
+    D: DIRT

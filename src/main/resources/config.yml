@@ -197,3 +197,14 @@ lsd:
   duration: 180
   effects: {}
 
+salvia:
+  material: FERN
+  display-name: "&2Salvia"
+  lore:
+    - "&7Reality bends and you become the block."
+    - "&8&oDisguise: Dirt Block"
+    - "&7OD Risk: &2&lNon-Lethal"
+    - "&7Abuse Potential: &3&lLow"
+  delay: 3
+  duration: 45
+  effects: {}

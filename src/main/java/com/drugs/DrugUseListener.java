@@ -94,6 +94,13 @@ public class DrugUseListener implements Listener {
             }
         }
 
+        if (drugId.equalsIgnoreCase("salvia")) {
+            DrugsV2 instance = DrugsV2.getInstance();
+            if (instance != null && instance.getSalviaEffectManager() != null) {
+                instance.getSalviaEffectManager().startEffect(player);
+            }
+        }
+
         if (player.getGameMode() != GameMode.CREATIVE) {
             if (drugId.equalsIgnoreCase("cart")) {
                 handleCartDurability(player, item);
